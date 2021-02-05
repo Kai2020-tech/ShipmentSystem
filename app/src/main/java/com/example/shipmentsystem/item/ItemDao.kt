@@ -27,5 +27,5 @@ interface ItemDao {
     fun getItem(): Item?
 
     @Query("SELECT * FROM item_table  ORDER BY id DESC")
-    fun getAllItems(): LiveData<List<Item>>
+    fun getAllItems(): List<Item>
 }
