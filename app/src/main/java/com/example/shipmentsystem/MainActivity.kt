@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
             add(R.id.main_Layout, itemFragment , itemFragment ::class.java.name)
             commit()
         }
+        val a = ""
 
     }
 }
