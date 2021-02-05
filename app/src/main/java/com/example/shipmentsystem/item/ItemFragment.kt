@@ -29,13 +29,14 @@ class ItemFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         itemBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_item, container, false)
-
+        var itemSelectedId: Int? =null
         itemRvAdapter = RvItemAdapter()
         itemBinding.rvItem.adapter = itemRvAdapter.apply {
             itemClickListener = {
                 Toast.makeText(requireActivity(), "$it", Toast.LENGTH_SHORT).show()
                 itemBinding.edItemName.setText(it.name)
                 itemBinding.edItemPrice.setText(it.price.toString())
+                itemSelectedId = it.id
             }
         }
         itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
@@ -61,6 +62,18 @@ class ItemFragment : Fragment() {
 
             itemBinding.edItemName.text.clear()
             itemBinding.edItemPrice.text.clear()
+        }
+
+        /** item delete */
+        itemBinding.btnDelete.setOnClickListener {
+            if(itemSelectedId != null){
+                val item = itemDb.itemDao.get(itemSelectedId!!)
+                itemDb.itemDao.delete(itemSelectedId!!)
+                Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT).show()
+                itemRvAdapter.update(itemDb.itemDao.getAllItems())
+            }else{
+                Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
