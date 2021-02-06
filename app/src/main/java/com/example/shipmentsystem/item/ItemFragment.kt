@@ -60,8 +60,7 @@ class ItemFragment : Fragment() {
             itemDb.itemDao.insert(item)
             itemRvAdapter.update(itemDb.itemDao.getAllItems())
 
-            itemBinding.edItemName.text.clear()
-            itemBinding.edItemPrice.text.clear()
+            clearEditText()
         }
 
         /** item delete */
@@ -69,15 +68,53 @@ class ItemFragment : Fragment() {
             if(itemSelectedId != null){
                 val item = itemDb.itemDao.get(itemSelectedId!!)
                 itemDb.itemDao.delete(itemSelectedId!!)
-                Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT).show()
                 itemRvAdapter.update(itemDb.itemDao.getAllItems())
+                Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT).show()
+                itemSelectedId = null
             }else{
                 Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT).show()
             }
+            clearEditText()
+        }
+
+        /** item update */
+        itemBinding.btnUpdate.setOnClickListener {
+            if(itemSelectedId != null){
+                val item = itemDb.itemDao.get(itemSelectedId!!)
+                if (item != null) {
+                    item.id = itemSelectedId!!.toInt()
+                    item.name = itemBinding.edItemName.text.toString()
+                    item.price = itemBinding.edItemPrice.text.toString().toInt()
+                    itemDb.itemDao.update(item!!)
+                    itemRvAdapter.update(itemDb.itemDao.getAllItems())
+                    Toast.makeText(requireActivity(), "${item?.name} updated!", Toast.LENGTH_SHORT).show()
+                }
+                itemSelectedId = null
+            }else{
+                Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT).show()
+            }
+            clearEditText()
+        }
+
+        /** query */
+        itemBinding.btnQuery.setOnClickListener {
+            val queryList = itemDb.itemDao.getAllItems()
+            val resultList = mutableListOf<Item>()
+            queryList.forEach {
+                if(it.name.contains(itemBinding.edItemName.text.toString())){
+                    resultList.add(it)
+                }
+            }
+            itemRvAdapter.update(resultList)
         }
 
 
 
         return itemBinding.root
+    }
+
+    private fun clearEditText() {
+        itemBinding.edItemName.text.clear()
+        itemBinding.edItemPrice.text.clear()
     }
 }

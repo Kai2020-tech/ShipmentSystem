@@ -80,12 +80,12 @@
             android:layout_marginStart="8dp"
             android:text="刪除"
             app:layout_constraintBaseline_toBaselineOf="@+id/btn_create"
-            app:layout_constraintEnd_toStartOf="@+id/btn_edit"
+            app:layout_constraintEnd_toStartOf="@+id/btn_update"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btn_create" />
 
         <Button
-            android:id="@+id/btn_edit"
+            android:id="@+id/btn_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -101,10 +101,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="查詢"
-            app:layout_constraintBaseline_toBaselineOf="@+id/btn_edit"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_update"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_edit" />
+            app:layout_constraintStart_toEndOf="@+id/btn_update" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline4"
