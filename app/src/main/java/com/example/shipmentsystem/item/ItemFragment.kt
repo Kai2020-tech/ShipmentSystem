@@ -1,10 +1,8 @@
 package com.example.shipmentsystem.item
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,6 +40,8 @@ class ItemFragment : Fragment() {
         itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
 
         itemRvAdapter.update(itemDb.itemDao.getAllItems())
+
+        setHasOptionsMenu(true)
 
         /** item create */
         itemBinding.btnCreate.setOnClickListener {
@@ -82,7 +82,6 @@ class ItemFragment : Fragment() {
             if(itemSelectedId != null){
                 val item = itemDb.itemDao.get(itemSelectedId!!)
                 if (item != null) {
-                    item.id = itemSelectedId!!.toInt()
                     item.name = itemBinding.edItemName.text.toString()
                     item.price = itemBinding.edItemPrice.text.toString().toInt()
                     itemDb.itemDao.update(item!!)
@@ -111,6 +110,24 @@ class ItemFragment : Fragment() {
 
 
         return itemBinding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.item_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return  when(item.itemId){
+            R.id.menu_itemListDel -> {
+                itemDb.itemDao.clear()
+                itemRvAdapter.update(itemDb.itemDao.getAllItems())
+                clearEditText()
+                Toast.makeText(requireContext(), "All items deleted!!", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun clearEditText() {

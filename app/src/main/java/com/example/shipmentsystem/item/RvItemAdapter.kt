@@ -15,7 +15,7 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         var name = binding.tvItemName
         var price = binding.tvItemPrice
         var id = binding.tvItemId
-        var isClicked = false
+        var clickedPosition = -1
 
     }
 
@@ -37,12 +37,18 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
 
         holder.itemView.setOnClickListener {
             itemClickListener.invoke(currentItem)
-            holder.isClicked = true
+
             for(i in 0 until viewList.size){
                 viewList[i].itemView.setBackgroundColor(Color.parseColor("#FFAB91"))
+                viewList[i].clickedPosition = -1
             }
+            holder.clickedPosition = position
             holder.itemView.setBackgroundColor(Color.parseColor("#F57C00"))
         }
+        if(holder.clickedPosition == position)
+            holder.itemView.setBackgroundColor(Color.parseColor("#F57C00"))
+        else
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFAB91"))
 
 //        if (holder.rowIndex!=position) {
 //            holder.itemView.setBackgroundColor(Color.parseColor("#FFAB91"))
