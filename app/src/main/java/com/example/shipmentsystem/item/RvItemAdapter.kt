@@ -1,6 +1,7 @@
 package com.example.shipmentsystem.item
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,8 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
+        Log.i("onBindViewHolder", "holder: $holder, pos: $position")
+
         val currentItem = innerItemList[position]
         viewList.add(holder)
         holder.id.text = currentItem.id.toString()
@@ -39,6 +42,7 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
             itemClickListener.invoke(currentItem)
 
             for(i in 0 until viewList.size){
+                println("i: $i")
                 viewList[i].itemView.setBackgroundColor(Color.parseColor("#FFAB91"))
                 viewList[i].clickedPosition = -1
             }
