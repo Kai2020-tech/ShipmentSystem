@@ -1,12 +1,15 @@
 package com.example.shipmentsystem.item
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shipmentsystem.databinding.ItemViewBinding
 
 class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
+    var mClickedPosition = -1
+
     private val innerItemList = mutableListOf<Item>()
     private val viewList = mutableListOf<MyHolder>()
     var itemClickListener: (Item) -> Unit = {}
@@ -29,8 +32,10 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
+        Log.i("onBindViewHolder", "holder: $holder, pos: $position")
+
         val currentItem = innerItemList[position]
-        viewList.add(holder)
+//        viewList.add(holder)
         holder.id.text = currentItem.id.toString()
         holder.name.text = currentItem.name
         holder.price.text = "$ " + currentItem.price.toString()
@@ -38,17 +43,24 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         holder.itemView.setOnClickListener {
             itemClickListener.invoke(currentItem)
 
-            for(i in 0 until viewList.size){
-                viewList[i].itemView.setBackgroundColor(Color.parseColor("#FFAB91"))
-                viewList[i].clickedPosition = -1
-            }
-            holder.clickedPosition = position
+//            for(i in 0 until viewList.size){
+//                println("i: $i")
+//                viewList[i].itemView.setBackgroundColor(Color.parseColor("#FFAB91"))
+//                viewList[i].clickedPosition = -1
+//            }
+//            holder.clickedPosition = position
+            mClickedPosition = position
             holder.itemView.setBackgroundColor(Color.parseColor("#F57C00"))
+            notifyDataSetChanged()
         }
-        if(holder.clickedPosition == position)
+        if(mClickedPosition == position)
             holder.itemView.setBackgroundColor(Color.parseColor("#F57C00"))
         else
             holder.itemView.setBackgroundColor(Color.parseColor("#FFAB91"))
+//        if(holder.clickedPosition == position)
+//            holder.itemView.setBackgroundColor(Color.parseColor("#F57C00"))
+//        else
+//            holder.itemView.setBackgroundColor(Color.parseColor("#FFAB91"))
 
 //        if (holder.rowIndex!=position) {
 //            holder.itemView.setBackgroundColor(Color.parseColor("#FFAB91"))
