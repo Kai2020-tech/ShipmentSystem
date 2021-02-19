@@ -42,7 +42,7 @@ class ItemFragment : Fragment() {
         }
         itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
 
-        itemRvAdapter.update(itemViewModel.getAllItem())
+        refreshScreen()
 
         setHasOptionsMenu(true)
 
@@ -60,8 +60,9 @@ class ItemFragment : Fragment() {
                 (100..900).random()
             }
             val item = Item(name, price)
-            itemDb.itemDao.insert(item)
-            itemRvAdapter.update(itemDb.itemDao.getAllItems())
+            itemViewModel.createItem(item)
+
+            itemRvAdapter.update(itemViewModel.getAllItem())
 
             clearEditText()
         }
@@ -69,9 +70,9 @@ class ItemFragment : Fragment() {
         /** item delete */
         itemBinding.btnDelete.setOnClickListener {
             if (itemSelectedId != null) {
-                val item = itemDb.itemDao.get(itemSelectedId!!)
-                itemDb.itemDao.delete(itemSelectedId!!)
-                itemRvAdapter.update(itemDb.itemDao.getAllItems())
+                val item = itemViewModel.get(itemSelectedId!!)
+                itemViewModel.deleteItem(itemSelectedId!!)
+                refreshScreen()
                 Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT)
                     .show()
                 itemSelectedId = null
@@ -85,12 +86,12 @@ class ItemFragment : Fragment() {
         /** item update */
         itemBinding.btnUpdate.setOnClickListener {
             if (itemSelectedId != null) {
-                val item = itemDb.itemDao.get(itemSelectedId!!)
+                val item = itemViewModel.get(itemSelectedId!!)
                 if (item != null) {
                     item.name = itemBinding.edItemName.text.toString()
                     item.price = itemBinding.edItemPrice.text.toString().toInt()
-                    itemDb.itemDao.update(item!!)
-                    itemRvAdapter.update(itemDb.itemDao.getAllItems())
+                    itemViewModel.update(item)
+                    refreshScreen()
                     Toast.makeText(requireActivity(), "${item?.name} updated!", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -104,7 +105,7 @@ class ItemFragment : Fragment() {
 
         /** query */
         itemBinding.btnQuery.setOnClickListener {
-            val queryList = itemDb.itemDao.getAllItems()
+            val queryList = itemViewModel.getAllItem()
             val resultList = mutableListOf<Item>()
             queryList.forEach {
                 if (it.name.contains(itemBinding.edItemName.text.toString())) {
@@ -113,9 +114,6 @@ class ItemFragment : Fragment() {
             }
             itemRvAdapter.update(resultList)
         }
-
-
-
         return itemBinding.root
     }
 
@@ -127,8 +125,8 @@ class ItemFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_itemListDel -> {
-                itemDb.itemDao.clear()
-                itemRvAdapter.update(itemDb.itemDao.getAllItems())
+                itemViewModel.clear()
+                refreshScreen()
                 clearEditText()
                 Toast.makeText(requireContext(), "All items deleted!!", Toast.LENGTH_SHORT).show()
                 true
@@ -140,5 +138,9 @@ class ItemFragment : Fragment() {
     private fun clearEditText() {
         itemBinding.edItemName.text.clear()
         itemBinding.edItemPrice.text.clear()
+    }
+
+    private fun refreshScreen() {
+        itemRvAdapter.update(itemViewModel.getAllItem())
     }
 }
