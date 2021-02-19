@@ -5,21 +5,18 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentItemBinding
-import kotlin.random.Random
 
 
 class ItemFragment : Fragment() {
     private lateinit var itemBinding: FragmentItemBinding
-    private lateinit var itemDb: ItemDatabase
+
     private lateinit var itemRvAdapter: RvItemAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        itemDb = ItemDatabase.getInstance(requireActivity())
-    }
+
+    private lateinit var itemViewModel: ItemViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +24,13 @@ class ItemFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         itemBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_item, container, false)
-        var itemSelectedId: Int? =null
+
+        var itemSelectedId: Int? = null
+
+        val app = requireNotNull(activity).application
+        itemViewModel =
+            ViewModelProvider(this, ItemViewModelFactory(app)).get(ItemViewModel::class.java)
+
         itemRvAdapter = RvItemAdapter()
         itemBinding.rvItem.adapter = itemRvAdapter.apply {
             itemClickListener = {
@@ -39,7 +42,7 @@ class ItemFragment : Fragment() {
         }
         itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
 
-        itemRvAdapter.update(itemDb.itemDao.getAllItems())
+        itemRvAdapter.update(itemViewModel.getAllItem())
 
         setHasOptionsMenu(true)
 
@@ -54,7 +57,7 @@ class ItemFragment : Fragment() {
             val price = if (itemBinding.edItemPrice.text.isNotEmpty()) {
                 itemBinding.edItemPrice.text.toString().toInt()
             } else {
-               (100..900).random()
+                (100..900).random()
             }
             val item = Item(name, price)
             itemDb.itemDao.insert(item)
@@ -65,32 +68,36 @@ class ItemFragment : Fragment() {
 
         /** item delete */
         itemBinding.btnDelete.setOnClickListener {
-            if(itemSelectedId != null){
+            if (itemSelectedId != null) {
                 val item = itemDb.itemDao.get(itemSelectedId!!)
                 itemDb.itemDao.delete(itemSelectedId!!)
                 itemRvAdapter.update(itemDb.itemDao.getAllItems())
-                Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT)
+                    .show()
                 itemSelectedId = null
-            }else{
-                Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT)
+                    .show()
             }
             clearEditText()
         }
 
         /** item update */
         itemBinding.btnUpdate.setOnClickListener {
-            if(itemSelectedId != null){
+            if (itemSelectedId != null) {
                 val item = itemDb.itemDao.get(itemSelectedId!!)
                 if (item != null) {
                     item.name = itemBinding.edItemName.text.toString()
                     item.price = itemBinding.edItemPrice.text.toString().toInt()
                     itemDb.itemDao.update(item!!)
                     itemRvAdapter.update(itemDb.itemDao.getAllItems())
-                    Toast.makeText(requireActivity(), "${item?.name} updated!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), "${item?.name} updated!", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 itemSelectedId = null
-            }else{
-                Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT)
+                    .show()
             }
             clearEditText()
         }
@@ -100,7 +107,7 @@ class ItemFragment : Fragment() {
             val queryList = itemDb.itemDao.getAllItems()
             val resultList = mutableListOf<Item>()
             queryList.forEach {
-                if(it.name.contains(itemBinding.edItemName.text.toString())){
+                if (it.name.contains(itemBinding.edItemName.text.toString())) {
                     resultList.add(it)
                 }
             }
@@ -114,11 +121,11 @@ class ItemFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.item_menu,menu)
+        inflater.inflate(R.menu.item_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return  when(item.itemId){
+        return when (item.itemId) {
             R.id.menu_itemListDel -> {
                 itemDb.itemDao.clear()
                 itemRvAdapter.update(itemDb.itemDao.getAllItems())
