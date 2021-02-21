@@ -49,6 +49,8 @@ class ItemFragment : Fragment() {
             itemBinding.edItemPrice.setText(selectedItem.price.toString())
             Toast.makeText(requireActivity(), "$selectedItem", Toast.LENGTH_SHORT).show()
         })
+        itemBinding.edItemName.setText(itemViewModel.selectedItem.value?.name)
+        itemBinding.edItemPrice.setText(itemViewModel.selectedItem.value?.price.toString())
         itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
 
         refreshScreen()
