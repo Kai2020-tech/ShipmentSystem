@@ -25,16 +25,19 @@ class ItemFragment : Fragment() {
         // Inflate the layout for this fragment
         itemBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_item, container, false)
 
-        var itemSelectedId: Int? = null
-
+        var itemSelectedId: Int? = 0
+        var id: Int? = null
         val app = requireNotNull(activity).application
         itemViewModel =
-            ViewModelProvider(requireActivity(), ItemViewModelFactory(app)).get(ItemViewModel::class.java)
+            ViewModelProvider(
+                requireActivity(),
+                ItemViewModelFactory(app)
+            ).get(ItemViewModel::class.java)
 
         itemRvAdapter = RvItemAdapter()
         itemBinding.rvItem.adapter = itemRvAdapter.apply {
             itemClickListener = {
-                itemSelectedId = it.id
+//                itemSelectedId = it.id
 //                val item = itemViewModel.get(itemSelectedId ?: 0)
 //                Toast.makeText(requireActivity(), "$item", Toast.LENGTH_SHORT).show()
 //                itemBinding.edItemName.setText(item?.name)
@@ -43,6 +46,7 @@ class ItemFragment : Fragment() {
 
 
             }
+
         }
         itemViewModel.selectedItem.observe(viewLifecycleOwner, { selectedItem ->
             itemBinding.edItemName.setText(selectedItem.name)
@@ -74,28 +78,40 @@ class ItemFragment : Fragment() {
             itemRvAdapter.update(itemViewModel.getAllItem())
 
             clearEditText()
+            id = 1
         }
 
+        if (id != null) {
+            itemViewModel.get(id)
+        }
+        id = 0
+
+        itemSelectedId = 0
         /** item delete */
         itemBinding.btnDelete.setOnClickListener {
-//            if (itemSelectedId != null) {
-//                val item = itemViewModel.get(itemSelectedId!!)
-//                itemViewModel.deleteItem(itemSelectedId!!)
-//                refreshScreen()
-//                Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT)
-//                    .show()
-//                itemSelectedId = null
-//            } else {
-//                Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT)
-//                    .show()
-//            }
+            itemSelectedId = 0
+            id = 1
+
+            if (itemSelectedId != null) {
+                val item = itemViewModel.get(itemSelectedId)
+                itemViewModel.deleteItem(itemSelectedId!!)
+                refreshScreen()
+                Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT)
+                    .show()
+//                itemSelectedId = 0
+            } else {
+                Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+
             itemSelectedId?.let {
                 val item = itemViewModel.get(it)
                 itemViewModel.deleteItem(it)
                 refreshScreen()
                 Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT)
                     .show()
-                itemSelectedId = null
+//                itemSelectedId = null
             } ?: let {
                 Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT)
                     .show()
@@ -115,7 +131,7 @@ class ItemFragment : Fragment() {
                     Toast.makeText(requireActivity(), "${item?.name} updated!", Toast.LENGTH_SHORT)
                         .show()
                 }
-                itemSelectedId = null
+//                itemSelectedId = null
             } else {
                 Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT)
                     .show()
@@ -134,6 +150,7 @@ class ItemFragment : Fragment() {
             }
             itemRvAdapter.update(resultList)
         }
+
         return itemBinding.root
     }
 
