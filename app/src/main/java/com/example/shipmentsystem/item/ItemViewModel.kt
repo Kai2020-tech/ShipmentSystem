@@ -11,7 +11,7 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
     val selectedItem = MutableLiveData<Item>()
 
     init {
-        Log.i("GameViewModel", "GameViewModel created!")
+        Log.i("GameViewModel", "GameViewModel created! $this")
     }
 
     fun getAllItem() = itemDb.itemDao.getAllItems()

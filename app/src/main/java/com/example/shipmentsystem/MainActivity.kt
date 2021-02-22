@@ -9,10 +9,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val itemFragment = ItemFragment()
-        supportFragmentManager.beginTransaction().apply {
-            add(R.id.main_Layout, itemFragment , itemFragment ::class.java.name)
-            commit()
-        }
+//        if (savedInstanceState == null) {
+            val itemFragment = ItemFragment()
+            supportFragmentManager.beginTransaction().apply {
+                add(R.id.main_Layout, itemFragment, itemFragment::class.java.name)
+                commit()
+            }
+//        }
     }
 }
