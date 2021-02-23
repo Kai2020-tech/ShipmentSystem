@@ -26,7 +26,6 @@ class ItemFragment : Fragment() {
         itemBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_item, container, false)
 
         var itemSelectedId: Int? = 0
-        var id: Int? = null
         val app = requireNotNull(activity).application
         itemViewModel =
             ViewModelProvider(
@@ -38,10 +37,6 @@ class ItemFragment : Fragment() {
         itemBinding.rvItem.adapter = itemRvAdapter.apply {
             itemClickListener = {
                 itemSelectedId = it.id
-//                val item = itemViewModel.get(itemSelectedId ?: 0)
-//                Toast.makeText(requireActivity(), "$item", Toast.LENGTH_SHORT).show()
-//                itemBinding.edItemName.setText(item?.name)
-//                itemBinding.edItemPrice.setText(item?.price.toString())
                 itemViewModel.getItem(it.id)
 
 
@@ -78,7 +73,6 @@ class ItemFragment : Fragment() {
             itemRvAdapter.update(itemViewModel.getAllItem())
 
             clearEditText()
-            id = 1
         }
 
 
@@ -87,7 +81,7 @@ class ItemFragment : Fragment() {
             val selectedId = itemSelectedId
             if (selectedId != null) {
                 val item = itemViewModel.get(selectedId)
-                itemViewModel.deleteItem(itemSelectedId!!)
+                itemViewModel.deleteItem(selectedId)
                 refreshScreen()
                 Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT)
                     .show()

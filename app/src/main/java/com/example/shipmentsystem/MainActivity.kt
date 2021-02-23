@@ -9,12 +9,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        if (savedInstanceState == null) {
+        if (savedInstanceState == null) {  //判斷前一fragment是否由系統自動recreate
             val itemFragment = ItemFragment()
             supportFragmentManager.beginTransaction().apply {
-                add(R.id.main_Layout, itemFragment, itemFragment::class.java.name)
+                setReorderingAllowed(true)
+                replace(R.id.main_Layout, itemFragment, itemFragment::class.java.name)
                 commit()
             }
-//        }
+        }
     }
 }
