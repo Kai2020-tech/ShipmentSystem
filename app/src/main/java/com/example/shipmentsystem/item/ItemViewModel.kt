@@ -8,16 +8,20 @@ import androidx.lifecycle.MutableLiveData
 
 class ItemViewModel(application: Application) : AndroidViewModel(application) {
     private var itemDb: ItemDatabase = ItemDatabase.getInstance(application)
-    val selectedItem = MutableLiveData<Item>()
+    var selectedItem = MutableLiveData<Item>()
+    val itemList = MutableLiveData<List<Item>>()
 
     init {
         Log.i("GameViewModel", "GameViewModel created! $this")
     }
 
-    fun getAllItem() = itemDb.itemDao.getAllItems()
+    fun getAllItem() {
+        itemList.value = itemDb.itemDao.getAllItems()
+    }
 
     fun createItem(item: Item) {
         itemDb.itemDao.insert(item)
+        getAllItem()
     }
 
     fun get(itemSelectedId: Int): Item? = itemDb.itemDao.get(itemSelectedId)
@@ -26,7 +30,9 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun deleteItem(itemSelectedId: Int) {
-        itemDb.itemDao.delete(itemSelectedId!!)
+        itemDb.itemDao.delete(itemSelectedId)
+        selectedItem.value = null
+        getAllItem()
     }
 
     fun update(item: Item) {

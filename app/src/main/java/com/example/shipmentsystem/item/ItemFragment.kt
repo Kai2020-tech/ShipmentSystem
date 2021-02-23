@@ -25,32 +25,35 @@ class ItemFragment : Fragment() {
         // Inflate the layout for this fragment
         itemBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_item, container, false)
 
-        var itemSelectedId: Int? = 0
         val app = requireNotNull(activity).application
         itemViewModel =
             ViewModelProvider(
-                requireActivity(),
+                this,
                 ItemViewModelFactory(app)
             ).get(ItemViewModel::class.java)
 
         itemRvAdapter = RvItemAdapter()
         itemBinding.rvItem.adapter = itemRvAdapter.apply {
             itemClickListener = {
-                itemSelectedId = it.id
                 itemViewModel.getItem(it.id)
-
-
             }
-
         }
         itemViewModel.selectedItem.observe(viewLifecycleOwner, { selectedItem ->
-            itemBinding.edItemName.setText(selectedItem.name)
-            itemBinding.edItemPrice.setText(selectedItem.price.toString())
-            Toast.makeText(requireActivity(), "$selectedItem", Toast.LENGTH_SHORT).show()
+            selectedItem?.let {
+                itemBinding.edItemName.setText(selectedItem.name)
+                itemBinding.edItemPrice.setText(selectedItem.price.toString())
+                Toast.makeText(requireActivity(), "$selectedItem", Toast.LENGTH_SHORT).show()
+            } ?: clearEditText()
         })
         itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
 
-        refreshScreen()
+        itemViewModel.getAllItem()
+
+        itemViewModel.itemList.value?.let { itemRvAdapter.update(it) }
+
+        itemViewModel.itemList.observe(viewLifecycleOwner,{
+            itemRvAdapter.update(it)
+        })
 
         setHasOptionsMenu(true)
 
@@ -70,7 +73,7 @@ class ItemFragment : Fragment() {
             val item = Item(name, price)
             itemViewModel.createItem(item)
 
-            itemRvAdapter.update(itemViewModel.getAllItem())
+//            itemRvAdapter.update(itemViewModel.getAllItem())
 
             clearEditText()
         }
@@ -78,66 +81,46 @@ class ItemFragment : Fragment() {
 
         /** item delete */
         itemBinding.btnDelete.setOnClickListener {
-            val selectedId = itemSelectedId
-            if (selectedId != null) {
-                val item = itemViewModel.get(selectedId)
-                itemViewModel.deleteItem(selectedId)
-                refreshScreen()
-                Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT)
+            val selectedItem = itemViewModel.selectedItem.value
+            selectedItem?.let {
+                itemViewModel.deleteItem(it.id)
+//                refreshScreen()
+                Toast.makeText(requireActivity(), "${it.name} deleted!", Toast.LENGTH_SHORT)
                     .show()
-//                itemSelectedId = 0
-            } else {
-                Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-
-            itemSelectedId?.let {
-                val item = itemViewModel.get(it)
-                itemViewModel.deleteItem(it)
-                refreshScreen()
-                Toast.makeText(requireActivity(), "${item?.name} deleted!", Toast.LENGTH_SHORT)
-                    .show()
-//                itemSelectedId = null
             } ?: let {
                 Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT)
                     .show()
             }
-            clearEditText()
         }
 
         /** item update */
         itemBinding.btnUpdate.setOnClickListener {
-            val selectedId = itemSelectedId
-            if (selectedId != null) {
-                val item = itemViewModel.get(selectedId)
-                if (item != null) {
-                    item.name = itemBinding.edItemName.text.toString()
-                    item.price = itemBinding.edItemPrice.text.toString().toInt()
-                    itemViewModel.update(item)
-                    refreshScreen()
-                    Toast.makeText(requireActivity(), "${item?.name} updated!", Toast.LENGTH_SHORT)
-                        .show()
-                }
-//                itemSelectedId = null
-            } else {
+            val selectedItem = itemViewModel.selectedItem.value
+            selectedItem?.let {
+                it.name = itemBinding.edItemName.text.toString()
+                it.price = itemBinding.edItemPrice.text.toString().toInt()
+                itemViewModel.update(it)
+                Toast.makeText(requireActivity(), "${it.name} updated!", Toast.LENGTH_SHORT)
+                    .show()
+//                refreshScreen()
+                clearEditText()
+            } ?: let {
                 Toast.makeText(requireActivity(), "please select an item", Toast.LENGTH_SHORT)
                     .show()
             }
-            clearEditText()
         }
 
         /** query */
-        itemBinding.btnQuery.setOnClickListener {
-            val queryList = itemViewModel.getAllItem()
-            val resultList = mutableListOf<Item>()
-            queryList.forEach {
-                if (it.name.contains(itemBinding.edItemName.text.toString())) {
-                    resultList.add(it)
-                }
-            }
-            itemRvAdapter.update(resultList)
-        }
+//        itemBinding.btnQuery.setOnClickListener {
+//            val queryList = itemViewModel.getAllItem()
+//            val resultList = mutableListOf<Item>()
+//            queryList.forEach {
+//                if (it.name.contains(itemBinding.edItemName.text.toString())) {
+//                    resultList.add(it)
+//                }
+//            }
+//            itemRvAdapter.update(resultList)
+//        }
 
         return itemBinding.root
     }
@@ -151,7 +134,7 @@ class ItemFragment : Fragment() {
         return when (item.itemId) {
             R.id.menu_itemListDel -> {
                 itemViewModel.clear()
-                refreshScreen()
+//                refreshScreen()
                 clearEditText()
                 Toast.makeText(requireContext(), "All items deleted!!", Toast.LENGTH_SHORT).show()
                 true
@@ -165,7 +148,7 @@ class ItemFragment : Fragment() {
         itemBinding.edItemPrice.text.clear()
     }
 
-    private fun refreshScreen() {
-        itemRvAdapter.update(itemViewModel.getAllItem())
-    }
+//    private fun refreshScreen() {
+//        itemRvAdapter.update(itemViewModel.itemList.value)
+//    }
 }
