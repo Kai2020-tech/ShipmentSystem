@@ -63,8 +63,7 @@ class ItemFragment : Fragment() {
         itemBinding.btnCreate.setOnClickListener {
             val name = if (itemBinding.edItemName.text.isNotEmpty()) {
                 itemBinding.edItemName.text.toString()
-            } else {
-                //a-z 隨機4-7個字母做一字串
+            } else {//a-z 隨機4-7個字母做一字串
                 ('a'..'z').map { it }.shuffled().subList(0, (4..7).random()).joinToString("")
             }
             val price = if (itemBinding.edItemPrice.text.isNotEmpty()) {

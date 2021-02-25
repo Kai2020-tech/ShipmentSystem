@@ -4,7 +4,6 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class ItemViewModel(application: Application) : AndroidViewModel(application) {
@@ -27,9 +26,9 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
         getAllItem()
     }
 
-    fun get(itemSelectedId: Int): Item? = itemDb.itemDao.get(itemSelectedId)
-    fun getItem(itemSelectedId: Int, isSeleted: Boolean) {
-        if (isSeleted) {
+//    fun get(itemSelectedId: Int): Item? = itemDb.itemDao.get(itemSelectedId)
+    fun getItem(itemSelectedId: Int, isSelected: Boolean) {
+        if (isSelected) {
             selectedItem.value = itemDb.itemDao.get(itemSelectedId)
         } else {
             selectedItem.value = null
