@@ -39,18 +39,19 @@ class ItemFragment : Fragment() {
                 when {
                     isSelected -> {
                         itemViewModel.getItem(it.id, isSelected)
-                        toast("$it \n selected.")
+                        toast("${it.name} \n selected.")
                         isSelected = false
                     }
                     it.id == itemViewModel.selectedItem.value?.id -> {
                         itemViewModel.getItem(it.id, isSelected)
-                        toast("$it \n unselected.")
+                        toast("${it.name} \n unselected.")
                         isSelected = true
                     }
                     else -> {
                         isSelected = true
                         itemViewModel.getItem(it.id, isSelected)
-                        toast("$it \n selected.")
+                        toast("${it.name} \n selected.")
+                        isSelected = false
                     }
                 }
             }
