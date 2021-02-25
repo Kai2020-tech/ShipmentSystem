@@ -43,7 +43,8 @@ class ItemFragment : Fragment() {
                 itemBinding.edItemName.setText(selectedItem.name)
                 itemBinding.edItemPrice.setText(selectedItem.price.toString())
                 toast("$selectedItem selected.")
-            } //?: clearEditText()
+            }
+                ?: clearEditText()
         })
         itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
 
