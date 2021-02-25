@@ -36,18 +36,22 @@ class ItemFragment : Fragment() {
         var isSelected = true
         itemBinding.rvItem.adapter = itemRvAdapter.apply {
             itemClickListener = {
-                if (isSelected) {
-                    itemViewModel.getItem(it.id, isSelected)
-                    toast("$it \n selected.")
-                    isSelected = false
-                } else if (it.id == itemViewModel.selectedItem.value?.id){
-                    itemViewModel.getItem(it.id, isSelected)
-                    toast("$it \n unselected.")
-                    isSelected = true
-                } else {
-                    isSelected = true
-                    itemViewModel.getItem(it.id, isSelected)
-                    toast("$it \n selected.")
+                when {
+                    isSelected -> {
+                        itemViewModel.getItem(it.id, isSelected)
+                        toast("$it \n selected.")
+                        isSelected = false
+                    }
+                    it.id == itemViewModel.selectedItem.value?.id -> {
+                        itemViewModel.getItem(it.id, isSelected)
+                        toast("$it \n unselected.")
+                        isSelected = true
+                    }
+                    else -> {
+                        isSelected = true
+                        itemViewModel.getItem(it.id, isSelected)
+                        toast("$it \n selected.")
+                    }
                 }
             }
         }
