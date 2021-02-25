@@ -3,6 +3,8 @@ package com.example.shipmentsystem.item
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shipmentsystem.databinding.ItemViewBinding
 
@@ -11,6 +13,7 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
     private val viewList = mutableListOf<MyHolder>()
     var itemClickListener: (Item) -> Unit = {}
     lateinit var itemVM: ItemViewModel
+    lateinit var lifecycleOwner: LifecycleOwner
     private val selectedColor = "#F57C00"
     private val unSelectedColor = "#FFAB91"
 
@@ -39,13 +42,13 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
 //                myHolder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
 //                myHolder.clickedPosition = RecyclerView.NO_POSITION
 //            }
-            if (itemVM.selectedItem.value != null) {
-                myHolder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
-                myHolder.clickedPosition = myHolder.adapterPosition
-            } else {
-                myHolder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
-                myHolder.clickedPosition = RecyclerView.NO_POSITION
-            }
+//            if (itemVM.selectedItem.value != null) {
+//                myHolder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
+//                myHolder.clickedPosition = myHolder.adapterPosition
+//            } else {
+//                myHolder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
+//                myHolder.clickedPosition = RecyclerView.NO_POSITION
+//            }
         }
         return myHolder
     }
@@ -68,10 +71,18 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
 //                holder.clickedPosition = RecyclerView.NO_POSITION
 //            }
 //        }
-        if (holder.clickedPosition == position)
-            holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
-        else
-            holder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
+//        if (holder.clickedPosition == position)
+//            holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
+//        else
+//            holder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
+        itemVM.selectedItem.observe(lifecycleOwner, Observer {
+            if(currentItem.id == itemVM.selectedItem.value?.id){
+                holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
+            }else{
+                holder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
+            }
+        })
+
 
     }
 
@@ -84,7 +95,11 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         this.notifyDataSetChanged()
     }
 
-    fun receiveItemVM(vm: ItemViewModel) {
+    fun getItemVM(vm: ItemViewModel) {
         itemVM = vm
+    }
+
+    fun getViewLifecycleOwner(owner: LifecycleOwner){
+        lifecycleOwner = owner
     }
 }

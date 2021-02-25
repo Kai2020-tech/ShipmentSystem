@@ -2,7 +2,6 @@ package com.example.shipmentsystem.item
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Message
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
@@ -40,7 +39,8 @@ class ItemFragment : Fragment() {
             }
         }
         //pass VM Object to RecyclerView Adapter
-        itemRvAdapter.receiveItemVM(itemViewModel)
+        itemRvAdapter.getItemVM(itemViewModel)
+        itemRvAdapter.getViewLifecycleOwner(viewLifecycleOwner)
 
         itemViewModel.selectedItem.observe(viewLifecycleOwner, { selectedItem ->
             selectedItem?.let {
