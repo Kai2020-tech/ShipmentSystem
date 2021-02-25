@@ -45,8 +45,9 @@ class ItemFragment : Fragment() {
                     toast("$it \n unselected.")
                     isSelected = true
                 } else {
-                    itemViewModel.getItem(it.id, isSelected);
-                    isSelected = false
+                    isSelected = true
+                    itemViewModel.getItem(it.id, isSelected)
+                    toast("$it \n selected.")
                 }
             }
         }
