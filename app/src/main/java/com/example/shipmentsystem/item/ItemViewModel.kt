@@ -11,6 +11,8 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
     private var itemDb: ItemDatabase = ItemDatabase.getInstance(application)
     var selectedItem = MutableLiveData<Item>()
     val itemList = MutableLiveData<List<Item>>()
+    var isSelected = true
+    private val app = application
 
     init {
         Log.i("GameViewModel", "GameViewModel created! $this")
@@ -50,6 +52,32 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
         itemDb.itemDao.clear()
         selectedItem.value = null
         getAllItem()
+    }
+
+    fun selectItem(item: Item){
+        when {
+            isSelected -> {
+                getItem(item.id, isSelected)
+                toast("${item.name} \n selected.")
+                isSelected = false
+            }
+            item.id == selectedItem.value?.id -> {
+                getItem(item.id, isSelected)
+                toast("${item.name} \n unselected.")
+                isSelected = true
+            }
+            else -> {
+                isSelected = true
+                getItem(item.id, isSelected)
+                toast("${item.name} \n selected.")
+                isSelected = false
+            }
+        }
+    }
+
+    private fun toast(message: String) {
+        Toast.makeText(app, message, Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun onCleared() {

@@ -33,27 +33,10 @@ class ItemFragment : Fragment() {
             ViewModelProvider(this, ItemViewModelFactory(app)).get(ItemViewModel::class.java)
 
         itemRvAdapter = RvItemAdapter()
-        var isSelected = true
+
         itemBinding.rvItem.adapter = itemRvAdapter.apply {
             itemClickListener = {
-                when {
-                    isSelected -> {
-                        itemViewModel.getItem(it.id, isSelected)
-                        toast("${it.name} \n selected.")
-                        isSelected = false
-                    }
-                    it.id == itemViewModel.selectedItem.value?.id -> {
-                        itemViewModel.getItem(it.id, isSelected)
-                        toast("${it.name} \n unselected.")
-                        isSelected = true
-                    }
-                    else -> {
-                        isSelected = true
-                        itemViewModel.getItem(it.id, isSelected)
-                        toast("${it.name} \n selected.")
-                        isSelected = false
-                    }
-                }
+                itemViewModel.selectItem(it)
             }
         }
         //pass VM Object to RecyclerView Adapter
