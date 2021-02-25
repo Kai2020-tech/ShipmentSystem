@@ -2,6 +2,7 @@ package com.example.shipmentsystem.item
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -37,10 +38,14 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
 
     fun update(item: Item) {
         itemDb.itemDao.update(item)
+        getAllItem()
+        selectedItem.value = null
     }
 
-    fun clear() {
+    fun dbClear() {
         itemDb.itemDao.clear()
+        selectedItem.value = null
+        getAllItem()
     }
 
     override fun onCleared() {
