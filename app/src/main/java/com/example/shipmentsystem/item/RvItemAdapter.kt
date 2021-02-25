@@ -1,5 +1,6 @@
 package com.example.shipmentsystem.item
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -53,28 +54,18 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         return myHolder
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val currentItem = innerItemList[position]
         holder.id.text = currentItem.id.toString()
         holder.name.text = currentItem.name
-        holder.price.text = "$ " + currentItem.price.toString()
+        holder.price.text = "$ ${currentItem.price}"
 
-//        holder.itemView.setOnClickListener {
-//            itemClickListener.invoke(currentItem)
-//            if (holder.clickedPosition != position) {
-//                //when item clicked, change background color
-//                holder.itemView.setBackgroundColor(Color.parseColor(itemSelectedColor))
-//                holder.clickedPosition = position
-//            }else{
-//                //the same item clicked again, set background color to default
-//                holder.itemView.setBackgroundColor(Color.parseColor(itemDefaultColor))
-//                holder.clickedPosition = RecyclerView.NO_POSITION
-//            }
-//        }
 //        if (holder.clickedPosition == position)
 //            holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
 //        else
 //            holder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
+
         itemVM.selectedItem.observe(lifecycleOwner, Observer {
             if(currentItem.id == itemVM.selectedItem.value?.id){
                 holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
