@@ -26,8 +26,12 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun get(itemSelectedId: Int): Item? = itemDb.itemDao.get(itemSelectedId)
-    fun getItem(itemSelectedId: Int) {
-        selectedItem.value = itemDb.itemDao.get(itemSelectedId)
+    fun getItem(itemSelectedId: Int, isSeleted: Boolean) {
+        if (isSeleted) {
+            selectedItem.value = itemDb.itemDao.get(itemSelectedId)
+        } else {
+            selectedItem.value = null
+        }
     }
 
     fun deleteItem(itemSelectedId: Int) {

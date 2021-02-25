@@ -10,15 +10,15 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
     private val innerItemList = mutableListOf<Item>()
     private val viewList = mutableListOf<MyHolder>()
     var itemClickListener: (Item) -> Unit = {}
-    private val itemSelectedColor = "#F57C00"
-    private val itemDefaultColor = "#FFAB91"
+    lateinit var itemVM: ItemViewModel
+    private val selectedColor = "#F57C00"
+    private val unSelectedColor = "#FFAB91"
 
     inner class MyHolder(binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
         var name = binding.tvItemName
         var price = binding.tvItemPrice
         var id = binding.tvItemId
         var clickedPosition = RecyclerView.NO_POSITION
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
@@ -30,13 +30,20 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         )
         myHolder.itemView.setOnClickListener {
             itemClickListener.invoke(innerItemList[myHolder.adapterPosition])
-            if (myHolder.clickedPosition != myHolder.adapterPosition) {
-                //when item clicked, change background color
-                myHolder.itemView.setBackgroundColor(Color.parseColor(itemSelectedColor))
+//            if (myHolder.clickedPosition != myHolder.adapterPosition) {
+//                //when item clicked, change background color
+//                myHolder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
+//                myHolder.clickedPosition = myHolder.adapterPosition
+//            } else {
+//                //the same item clicked again, set background color to default
+//                myHolder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
+//                myHolder.clickedPosition = RecyclerView.NO_POSITION
+//            }
+            if (itemVM.selectedItem.value != null) {
+                myHolder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
                 myHolder.clickedPosition = myHolder.adapterPosition
-            }else{
-                //the same item clicked again, set background color to default
-                myHolder.itemView.setBackgroundColor(Color.parseColor(itemDefaultColor))
+            } else {
+                myHolder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
                 myHolder.clickedPosition = RecyclerView.NO_POSITION
             }
         }
@@ -62,9 +69,9 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
 //            }
 //        }
         if (holder.clickedPosition == position)
-            holder.itemView.setBackgroundColor(Color.parseColor(itemSelectedColor))
+            holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
         else
-            holder.itemView.setBackgroundColor(Color.parseColor(itemDefaultColor))
+            holder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
 
     }
 
@@ -75,5 +82,9 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         innerItemList.clear()
         innerItemList.addAll(updateList)
         this.notifyDataSetChanged()
+    }
+
+    fun receiveItemVM(vm: ItemViewModel) {
+        itemVM = vm
     }
 }
