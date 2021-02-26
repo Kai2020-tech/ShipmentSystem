@@ -39,8 +39,7 @@ class ItemFragment : Fragment() {
             }
         }
         //pass VM Object to RecyclerView Adapter
-        itemRvAdapter.getItemVM(itemViewModel)
-        itemRvAdapter.getViewLifecycleOwner(viewLifecycleOwner)
+        itemRvAdapter.getVM(itemViewModel,viewLifecycleOwner)
 
         itemViewModel.selectedItem.observe(viewLifecycleOwner, { selectedItem ->
             selectedItem?.let {
@@ -52,10 +51,6 @@ class ItemFragment : Fragment() {
         itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
 
         itemViewModel.getAllItem()
-
-        itemViewModel.itemList.observe(viewLifecycleOwner, {
-            itemRvAdapter.update(it)
-        })
 
         setHasOptionsMenu(true)
 
@@ -100,7 +95,7 @@ class ItemFragment : Fragment() {
             }
         }
 
-        /** query */
+        /** item query */
         itemBinding.btnQuery.setOnClickListener {
             val queryList = itemViewModel.itemList.value
             val resultList = mutableListOf<Item>()
