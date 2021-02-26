@@ -97,15 +97,8 @@ class ItemFragment : Fragment() {
 
         /** item query */
         itemBinding.btnQuery.setOnClickListener {
-            val queryList = itemViewModel.itemList.value
-            val resultList = mutableListOf<Item>()
-            queryList?.forEach {
-                if (it.name.contains(itemBinding.edItemName.text.toString())) {
-                    resultList.add(it)
-                }
-            }
-
-            itemRvAdapter.update(resultList)
+            val name = itemBinding.edItemName.text.toString()
+            itemRvAdapter.update(itemViewModel.query(name))
 
             hideKeyboard(itemBinding.textView)
         }

@@ -26,7 +26,7 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
         getAllItem()
     }
 
-//    fun get(itemSelectedId: Int): Item? = itemDb.itemDao.get(itemSelectedId)
+    //    fun get(itemSelectedId: Int): Item? = itemDb.itemDao.get(itemSelectedId)
     fun getItem(itemSelectedId: Int, isSelected: Boolean) {
         if (isSelected) {
             selectedItem.value = itemDb.itemDao.get(itemSelectedId)
@@ -53,7 +53,7 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
         getAllItem()
     }
 
-    fun selectItem(item: Item){
+    fun selectItem(item: Item) {
         when {
             isSelected -> {
                 getItem(item.id, isSelected)
@@ -66,11 +66,30 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
                 isSelected = true
             }
             else -> {
-                isSelected = true
-                getItem(item.id, isSelected)
+                getItem(item.id, true)
                 toast("${item.name} \n selected.")
                 isSelected = false
             }
+        }
+    }
+
+    fun query(name: String): List<Item> {
+        val resultList = mutableListOf<Item>()
+        if (name.isNotEmpty()) {
+            itemList.value?.forEach { item ->
+                if (item.name.contains(name)) {
+                    resultList.add(item)
+                }
+            }
+            return if (resultList.isEmpty()) {
+                toast("not found $name")
+                itemList.value!!
+            } else {
+                resultList
+            }
+        } else {
+            toast("Please enter a name")
+            return itemList.value!!
         }
     }
 

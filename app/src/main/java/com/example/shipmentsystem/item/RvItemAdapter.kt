@@ -21,7 +21,6 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         var name = binding.tvItemName
         var price = binding.tvItemPrice
         var id = binding.tvItemId
-//        var clickedPosition = RecyclerView.NO_POSITION
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
@@ -33,15 +32,6 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         )
         myHolder.itemView.setOnClickListener {
             itemClickListener.invoke(innerItemList[myHolder.adapterPosition])
-/*            if (myHolder.clickedPosition != myHolder.adapterPosition) {
-                //when item clicked, change background color
-                myHolder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
-                myHolder.clickedPosition = myHolder.adapterPosition
-            } else {
-                //the same item clicked again, set background color to default
-                myHolder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
-                myHolder.clickedPosition = RecyclerView.NO_POSITION
-            }*/
         }
         return myHolder
     }
@@ -52,11 +42,6 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         holder.id.text = currentItem.id.toString()
         holder.name.text = currentItem.name
         holder.price.text = "$ ${currentItem.price}"
-
-//        if (holder.clickedPosition == position)
-//            holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
-//        else
-//            holder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
 
         itemVM.selectedItem.observe(lifecycleOwner, Observer {
             if(currentItem.id == itemVM.selectedItem.value?.id){
