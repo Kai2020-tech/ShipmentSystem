@@ -47,6 +47,8 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         setSelectedItemBackground(currentItem, holder)
     }
 
+    override fun getItemCount(): Int = innerItemList.size
+
     private fun setSelectedItemBackground(currentItem: Item, holder: MyHolder) {
         itemVM.selectedItem.observe(lifecycleOwner, Observer {
             if (currentItem.id == itemVM.selectedItem.value?.id) {
@@ -57,7 +59,11 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         })
     }
 
-    override fun getItemCount(): Int = innerItemList.size
+    private fun observeItemList() {
+        itemVM.itemList.observe(lifecycleOwner, Observer {
+            update(it)
+        })
+    }
 
     fun update(updateList: List<Item>) {
         innerItemList.clear()
@@ -69,11 +75,5 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         itemVM = vm
         lifecycleOwner = owner
         observeItemList()
-    }
-
-    private fun observeItemList() {
-        itemVM.itemList.observe(lifecycleOwner, Observer {
-            update(it)
-        })
     }
 }
