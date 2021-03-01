@@ -33,6 +33,7 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         myHolder.itemView.setOnClickListener {
             itemClickListener.invoke(innerItemList[myHolder.adapterPosition])
         }
+
         return myHolder
     }
 
@@ -43,10 +44,14 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         holder.name.text = currentItem.name
         holder.price.text = "$ ${currentItem.price}"
 
+        setSelectedItemBackground(currentItem, holder)
+    }
+
+    private fun setSelectedItemBackground(currentItem: Item, holder: MyHolder) {
         itemVM.selectedItem.observe(lifecycleOwner, Observer {
-            if(currentItem.id == itemVM.selectedItem.value?.id){
+            if (currentItem.id == itemVM.selectedItem.value?.id) {
                 holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
-            }else{
+            } else {
                 holder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
             }
         })
@@ -63,6 +68,10 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
     fun getVM(vm: ItemViewModel, owner: LifecycleOwner) {
         itemVM = vm
         lifecycleOwner = owner
+        observeItemList()
+    }
+
+    private fun observeItemList() {
         itemVM.itemList.observe(lifecycleOwner, Observer {
             update(it)
         })

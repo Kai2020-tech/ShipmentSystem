@@ -27,36 +27,61 @@ class ItemFragment : Fragment() {
         // Inflate the layout for this fragment
         itemBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_item, container, false)
 
-        val app = requireNotNull(activity).application
-        itemViewModel =
-            ViewModelProvider(this, ItemViewModelFactory(app)).get(ItemViewModel::class.java)
+        setItemViewModel()
 
-        itemViewModel.getAllItem()
+        setItemRecyclerView()
 
-        itemRvAdapter = RvItemAdapter()
-
-        itemBinding.rvItem.adapter = itemRvAdapter.apply {
-            itemClickListener = {
-                itemViewModel.selectItem(it)
-            }
-        }
-        itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
-
-        //pass VM Object to RecyclerView Adapter
-        itemRvAdapter.getVM(itemViewModel, viewLifecycleOwner)
-
-        //selectedItem observe
-        itemViewModel.selectedItem.observe(viewLifecycleOwner, { selectedItem ->
-            selectedItem?.let {
-                itemBinding.edItemName.setText(selectedItem.name)
-                itemBinding.edItemPrice.setText(selectedItem.price.toString())
-            }
-                ?: clearEditText()
-        })
+        setEditTextContent()
 
         setHasOptionsMenu(true)
 
-        /** item create */
+        createItem()
+
+        deleteItem()
+
+        updateItem()
+
+        queryItem()
+
+        return itemBinding.root
+    }
+
+    private fun queryItem() {
+        itemBinding.btnQuery.setOnClickListener {
+            val name = itemBinding.edItemName.text.toString()
+            itemRvAdapter.update(itemViewModel.query(name))
+
+            hideKeyboard(itemBinding.textView)
+        }
+    }
+
+    private fun updateItem() {
+        itemBinding.btnUpdate.setOnClickListener {
+            val selectedItem = itemViewModel.selectedItem.value
+            selectedItem?.let {
+                it.name = itemBinding.edItemName.text.toString()
+                it.price = itemBinding.edItemPrice.text.toString().toInt()
+                itemViewModel.update(it)
+                toast("${it.name} updated!")
+            } ?: let {
+                toast("please select an item")
+            }
+        }
+    }
+
+    private fun deleteItem() {
+        itemBinding.btnDelete.setOnClickListener {
+            val selectedItem = itemViewModel.selectedItem.value
+            selectedItem?.let {
+                itemViewModel.deleteItem(it.id)
+                toast("${it.name} deleted!")
+            } ?: let {
+                toast("please select an item")
+            }
+        }
+    }
+
+    private fun createItem() {
         itemBinding.btnCreate.setOnClickListener {
             val name = if (itemBinding.edItemName.text.isNotEmpty()) {
                 itemBinding.edItemName.text.toString()
@@ -71,40 +96,36 @@ class ItemFragment : Fragment() {
             itemViewModel.createItem(name, price)
             clearEditText()
         }
+    }
 
-        /** item delete */
-        itemBinding.btnDelete.setOnClickListener {
-            val selectedItem = itemViewModel.selectedItem.value
-            selectedItem?.let {
-                itemViewModel.deleteItem(it.id)
-                toast("${it.name} deleted!")
-            } ?: let {
-                toast("please select an item")
+    private fun setItemViewModel() {
+        val app = requireNotNull(activity).application
+        itemViewModel =
+            ViewModelProvider(this, ItemViewModelFactory(app)).get(ItemViewModel::class.java)
+
+        itemViewModel.getAllItem()
+    }
+
+    private fun setItemRecyclerView() {
+        itemRvAdapter = RvItemAdapter()
+        itemBinding.rvItem.adapter = itemRvAdapter.apply {
+            itemClickListener = {
+                itemViewModel.selectItem(it)
             }
         }
+        itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
+        //pass VM Object to RecyclerView Adapter
+        itemRvAdapter.getVM(itemViewModel, viewLifecycleOwner)
+    }
 
-        /** item update */
-        itemBinding.btnUpdate.setOnClickListener {
-            val selectedItem = itemViewModel.selectedItem.value
+    private fun setEditTextContent() {
+        itemViewModel.selectedItem.observe(viewLifecycleOwner, { selectedItem ->
             selectedItem?.let {
-                it.name = itemBinding.edItemName.text.toString()
-                it.price = itemBinding.edItemPrice.text.toString().toInt()
-                itemViewModel.update(it)
-                toast("${it.name} updated!")
-            } ?: let {
-                toast("please select an item")
+                itemBinding.edItemName.setText(selectedItem.name)
+                itemBinding.edItemPrice.setText(selectedItem.price.toString())
             }
-        }
-
-        /** item query */
-        itemBinding.btnQuery.setOnClickListener {
-            val name = itemBinding.edItemName.text.toString()
-            itemRvAdapter.update(itemViewModel.query(name))
-
-            hideKeyboard(itemBinding.textView)
-        }
-
-        return itemBinding.root
+                ?: clearEditText()
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
