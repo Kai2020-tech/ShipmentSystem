@@ -21,7 +21,8 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
         itemList.value = itemDb.itemDao.getAllItems()
     }
 
-    fun createItem(item: Item) {
+    fun createItem(name: String, price: Int) {
+        val item = Item(name, price)
         itemDb.itemDao.insert(item)
         getAllItem()
     }

@@ -31,6 +31,8 @@ class ItemFragment : Fragment() {
         itemViewModel =
             ViewModelProvider(this, ItemViewModelFactory(app)).get(ItemViewModel::class.java)
 
+        itemViewModel.getAllItem()
+
         itemRvAdapter = RvItemAdapter()
 
         itemBinding.rvItem.adapter = itemRvAdapter.apply {
@@ -38,9 +40,12 @@ class ItemFragment : Fragment() {
                 itemViewModel.selectItem(it)
             }
         }
-        //pass VM Object to RecyclerView Adapter
-        itemRvAdapter.getVM(itemViewModel,viewLifecycleOwner)
+        itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
 
+        //pass VM Object to RecyclerView Adapter
+        itemRvAdapter.getVM(itemViewModel, viewLifecycleOwner)
+
+        //selectedItem observe
         itemViewModel.selectedItem.observe(viewLifecycleOwner, { selectedItem ->
             selectedItem?.let {
                 itemBinding.edItemName.setText(selectedItem.name)
@@ -48,9 +53,6 @@ class ItemFragment : Fragment() {
             }
                 ?: clearEditText()
         })
-        itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
-
-        itemViewModel.getAllItem()
 
         setHasOptionsMenu(true)
 
@@ -66,8 +68,7 @@ class ItemFragment : Fragment() {
             } else {
                 (100..900).random()
             }
-            val item = Item(name, price)
-            itemViewModel.createItem(item)
+            itemViewModel.createItem(name, price)
             clearEditText()
         }
 
