@@ -11,11 +11,9 @@ import com.example.shipmentsystem.databinding.ItemViewBinding
 
 class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
     private val innerItemList = mutableListOf<Item>()
+    private lateinit var itemVM: ItemViewModel
+    private lateinit var lifecycleOwner: LifecycleOwner
     var itemClickListener: (Item) -> Unit = {}
-    lateinit var itemVM: ItemViewModel
-    lateinit var lifecycleOwner: LifecycleOwner
-    private val selectedColor = "#F57C00"
-    private val unSelectedColor = "#FFAB91"
 
     inner class MyHolder(binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
         var name = binding.tvItemName
@@ -50,6 +48,8 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
     override fun getItemCount(): Int = innerItemList.size
 
     private fun setSelectedItemBackground(currentItem: Item, holder: MyHolder) {
+        val selectedColor = "#F57C00"
+        val unSelectedColor = "#FFAB91"
         itemVM.selectedItem.observe(lifecycleOwner, Observer {
             if (currentItem.id == itemVM.selectedItem.value?.id) {
                 holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
