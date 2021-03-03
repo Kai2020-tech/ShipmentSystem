@@ -1,12 +1,17 @@
 package com.example.shipmentsystem.item
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
@@ -44,6 +49,15 @@ class ItemFragment : Fragment() {
         queryItem()
 
         return itemBinding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        itemViewModel.itemList.observe(viewLifecycleOwner, Observer {
+            itemRvAdapter.update(it)
+        })
     }
 
     private fun queryItem() {
@@ -112,10 +126,23 @@ class ItemFragment : Fragment() {
             itemClickListener = {
                 itemViewModel.selectItem(it)
             }
+            onBindListener = { item, myHolder ->
+                setSelectedItemBackground(item, myHolder)
+            }
         }
         itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
-        //pass VM Object to RecyclerView Adapter
-        itemRvAdapter.getVM(itemViewModel, viewLifecycleOwner)
+    }
+
+    private fun setSelectedItemBackground(currentItem: Item, holder: RvItemAdapter.MyHolder) {
+        val selectedColor = "#F57C00"
+        val unSelectedColor = "#FFAB91"
+        itemViewModel.selectedItem.observe(viewLifecycleOwner, Observer {
+            if (currentItem.id == itemViewModel.selectedItem.value?.id) {
+                holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
+            } else {
+                holder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
+            }
+        })
     }
 
     private fun setEditTextContent() {
