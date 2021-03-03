@@ -1,11 +1,8 @@
 package com.example.shipmentsystem.item
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shipmentsystem.databinding.ItemViewBinding
 
@@ -19,8 +16,12 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         var price = binding.tvItemPrice
         var id = binding.tvItemId
 
-        fun changeBackground(item: Item, holder: MyHolder) {
+        fun bind(item: Item, holder: MyHolder) {
             changeBackgroundListener.invoke(item, holder)
+
+            holder.itemView.setOnClickListener {
+                itemClickListener.invoke(innerItemList[adapterPosition])
+            }
         }
     }
 
@@ -31,9 +32,6 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
                 parent, false
             )
         )
-        myHolder.itemView.setOnClickListener {
-            itemClickListener.invoke(innerItemList[myHolder.adapterPosition])
-        }
 
         return myHolder
     }
@@ -44,7 +42,7 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
         holder.id.text = currentItem.id.toString()
         holder.name.text = currentItem.name
         holder.price.text = "$ ${currentItem.price}"
-        holder.changeBackground(currentItem, holder)
+        holder.bind(currentItem, holder)
     }
 
     override fun getItemCount(): Int = innerItemList.size
