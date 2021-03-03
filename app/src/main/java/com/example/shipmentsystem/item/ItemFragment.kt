@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentItemBinding
+import timber.log.Timber
 
 
 class ItemFragment : Fragment() {
