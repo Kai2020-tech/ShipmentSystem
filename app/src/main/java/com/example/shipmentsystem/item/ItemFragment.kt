@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentItemBinding
-import timber.log.Timber
 
 
 class ItemFragment : Fragment() {
@@ -57,6 +56,7 @@ class ItemFragment : Fragment() {
                 (100..900).random()
             }
             itemViewModel.createItem(name, price)
+            toast(getString(R.string.created, name))
             clearEditText()
         }
         /** Delete */
@@ -64,9 +64,9 @@ class ItemFragment : Fragment() {
             val selectedItem = itemViewModel.selectedItem.value
             selectedItem?.let {
                 itemViewModel.deleteItem(it.id)
-                toast("${it.name} deleted!")
+                toast(getString(R.string.deleted, it.name))
             } ?: let {
-                toast("please select an item")
+                toast(getString(R.string.pleaseSelect))
             }
         }
         /** Update */
@@ -76,9 +76,9 @@ class ItemFragment : Fragment() {
                 it.name = itemBinding.edItemName.text.toString()
                 it.price = itemBinding.edItemPrice.text.toString().toInt()
                 itemViewModel.update(it)
-                toast("${it.name} updated!")
+                toast(getString(R.string.updated, it.name))
             } ?: let {
-                toast("please select an item")
+                toast(getString(R.string.pleaseSelect))
             }
         }
         /** Query */
@@ -116,14 +116,14 @@ class ItemFragment : Fragment() {
     }
 
     private fun setSelectedItemBackground(currentItem: Item, holder: RvItemAdapter.MyHolder) {
-        val selectedColor = "#F57C00"
-        val unSelectedColor = "#FFAB91"
+        val selectedColor = getString(R.string.selectedColor)
+        val defaultColor = getString(R.string.defaultColor)
         itemViewModel.selectedItem.observe(this, Observer {
             //do not use "it" in here, cause it might be null
             if (currentItem.id == itemViewModel.selectedItem.value?.id) {
                 holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
             } else {
-                holder.itemView.setBackgroundColor(Color.parseColor(unSelectedColor))
+                holder.itemView.setBackgroundColor(Color.parseColor(defaultColor))
             }
         })
     }
