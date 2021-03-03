@@ -118,6 +118,7 @@ class ItemFragment : Fragment() {
         val selectedColor = "#F57C00"
         val unSelectedColor = "#FFAB91"
         itemViewModel.selectedItem.observe(this, Observer {
+            //do not use "it" in here, cause it might be null
             if (currentItem.id == itemViewModel.selectedItem.value?.id) {
                 holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
             } else {
