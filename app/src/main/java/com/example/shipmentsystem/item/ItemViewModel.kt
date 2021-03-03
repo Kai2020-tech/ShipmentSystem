@@ -10,7 +10,7 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
     private var itemDb: ItemDatabase = ItemDatabase.getInstance(application)
     var selectedItem = MutableLiveData<Item>()
     val itemList = MutableLiveData<List<Item>>()
-    var isSelected = true
+    var onSelected = true
     private val app = application
 
     init {
@@ -56,20 +56,20 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
 
     fun selectItem(item: Item) {
         when {
-            isSelected -> {
-                getItem(item.id, isSelected)
+            onSelected -> {
+                getItem(item.id, onSelected)
                 toast("${item.name} \n selected.")
-                isSelected = false
+                onSelected = false
             }
             item.id == selectedItem.value?.id -> {
-                getItem(item.id, isSelected)
+                getItem(item.id, onSelected)
                 toast("${item.name} \n unselected.")
-                isSelected = true
+                onSelected = true
             }
             else -> {
                 getItem(item.id, true)
                 toast("${item.name} \n selected.")
-                isSelected = false
+                onSelected = false
             }
         }
     }
