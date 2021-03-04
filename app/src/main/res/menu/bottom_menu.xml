@@ -3,13 +3,13 @@
 <item
     android:id="@+id/fragment_orderList"
     android:icon="@drawable/ic_order_list"
-    android:title="訂購清單" />
+    android:title="@string/order_list" />
 <item
     android:id="@+id/fragment_result"
     android:icon="@drawable/ic_result"
-    android:title="銷售清單"/>
+    android:title="@string/result_list"/>
 <item
     android:id="@+id/fragment_item"
     android:icon="@drawable/ic_item"
-    android:title="物品清單" />
+    android:title="@string/item_list" />
 </menu>
