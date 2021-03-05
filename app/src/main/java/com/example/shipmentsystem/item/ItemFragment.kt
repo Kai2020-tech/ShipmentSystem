@@ -101,7 +101,7 @@ class ItemFragment : Fragment() {
     private fun initItemViewModel() {
         val app = requireNotNull(activity).application
         itemViewModel =
-            ViewModelProvider(this, ItemViewModelFactory(app)).get(ItemViewModel::class.java)
+            ViewModelProvider(requireActivity(), ItemViewModelFactory(app)).get(ItemViewModel::class.java)
 
         itemViewModel.getAllItem()
     }
@@ -118,7 +118,7 @@ class ItemFragment : Fragment() {
             }
         }
         itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
-        itemViewModel.itemList.observe(this, Observer {
+        itemViewModel.itemList.observe(viewLifecycleOwner, Observer {
             itemRvAdapter.update(it)
         })
     }
@@ -126,7 +126,7 @@ class ItemFragment : Fragment() {
     private fun setSelectedItemBackground(currentItem: Item, holder: RvItemAdapter.MyHolder) {
         val selectedColor = getString(R.string.selectedColor)
         val defaultColor = getString(R.string.defaultColor)
-        itemViewModel.selectedItem.observe(this, Observer {
+        itemViewModel.selectedItem.observe(viewLifecycleOwner, Observer {
             //do not use "it" in here, cause it might be null
             if (currentItem.id == itemViewModel.selectedItem.value?.id) {
                 holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))

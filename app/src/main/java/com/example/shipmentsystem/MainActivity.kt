@@ -2,6 +2,7 @@ package com.example.shipmentsystem
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,13 +10,21 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.shipmentsystem.item.ItemFragment
+import com.example.shipmentsystem.item.ItemViewModel
+import com.example.shipmentsystem.item.ItemViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var itemViewModel: ItemViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_Navigation)
+
+        val app = requireNotNull(this).application
+        itemViewModel =
+            ViewModelProvider(this, ItemViewModelFactory(app)).get(ItemViewModel::class.java)
 
 //        if (savedInstanceState == null) {  //判斷前一fragment是否由系統自動recreate
 //            val itemFragment = ItemFragment()
