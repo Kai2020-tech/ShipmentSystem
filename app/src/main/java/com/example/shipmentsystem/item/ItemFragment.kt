@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentItemBinding
+import timber.log.Timber
 
 
 class ItemFragment : Fragment() {
@@ -29,6 +30,8 @@ class ItemFragment : Fragment() {
         // Inflate the layout for this fragment
         itemBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_item, container, false)
 
+        Timber.d("$this")
+
         initItemViewModel()
 
         initItemRecyclerView()
@@ -40,6 +43,11 @@ class ItemFragment : Fragment() {
         crud()
 
         return itemBinding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.d("$this destroyed.")
     }
 
     private fun crud() {

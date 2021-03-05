@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <item
-    android:id="@+id/fragment_orderList"
+    android:id="@+id/orderListFragment"
     android:icon="@drawable/ic_order_list"
     android:title="@string/order_list" />
 <item
-    android:id="@+id/fragment_result"
+    android:id="@+id/resultFragment"
     android:icon="@drawable/ic_result"
     android:title="@string/result_list"/>
 <item
-    android:id="@+id/fragment_item"
+    android:id="@+id/itemFragment"
     android:icon="@drawable/ic_item"
     android:title="@string/item_list" />
 </menu>
