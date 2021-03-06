@@ -3,7 +3,7 @@ package com.example.shipmentsystem
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -20,11 +20,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_Navigation)
 
-        val app = requireNotNull(this).application
-        itemViewModel =
-            ViewModelProvider(this, ItemViewModelFactory(app)).get(ItemViewModel::class.java)
+        createItemVm()
 
 //        if (savedInstanceState == null) {  //判斷前一fragment是否由系統自動recreate
 //            val itemFragment = ItemFragment()
@@ -35,19 +32,37 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
+        val navController = getNavController()
+
+        setupBottomNav(navController)
+
+        setupActionBar(navController)
+    }
+
+    private fun setupActionBar(navController: NavController) {
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.orderListFragment,
+                R.id.itemFragment
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }//setup ActionBar fragment's label with nav_graph
+
+    private fun setupBottomNav(navController: NavController) {
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_Navigation)
+        bottomNav.setupWithNavController(navController)
+    }
+
+    private fun getNavController(): NavController {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-//        val navController = findNavController(R.id.nav_host_fragment)
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.orderListFragment,
-//                R.id.fragment_item
-//
-//            )
-//        )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-        bottomNav.setupWithNavController(navController)
-//        NavigationUI.setupWithNavController(bottomNav,navController)
+        return navHostFragment.navController
+    }
+
+    private fun createItemVm() {
+        val app = requireNotNull(this).application
+        itemViewModel =
+            ViewModelProvider(this, ItemViewModelFactory(app)).get(ItemViewModel::class.java)
     }
 }

@@ -7,10 +7,10 @@
     <fragment
         android:id="@+id/orderListFragment"
         android:name="com.example.shipmentsystem.order.OrderListFragment"
-        android:label="fragment_order_list"
-        tools:layout="@layout/fragment_order_list" />
+        android:label="@string/order_list"
+         />
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.example.shipmentsystem.item.ItemFragment"
-        android:label="ItemFragment" />
+        android:label="@string/item_list" />
 </navigation>
