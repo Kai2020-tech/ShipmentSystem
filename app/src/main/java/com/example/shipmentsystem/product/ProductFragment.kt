@@ -7,7 +7,7 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
+//import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +18,8 @@ import timber.log.Timber
 
 
 class ProductFragment : Fragment() {
-    private lateinit var productBinding: FragmentProductBinding
+    private var productBinding: FragmentProductBinding? = null
+    private val binding get() = productBinding!!
 
     private lateinit var productRvAdapter: RvItemAdapter
 
@@ -27,9 +28,9 @@ class ProductFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
-        productBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
+        productBinding = FragmentProductBinding.inflate(inflater, container, false)
 
         Timber.d("$this")
 
@@ -43,7 +44,8 @@ class ProductFragment : Fragment() {
 
         crud()
 
-        return productBinding.root
+        return binding.root
+
     }
 
     override fun onDestroy() {
@@ -51,16 +53,21 @@ class ProductFragment : Fragment() {
         Timber.d("$this destroyed.")
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        productBinding = null
+    }
+
     private fun crud() {
         /** Create */
-        productBinding.btnCreate.setOnClickListener {
-            val name = if (productBinding.edItemName.text.isNotEmpty()) {
-                productBinding.edItemName.text.toString()
+        binding.btnCreate.setOnClickListener {
+            val name = if (binding.edItemName.text.isNotEmpty()) {
+                binding.edItemName.text.toString()
             } else {//a-z 隨機4-7個字母做一字串
                 ('a'..'z').map { it }.shuffled().subList(0, (4..7).random()).joinToString("")
             }
-            val price = if (productBinding.edItemPrice.text.isNotEmpty()) {
-                productBinding.edItemPrice.text.toString().toInt()
+            val price = if (binding.edItemPrice.text.isNotEmpty()) {
+                binding.edItemPrice.text.toString().toInt()
             } else {
                 (100..900).random()
             }
@@ -69,7 +76,7 @@ class ProductFragment : Fragment() {
             clearEditText()
         }
         /** Delete */
-        productBinding.btnDelete.setOnClickListener {
+        binding.btnDelete.setOnClickListener {
             val selectedItem = productViewModel.selectedProduct.value
             selectedItem?.let {
                 productViewModel.deleteProduct(it.id)
@@ -79,11 +86,11 @@ class ProductFragment : Fragment() {
             }
         }
         /** Update */
-        productBinding.btnUpdate.setOnClickListener {
+        binding.btnUpdate.setOnClickListener {
             val selectedItem = productViewModel.selectedProduct.value
             selectedItem?.let {
-                it.name = productBinding.edItemName.text.toString()
-                it.price = productBinding.edItemPrice.text.toString().toInt()
+                it.name = binding.edItemName.text.toString()
+                it.price = binding.edItemPrice.text.toString().toInt()
                 productViewModel.update(it)
                 toast(getString(R.string.updated, it.name))
             } ?: let {
@@ -91,25 +98,28 @@ class ProductFragment : Fragment() {
             }
         }
         /** Query */
-        productBinding.btnQuery.setOnClickListener {
-            val name = productBinding.edItemName.text.toString()
+        binding.btnQuery.setOnClickListener {
+            val name = binding.edItemName.text.toString()
             productRvAdapter.update(productViewModel.query(name))
 
-            hideKeyboard(productBinding.textView)
+            hideKeyboard(binding.textView)
         }
     }
 
     private fun initItemViewModel() {
         val app = requireNotNull(activity).application
         productViewModel =
-            ViewModelProvider(requireActivity(), ItemViewModelFactory(app)).get(ProductViewModel::class.java)
+            ViewModelProvider(
+                requireActivity(),
+                ItemViewModelFactory(app)
+            ).get(ProductViewModel::class.java)
 
         productViewModel.getAllProduct()
     }
 
     private fun initItemRecyclerView() {
         productRvAdapter = RvItemAdapter()
-        productBinding.rvProduct.adapter = productRvAdapter.apply {
+        binding.rvProduct.adapter = productRvAdapter.apply {
             itemClickListener = {
                 productViewModel.selectProduct(it)
             }
@@ -118,7 +128,7 @@ class ProductFragment : Fragment() {
                 setSelectedItemBackground(currentItem, holder)
             }
         }
-        productBinding.rvProduct.layoutManager = LinearLayoutManager(requireActivity())
+        binding.rvProduct.layoutManager = LinearLayoutManager(requireActivity())
         productViewModel.productList.observe(viewLifecycleOwner, Observer {
             productRvAdapter.update(it)
         })
@@ -140,8 +150,8 @@ class ProductFragment : Fragment() {
     private fun setEditTextContent() {
         productViewModel.selectedProduct.observe(viewLifecycleOwner, { selectedItem ->
             selectedItem?.let {
-                productBinding.edItemName.setText(selectedItem.name)
-                productBinding.edItemPrice.setText(selectedItem.price.toString())
+                binding.edItemName.setText(selectedItem.name)
+                binding.edItemPrice.setText(selectedItem.price.toString())
             }
                 ?: clearEditText()
         })
@@ -164,8 +174,8 @@ class ProductFragment : Fragment() {
     }
 
     private fun clearEditText() {
-        productBinding.edItemName.text.clear()
-        productBinding.edItemPrice.text.clear()
+        binding.edItemName.text.clear()
+        binding.edItemPrice.text.clear()
     }
 
     private fun toast(message: String) {
