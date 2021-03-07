@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.shipmentsystem.item.ItemFragment
 import com.example.shipmentsystem.item.ItemViewModel
 import com.example.shipmentsystem.item.ItemViewModelFactory
+import com.example.shipmentsystem.order.OrderListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -52,6 +53,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNav(navController: NavController) {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_Navigation)
         bottomNav.setupWithNavController(navController)
+        // if current fragment == destination , do not create the same fragment
+        bottomNav.setOnNavigationItemReselectedListener {}
     }
 
     private fun getNavController(): NavController {
