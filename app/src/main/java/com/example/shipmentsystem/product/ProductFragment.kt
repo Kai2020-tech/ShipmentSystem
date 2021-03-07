@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 //import androidx.databinding.DataBindingUtil
@@ -25,12 +26,17 @@ class ProductFragment : Fragment() {
 
     private lateinit var productViewModel: ProductViewModel
 
+    private  lateinit var productName:EditText
+    private  lateinit var productPrice:EditText
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         productBinding = FragmentProductBinding.inflate(inflater, container, false)
+        productName = binding.edProductName
+        productPrice = binding.edProductPrice
 
         Timber.d("$this")
 
@@ -61,13 +67,13 @@ class ProductFragment : Fragment() {
     private fun crud() {
         /** Create */
         binding.btnCreate.setOnClickListener {
-            val name = if (binding.edItemName.text.isNotEmpty()) {
-                binding.edItemName.text.toString()
+            val name = if (productName.text.isNotEmpty()) {
+                productName.text.toString()
             } else {//a-z 隨機4-7個字母做一字串
                 ('a'..'z').map { it }.shuffled().subList(0, (4..7).random()).joinToString("")
             }
-            val price = if (binding.edItemPrice.text.isNotEmpty()) {
-                binding.edItemPrice.text.toString().toInt()
+            val price = if (productPrice.text.isNotEmpty()) {
+                productPrice.text.toString().toInt()
             } else {
                 (100..900).random()
             }
@@ -89,8 +95,8 @@ class ProductFragment : Fragment() {
         binding.btnUpdate.setOnClickListener {
             val selectedItem = productViewModel.selectedProduct.value
             selectedItem?.let {
-                it.name = binding.edItemName.text.toString()
-                it.price = binding.edItemPrice.text.toString().toInt()
+                it.name = productName.text.toString()
+                it.price = productPrice.text.toString().toInt()
                 productViewModel.update(it)
                 toast(getString(R.string.updated, it.name))
             } ?: let {
@@ -99,7 +105,7 @@ class ProductFragment : Fragment() {
         }
         /** Query */
         binding.btnQuery.setOnClickListener {
-            val name = binding.edItemName.text.toString()
+            val name = productName.text.toString()
             productRvAdapter.update(productViewModel.query(name))
 
             hideKeyboard(binding.textView)
@@ -150,8 +156,8 @@ class ProductFragment : Fragment() {
     private fun setEditTextContent() {
         productViewModel.selectedProduct.observe(viewLifecycleOwner, { selectedItem ->
             selectedItem?.let {
-                binding.edItemName.setText(selectedItem.name)
-                binding.edItemPrice.setText(selectedItem.price.toString())
+                productName.setText(selectedItem.name)
+                productPrice.setText(selectedItem.price.toString())
             }
                 ?: clearEditText()
         })
@@ -174,8 +180,8 @@ class ProductFragment : Fragment() {
     }
 
     private fun clearEditText() {
-        binding.edItemName.text.clear()
-        binding.edItemPrice.text.clear()
+        productName.text.clear()
+        productPrice.text.clear()
     }
 
     private fun toast(message: String) {
