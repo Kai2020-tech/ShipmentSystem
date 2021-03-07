@@ -1,23 +1,24 @@
-package com.example.shipmentsystem.item
+package com.example.shipmentsystem.product
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shipmentsystem.databinding.ItemViewBinding
+import com.example.shipmentsystem.db.Product
 
 class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
-    private val innerItemList = mutableListOf<Item>()
-    var itemClickListener: (Item) -> Unit = {}
-    var changeBackgroundListener: (Item, MyHolder) -> Unit = { item: Item, myHolder: MyHolder -> }
+    private val innerItemList = mutableListOf<Product>()
+    var itemClickListener: (Product) -> Unit = {}
+    var changeBackgroundListener: (Product, MyHolder) -> Unit = { product: Product, myHolder: MyHolder -> }
 
     inner class MyHolder(binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
         var name = binding.tvItemName
         var price = binding.tvItemPrice
         var id = binding.tvItemId
 
-        fun bind(item: Item, holder: MyHolder) {
-            changeBackgroundListener.invoke(item, holder)
+        fun bind(product: Product, holder: MyHolder) {
+            changeBackgroundListener.invoke(product, holder)
 
             holder.itemView.setOnClickListener {
                 itemClickListener.invoke(innerItemList[adapterPosition])
@@ -47,7 +48,7 @@ class RvItemAdapter : RecyclerView.Adapter<RvItemAdapter.MyHolder>() {
 
     override fun getItemCount(): Int = innerItemList.size
 
-    fun update(updateList: List<Item>) {
+    fun update(updateList: List<Product>) {
         innerItemList.clear()
         innerItemList.addAll(updateList)
         this.notifyDataSetChanged()

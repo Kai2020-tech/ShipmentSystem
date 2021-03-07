@@ -6,17 +6,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.shipmentsystem.item.ItemFragment
-import com.example.shipmentsystem.item.ItemViewModel
-import com.example.shipmentsystem.item.ItemViewModelFactory
-import com.example.shipmentsystem.order.OrderListFragment
+import com.example.shipmentsystem.product.ProductViewModel
+import com.example.shipmentsystem.product.ItemViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var itemViewModel: ItemViewModel
+    private lateinit var productViewModel: ProductViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun createItemVm() {
         val app = requireNotNull(this).application
-        itemViewModel =
-            ViewModelProvider(this, ItemViewModelFactory(app)).get(ItemViewModel::class.java)
+        productViewModel =
+            ViewModelProvider(this, ItemViewModelFactory(app)).get(ProductViewModel::class.java)
     }
 }

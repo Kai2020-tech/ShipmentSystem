@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:background="#FFF3E0"
         android:id="@+id/fragment_item"
-        tools:context=".item.ItemFragment">
+        tools:context=".product.ProductFragment">
 
         <TextView
             android:id="@+id/textView"
@@ -111,7 +111,7 @@
             app:layout_constraintGuide_begin="162dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_item"
+            android:id="@+id/rv_product"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="1dp"

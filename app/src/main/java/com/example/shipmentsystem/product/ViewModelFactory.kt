@@ -1,4 +1,4 @@
-package com.example.shipmentsystem.item
+package com.example.shipmentsystem.product
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
@@ -8,8 +8,8 @@ class ItemViewModelFactory(val application: Application) :
     ViewModelProvider.AndroidViewModelFactory(application) {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ItemViewModel::class.java)) {
-            return ItemViewModel(application) as T
+        if (modelClass.isAssignableFrom(ProductViewModel::class.java)) {
+            return ProductViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown VewModel class.")
     }

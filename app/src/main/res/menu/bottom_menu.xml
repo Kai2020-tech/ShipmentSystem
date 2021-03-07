@@ -11,5 +11,5 @@
 <item
     android:id="@+id/itemFragment"
     android:icon="@drawable/ic_item"
-    android:title="@string/item_list" />
+    android:title="@string/product_list" />
 </menu>

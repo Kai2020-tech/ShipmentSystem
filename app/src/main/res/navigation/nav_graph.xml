@@ -11,6 +11,6 @@
          />
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.example.shipmentsystem.item.ItemFragment"
-        android:label="@string/item_list" />
+        android:name="com.example.shipmentsystem.product.ProductFragment"
+        android:label="@string/product_list" />
 </navigation>

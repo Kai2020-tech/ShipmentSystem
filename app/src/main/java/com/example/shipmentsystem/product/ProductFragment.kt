@@ -1,4 +1,4 @@
-package com.example.shipmentsystem.item
+package com.example.shipmentsystem.product
 
 import android.content.Context
 import android.graphics.Color
@@ -12,23 +12,24 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
-import com.example.shipmentsystem.databinding.FragmentItemBinding
+import com.example.shipmentsystem.databinding.FragmentProductBinding
+import com.example.shipmentsystem.db.Product
 import timber.log.Timber
 
 
-class ItemFragment : Fragment() {
-    private lateinit var itemBinding: FragmentItemBinding
+class ProductFragment : Fragment() {
+    private lateinit var productBinding: FragmentProductBinding
 
-    private lateinit var itemRvAdapter: RvItemAdapter
+    private lateinit var productRvAdapter: RvItemAdapter
 
-    private lateinit var itemViewModel: ItemViewModel
+    private lateinit var productViewModel: ProductViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        itemBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_item, container, false)
+        productBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
 
         Timber.d("$this")
 
@@ -42,7 +43,7 @@ class ItemFragment : Fragment() {
 
         crud()
 
-        return itemBinding.root
+        return productBinding.root
     }
 
     override fun onDestroy() {
@@ -52,83 +53,83 @@ class ItemFragment : Fragment() {
 
     private fun crud() {
         /** Create */
-        itemBinding.btnCreate.setOnClickListener {
-            val name = if (itemBinding.edItemName.text.isNotEmpty()) {
-                itemBinding.edItemName.text.toString()
+        productBinding.btnCreate.setOnClickListener {
+            val name = if (productBinding.edItemName.text.isNotEmpty()) {
+                productBinding.edItemName.text.toString()
             } else {//a-z 隨機4-7個字母做一字串
                 ('a'..'z').map { it }.shuffled().subList(0, (4..7).random()).joinToString("")
             }
-            val price = if (itemBinding.edItemPrice.text.isNotEmpty()) {
-                itemBinding.edItemPrice.text.toString().toInt()
+            val price = if (productBinding.edItemPrice.text.isNotEmpty()) {
+                productBinding.edItemPrice.text.toString().toInt()
             } else {
                 (100..900).random()
             }
-            itemViewModel.createItem(name, price)
+            productViewModel.createProduct(name, price)
             toast(getString(R.string.created, name))
             clearEditText()
         }
         /** Delete */
-        itemBinding.btnDelete.setOnClickListener {
-            val selectedItem = itemViewModel.selectedItem.value
+        productBinding.btnDelete.setOnClickListener {
+            val selectedItem = productViewModel.selectedProduct.value
             selectedItem?.let {
-                itemViewModel.deleteItem(it.id)
+                productViewModel.deleteProduct(it.id)
                 toast(getString(R.string.deleted, it.name))
             } ?: let {
                 toast(getString(R.string.pleaseSelect))
             }
         }
         /** Update */
-        itemBinding.btnUpdate.setOnClickListener {
-            val selectedItem = itemViewModel.selectedItem.value
+        productBinding.btnUpdate.setOnClickListener {
+            val selectedItem = productViewModel.selectedProduct.value
             selectedItem?.let {
-                it.name = itemBinding.edItemName.text.toString()
-                it.price = itemBinding.edItemPrice.text.toString().toInt()
-                itemViewModel.update(it)
+                it.name = productBinding.edItemName.text.toString()
+                it.price = productBinding.edItemPrice.text.toString().toInt()
+                productViewModel.update(it)
                 toast(getString(R.string.updated, it.name))
             } ?: let {
                 toast(getString(R.string.pleaseSelect))
             }
         }
         /** Query */
-        itemBinding.btnQuery.setOnClickListener {
-            val name = itemBinding.edItemName.text.toString()
-            itemRvAdapter.update(itemViewModel.query(name))
+        productBinding.btnQuery.setOnClickListener {
+            val name = productBinding.edItemName.text.toString()
+            productRvAdapter.update(productViewModel.query(name))
 
-            hideKeyboard(itemBinding.textView)
+            hideKeyboard(productBinding.textView)
         }
     }
 
     private fun initItemViewModel() {
         val app = requireNotNull(activity).application
-        itemViewModel =
-            ViewModelProvider(requireActivity(), ItemViewModelFactory(app)).get(ItemViewModel::class.java)
+        productViewModel =
+            ViewModelProvider(requireActivity(), ItemViewModelFactory(app)).get(ProductViewModel::class.java)
 
-        itemViewModel.getAllItem()
+        productViewModel.getAllProduct()
     }
 
     private fun initItemRecyclerView() {
-        itemRvAdapter = RvItemAdapter()
-        itemBinding.rvItem.adapter = itemRvAdapter.apply {
+        productRvAdapter = RvItemAdapter()
+        productBinding.rvProduct.adapter = productRvAdapter.apply {
             itemClickListener = {
-                itemViewModel.selectItem(it)
+                productViewModel.selectProduct(it)
             }
 
             changeBackgroundListener = { currentItem, holder ->
                 setSelectedItemBackground(currentItem, holder)
             }
         }
-        itemBinding.rvItem.layoutManager = LinearLayoutManager(requireActivity())
-        itemViewModel.itemList.observe(viewLifecycleOwner, Observer {
-            itemRvAdapter.update(it)
+        productBinding.rvProduct.layoutManager = LinearLayoutManager(requireActivity())
+        productViewModel.productList.observe(viewLifecycleOwner, Observer {
+            productRvAdapter.update(it)
         })
     }
 
-    private fun setSelectedItemBackground(currentItem: Item, holder: RvItemAdapter.MyHolder) {
+    private fun setSelectedItemBackground(currentProduct: Product, holder: RvItemAdapter.MyHolder) {
         val selectedColor = getString(R.string.selectedColor)
         val defaultColor = getString(R.string.defaultColor)
-        itemViewModel.selectedItem.observe(viewLifecycleOwner, Observer {
+        productViewModel.selectedProduct.observe(viewLifecycleOwner, Observer {
             //do not use "it" in here, cause it might be null
-            if (currentItem.id == itemViewModel.selectedItem.value?.id) {
+            if (currentProduct.id == productViewModel.selectedProduct.value?.id) {
                 holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
             } else {
                 holder.itemView.setBackgroundColor(Color.parseColor(defaultColor))
@@ -137,10 +138,10 @@ class ItemFragment : Fragment() {
     }
 
     private fun setEditTextContent() {
-        itemViewModel.selectedItem.observe(viewLifecycleOwner, { selectedItem ->
+        productViewModel.selectedProduct.observe(viewLifecycleOwner, { selectedItem ->
             selectedItem?.let {
-                itemBinding.edItemName.setText(selectedItem.name)
-                itemBinding.edItemPrice.setText(selectedItem.price.toString())
+                productBinding.edItemName.setText(selectedItem.name)
+                productBinding.edItemPrice.setText(selectedItem.price.toString())
             }
                 ?: clearEditText()
         })
@@ -154,7 +155,7 @@ class ItemFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_itemListDel -> {
-                itemViewModel.dbClear()
+                productViewModel.dbClear()
                 toast("All items deleted!!")
                 true
             }
@@ -163,8 +164,8 @@ class ItemFragment : Fragment() {
     }
 
     private fun clearEditText() {
-        itemBinding.edItemName.text.clear()
-        itemBinding.edItemPrice.text.clear()
+        productBinding.edItemName.text.clear()
+        productBinding.edItemPrice.text.clear()
     }
 
     private fun toast(message: String) {

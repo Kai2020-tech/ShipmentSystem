@@ -8,7 +8,7 @@
     <string name="deleted">"%1$s deleted!"</string>
     <string name="updated">"%1$s updated!"</string>
     <string name="pleaseSelect">please select an item</string>
-    <string name="item_name">Product:</string>
+    <string name="item_name">Product Name:</string>
     <string name="item_price">Price:</string>
     <string name="item_create">Create</string>
     <string name="item_delete">Delete</string>
@@ -16,5 +16,6 @@
     <string name="item_query">Query</string>
     <string name="order_list">Order List</string>
     <string name="sell_list">Sell List</string>
-    <string name="item_list">Item List</string>
+    <string name="product_list">Product List</string>
+    <string name="delete_all_products">Delete All Products</string>
 </resources>
