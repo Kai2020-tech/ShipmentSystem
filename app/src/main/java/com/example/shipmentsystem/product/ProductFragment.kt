@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.fragment.app.Fragment
 import android.widget.Toast
-//import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,8 +25,8 @@ class ProductFragment : Fragment() {
 
     private lateinit var productViewModel: ProductViewModel
 
-    private  lateinit var productName:EditText
-    private  lateinit var productPrice:EditText
+    private lateinit var productName:EditText
+    private lateinit var productPrice:EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +39,7 @@ class ProductFragment : Fragment() {
 
         Timber.d("$this")
 
-        initItemViewModel()
+        initProductViewModel()
 
         initItemRecyclerView()
 
@@ -112,7 +111,7 @@ class ProductFragment : Fragment() {
         }
     }
 
-    private fun initItemViewModel() {
+    private fun initProductViewModel() {
         val app = requireNotNull(activity).application
         productViewModel =
             ViewModelProvider(

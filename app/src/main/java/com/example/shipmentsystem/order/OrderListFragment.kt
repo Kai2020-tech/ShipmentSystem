@@ -5,56 +5,89 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.shipmentsystem.R
+import com.example.shipmentsystem.databinding.FragmentOrderListBinding
+import com.example.shipmentsystem.product.ItemViewModelFactory
+import com.example.shipmentsystem.product.ProductViewModel
+import timber.log.Timber
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [OrderListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class OrderListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var orderBinding: FragmentOrderListBinding? = null
+    private lateinit var productVM: ProductViewModel
+    private val binding get() = orderBinding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_list, container, false)
+        orderBinding = FragmentOrderListBinding.inflate(inflater, container, false)
+        initProductViewModel()
+
+        val productList = mutableListOf<String>()
+        productVM.productList.observe(viewLifecycleOwner, Observer { it ->
+//            productList.clear()
+            it.forEach { product ->
+                productList.add(product.name)
+            }
+            Timber.d("product $productList")
+            initProductSpinner(productList)
+        })
+
+
+
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OrderListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            OrderListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun initProductSpinner(spinnerList: MutableList<String>) {
+//        val productList = mutableListOf<String>("aaa","bbb","ccc")
+
+//        var spinnerList= listOf<String>()
+
+//        Timber.d(" spinner list $spinnerList")
+        val adapter = ArrayAdapter(
+            requireActivity(),
+            R.layout.spinner_item,
+            spinnerList
+        )
+        Timber.d("spinner $spinnerList")
+//        adapter.setDropDownViewResource(R.layout.spinner_checked_item)
+        binding.spinnerProduct.adapter = adapter
+        binding.spinnerProduct.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
                 }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    Timber.d("clicked")
+                    Toast.makeText(requireActivity(), position.toString(), Toast.LENGTH_SHORT).show()
+                }
+
             }
+
     }
+
+    private fun initProductViewModel() {
+        val app = requireNotNull(activity).application
+        productVM =
+            ViewModelProvider(
+                requireActivity(),
+                ItemViewModelFactory(app)
+            ).get(ProductViewModel::class.java)
+
+        productVM.getAllProduct()
+    }
+
 }

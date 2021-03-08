@@ -16,9 +16,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/customer_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,14 +29,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/customer_order"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/ed_customerName"
+        android:id="@+id/ed_productName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -49,7 +48,7 @@
         app:layout_constraintStart_toEndOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/ed_customerOrder"
+        android:id="@+id/ed_productPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -64,13 +63,13 @@
 
     <Button
         android:id="@+id/btn_create"
-        style="@style/button_style"
         android:text="@string/create"
         app:layout_constraintEnd_toStartOf="@+id/btn_delete"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_customerOrder" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_productPrice"
+        style="@style/button_style" />
 
     <Button
         android:id="@+id/btn_delete"
@@ -107,7 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="162dp" />
+        app:layout_constraintGuide_begin="148dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_product"
@@ -122,5 +121,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         tools:listitem="@layout/item_view" />
+
+    <Spinner
+        android:id="@+id/spinner_product"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/textView1"
+        app:layout_constraintEnd_toStartOf="@+id/ed_productPrice"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView1"
+        app:layout_constraintTop_toTopOf="@+id/textView1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
