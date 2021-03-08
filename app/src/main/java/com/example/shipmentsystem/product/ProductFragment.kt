@@ -39,7 +39,7 @@ class ProductFragment : Fragment() {
 
         Timber.d("$this")
 
-        initItemViewModel()
+        initProductViewModel()
 
         initItemRecyclerView()
 
@@ -111,7 +111,7 @@ class ProductFragment : Fragment() {
         }
     }
 
-    private fun initItemViewModel() {
+    private fun initProductViewModel() {
         val app = requireNotNull(activity).application
         productViewModel =
             ViewModelProvider(

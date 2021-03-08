@@ -18,11 +18,11 @@ data class Product(
 
 @Entity(tableName = "orderList_table")
 data class OrderItem(
-    @ColumnInfo(name = "item_name")
+    @ColumnInfo(name = "customer_name")
     var name: String = "",
 
-    @ColumnInfo(name = "price")
-    var price: Int = 0,
+    @ColumnInfo(name = "order_sum")
+    var orderSum: Int = 0,
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
