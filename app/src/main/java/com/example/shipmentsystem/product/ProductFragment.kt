@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProductBinding
@@ -119,7 +118,7 @@ class ProductFragment : Fragment() {
             }
 
             changeBackgroundListener = { currentItem, holder ->
-                setSelectedItemBackground(currentItem, holder)
+                setSelectedItemColor(currentItem, holder)
             }
         }
         binding.rvProduct.layoutManager = LinearLayoutManager(requireActivity())
@@ -128,14 +127,18 @@ class ProductFragment : Fragment() {
         })
     }
 
-    private fun setSelectedItemBackground(currentProduct: Product, holder: RvItemAdapter.MyHolder) {
+    private fun setSelectedItemColor(currentProduct: Product, holder: RvItemAdapter.MyHolder) {
         val selectedColor = getString(R.string.selectedColor)
         val defaultColor = getString(R.string.defaultColor)
         productViewModel.selectedProduct.observe(viewLifecycleOwner, Observer {
             //do not use "it" in here, cause it might be null
             if (currentProduct.id == productViewModel.selectedProduct.value?.id) {
+                holder.name.setTextColor(Color.BLACK)
+                holder.price.setTextColor(Color.BLACK)
                 holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
             } else {
+                holder.name.setTextColor(Color.WHITE)
+                holder.price.setTextColor(Color.WHITE)
                 holder.itemView.setBackgroundColor(Color.parseColor(defaultColor))
             }
         })
