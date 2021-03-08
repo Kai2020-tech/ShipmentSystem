@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        createItemVm()
+        createProductVm()
 
 //        if (savedInstanceState == null) {  //判斷前一fragment是否由系統自動recreate
 //            val itemFragment = ItemFragment()
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         return navHostFragment.navController
     }
 
-    private fun createItemVm() {
+    private fun createProductVm() {
         val app = requireNotNull(this).application
         productViewModel =
             ViewModelProvider(this, ItemViewModelFactory(app)).get(ProductViewModel::class.java)

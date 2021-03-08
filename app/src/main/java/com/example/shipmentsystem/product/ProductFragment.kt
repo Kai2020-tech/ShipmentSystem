@@ -39,9 +39,9 @@ class ProductFragment : Fragment() {
 
         Timber.d("$this")
 
-        initProductViewModel()
+        getProductVmAndList()
 
-        initItemRecyclerView()
+        initProductRecyclerView()
 
         setEditTextContent()
 
@@ -111,7 +111,7 @@ class ProductFragment : Fragment() {
         }
     }
 
-    private fun initProductViewModel() {
+    private fun getProductVmAndList() {
         val app = requireNotNull(activity).application
         productViewModel =
             ViewModelProvider(
@@ -122,7 +122,7 @@ class ProductFragment : Fragment() {
         productViewModel.getAllProduct()
     }
 
-    private fun initItemRecyclerView() {
+    private fun initProductRecyclerView() {
         productRvAdapter = RvItemAdapter()
         binding.rvProduct.adapter = productRvAdapter.apply {
             itemClickListener = {

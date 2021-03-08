@@ -45,18 +45,18 @@ class OrderListFragment : Fragment() {
         return binding.root
     }
 
-    private fun initProductSpinner(spinnerList: MutableList<String>) {
+    private fun initProductSpinner(list: MutableList<String>) {
 //        val productList = mutableListOf<String>("aaa","bbb","ccc")
 
 //        var spinnerList= listOf<String>()
 
 //        Timber.d(" spinner list $spinnerList")
         val adapter = ArrayAdapter(
-            requireActivity(),
-            R.layout.spinner_item,
-            spinnerList
+            requireActivity(),      //context
+            R.layout.spinner_item,  //spinner text view style
+            list                    //spinner option list
         )
-        Timber.d("spinner $spinnerList")
+        Timber.d("spinner $list")
 //        adapter.setDropDownViewResource(R.layout.spinner_checked_item)
         binding.spinnerProduct.adapter = adapter
         binding.spinnerProduct.onItemSelectedListener =
@@ -72,7 +72,7 @@ class OrderListFragment : Fragment() {
                     id: Long
                 ) {
                     Timber.d("clicked")
-                    Toast.makeText(requireActivity(), position.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), list[position], Toast.LENGTH_SHORT).show()
                 }
 
             }
