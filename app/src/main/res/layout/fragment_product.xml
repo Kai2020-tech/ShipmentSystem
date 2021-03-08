@@ -6,37 +6,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFF3E0"
-        android:id="@+id/fragment_item"
+        android:id="@+id/fragment_product"
         tools:context=".product.ProductFragment">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/item_name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/product_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/item_price"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/product_price"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
-            android:id="@+id/ed_itemName"
+            android:id="@+id/ed_productName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -49,7 +48,7 @@
             app:layout_constraintStart_toEndOf="@+id/textView" />
 
         <EditText
-            android:id="@+id/ed_itemPrice"
+            android:id="@+id/ed_productPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -64,19 +63,19 @@
 
         <Button
             android:id="@+id/btn_create"
-            android:text="@string/item_create"
+            android:text="@string/create"
             app:layout_constraintEnd_toStartOf="@+id/btn_delete"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ed_itemPrice"
+            app:layout_constraintTop_toBottomOf="@+id/ed_productPrice"
             style="@style/button_style" />
 
         <Button
             android:id="@+id/btn_delete"
             style="@style/button_style"
             android:layout_marginStart="8dp"
-            android:text="@string/item_delete"
+            android:text="@string/delete"
             app:layout_constraintBaseline_toBaselineOf="@+id/btn_create"
             app:layout_constraintEnd_toStartOf="@+id/btn_update"
             app:layout_constraintHorizontal_bias="0.5"
@@ -86,7 +85,7 @@
             android:id="@+id/btn_update"
             style="@style/button_style"
             android:layout_marginStart="8dp"
-            android:text="@string/item_update"
+            android:text="@string/update"
             app:layout_constraintBaseline_toBaselineOf="@+id/btn_delete"
             app:layout_constraintEnd_toStartOf="@+id/btn_query"
             app:layout_constraintHorizontal_bias="0.5"
@@ -96,18 +95,18 @@
             android:id="@+id/btn_query"
             style="@style/button_style"
             android:layout_marginStart="8dp"
-            android:text="@string/item_query"
+            android:text="@string/query"
             app:layout_constraintBaseline_toBaselineOf="@+id/btn_update"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btn_update" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="162dp" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="148dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product"
