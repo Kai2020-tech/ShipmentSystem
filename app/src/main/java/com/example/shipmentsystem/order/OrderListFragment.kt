@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentOrderListBinding
+import com.example.shipmentsystem.getProductViewModel
 import com.example.shipmentsystem.product.ItemViewModelFactory
 import com.example.shipmentsystem.product.ProductViewModel
 import timber.log.Timber
@@ -27,30 +28,25 @@ class OrderListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         orderBinding = FragmentOrderListBinding.inflate(inflater, container, false)
-        initProductViewModel()
-
-        val productList = mutableListOf<String>()
-        productVM.productList.observe(viewLifecycleOwner, Observer { it ->
-//            productList.clear()
-            it.forEach { product ->
-                productList.add(product.name)
-            }
-            Timber.d("product $productList")
-            initProductSpinner(productList)
-        })
-
-
-
+        productVM = getProductViewModel()
+        productVM.getAllProduct()
+        getProductListToSpinner()
 
         return binding.root
     }
 
-    private fun initProductSpinner(list: MutableList<String>) {
-//        val productList = mutableListOf<String>("aaa","bbb","ccc")
+    private fun getProductListToSpinner() {
+        val productList = mutableListOf<String>()
+        productVM.productList.observe(viewLifecycleOwner, Observer { it ->
+            it.forEach { product ->
+                productList.add(product.name)
+            }
+            Timber.d("product $productList")
+            setProductSpinner(productList)
+        })
+    }
 
-//        var spinnerList= listOf<String>()
-
-//        Timber.d(" spinner list $spinnerList")
+    private fun setProductSpinner(list: MutableList<String>) {
         val adapter = ArrayAdapter(
             requireActivity(),      //context
             R.layout.spinner_item,  //spinner text view style
@@ -78,16 +74,4 @@ class OrderListFragment : Fragment() {
             }
 
     }
-
-    private fun initProductViewModel() {
-        val app = requireNotNull(activity).application
-        productVM =
-            ViewModelProvider(
-                requireActivity(),
-                ItemViewModelFactory(app)
-            ).get(ProductViewModel::class.java)
-
-        productVM.getAllProduct()
-    }
-
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProductBinding
 import com.example.shipmentsystem.db.Product
+import com.example.shipmentsystem.getProductViewModel
 import timber.log.Timber
 
 
@@ -37,9 +38,8 @@ class ProductFragment : Fragment() {
         productName = binding.edProductName
         productPrice = binding.edProductPrice
 
-        Timber.d("$this")
-
-        getProductVmAndList()
+        productViewModel = getProductViewModel()
+        productViewModel.getAllProduct()
 
         initProductRecyclerView()
 
@@ -109,17 +109,6 @@ class ProductFragment : Fragment() {
 
             hideKeyboard(binding.textView)
         }
-    }
-
-    private fun getProductVmAndList() {
-        val app = requireNotNull(activity).application
-        productViewModel =
-            ViewModelProvider(
-                requireActivity(),
-                ItemViewModelFactory(app)
-            ).get(ProductViewModel::class.java)
-
-        productViewModel.getAllProduct()
     }
 
     private fun initProductRecyclerView() {
