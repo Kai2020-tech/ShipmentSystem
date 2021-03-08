@@ -63,15 +63,16 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView" />
 
-        <Button
-            android:id="@+id/btn_create"
-            android:text="@string/create"
-            app:layout_constraintEnd_toStartOf="@+id/btn_delete"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ed_productPrice"
-            style="@style/button_style" />
+    <Button
+        android:id="@+id/btn_create"
+        style="@style/button_style"
+        android:layout_marginTop="8dp"
+        android:text="@string/create"
+        app:layout_constraintEnd_toStartOf="@+id/btn_delete"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
         <Button
             android:id="@+id/btn_delete"
@@ -110,19 +111,21 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="148dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_product"
-            android:background="@color/recyclerview_background"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline4"
-            tools:listitem="@layout/item_view" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_product"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/recyclerview_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/item_view" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

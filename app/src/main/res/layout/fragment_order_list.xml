@@ -50,7 +50,7 @@
     <Button
         android:id="@+id/btn_create"
         style="@style/button_style"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="8dp"
         android:text="@string/create"
         app:layout_constraintEnd_toStartOf="@+id/btn_delete"
         app:layout_constraintHorizontal_bias="0.5"
@@ -116,7 +116,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:backgroundTint="#000000"
-        android:maxWidth="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView1"
         app:layout_constraintStart_toEndOf="@+id/textView1"
         app:layout_constraintTop_toTopOf="@+id/textView1" />
