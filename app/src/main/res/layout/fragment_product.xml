@@ -43,6 +43,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textColor="@color/black"
+            android:background="@color/edtext_background"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView" />
@@ -56,6 +57,7 @@
             android:ems="10"
             android:inputType="number"
             android:textColor="@color/black"
+            android:background="@color/edtext_background"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -110,6 +112,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product"
+            android:background="@color/recyclerview_background"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="1dp"
