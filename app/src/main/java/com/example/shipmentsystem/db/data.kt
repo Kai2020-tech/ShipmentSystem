@@ -25,8 +25,8 @@ data class OrderItem(
     @ColumnInfo(name = "order_sum")
     var orderSum: Int = 0,
 
-//    @ColumnInfo(name = "order_date")
-//    var date: Date,
+    @ColumnInfo(name = "order_date")
+    var date: Date,
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

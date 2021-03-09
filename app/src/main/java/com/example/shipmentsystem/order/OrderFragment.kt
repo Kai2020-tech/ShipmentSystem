@@ -1,5 +1,6 @@
 package com.example.shipmentsystem.order
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -75,17 +76,16 @@ class OrderFragment : Fragment() {
 
     }
 
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     private fun setDate(){
-        binding.tvDate.text = SimpleDateFormat("yyyy/MM/dd").format(System.currentTimeMillis())
+        binding.tvDate.text = SimpleDateFormat("yy/MM/dd").format(System.currentTimeMillis())
         binding.tvDate.setOnClickListener {
-            val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
             DatePickerDialog(requireActivity(), { _, year, month, day ->
                 run {
-//                        val format = "你設定的日期為:${setDateFormat(year, month, day)}"
-//                        val formatDate = SimpleDateFormat("yyyy/MM/dd").parse("$year/$month/$day")
                     binding.tvDate.text = "$year/${month + 1}/$day"
                 }
             }, year, month, day).show()
