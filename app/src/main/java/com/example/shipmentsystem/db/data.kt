@@ -3,6 +3,7 @@ package com.example.shipmentsystem.db
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "product_table")
 data class Product(
@@ -23,6 +24,9 @@ data class OrderItem(
 
     @ColumnInfo(name = "order_sum")
     var orderSum: Int = 0,
+
+//    @ColumnInfo(name = "order_date")
+//    var date: Date,
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

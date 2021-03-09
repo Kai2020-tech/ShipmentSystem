@@ -23,7 +23,7 @@ class ProductFragment : Fragment() {
 
     private lateinit var productRvAdapter: RvItemAdapter
 
-    private lateinit var productViewModel: ProductViewModel
+    private lateinit var productVM: ProductVM
 
     private lateinit var productName:EditText
     private lateinit var productPrice:EditText
@@ -37,8 +37,8 @@ class ProductFragment : Fragment() {
         productName = binding.edProductName
         productPrice = binding.edProductPrice
 
-        productViewModel = getProductViewModel()
-        productViewModel.getAllProduct()
+        productVM = getProductViewModel()
+        productVM.getAllProduct()
 
         initProductRecyclerView()
 
@@ -75,15 +75,15 @@ class ProductFragment : Fragment() {
             } else {
                 (100..900).random()
             }
-            productViewModel.createProduct(name, price)
+            productVM.createProduct(name, price)
             toast(getString(R.string.created, name))
             clearEditText()
         }
         /** Delete */
         binding.btnDelete.setOnClickListener {
-            val selectedItem = productViewModel.selectedProduct.value
+            val selectedItem = productVM.selectedProduct.value
             selectedItem?.let {
-                productViewModel.deleteProduct(it.id)
+                productVM.deleteProduct(it.id)
                 toast(getString(R.string.deleted, it.name))
             } ?: let {
                 toast(getString(R.string.pleaseSelect))
@@ -91,11 +91,11 @@ class ProductFragment : Fragment() {
         }
         /** Update */
         binding.btnUpdate.setOnClickListener {
-            val selectedItem = productViewModel.selectedProduct.value
+            val selectedItem = productVM.selectedProduct.value
             selectedItem?.let {
                 it.name = productName.text.toString()
                 it.price = productPrice.text.toString().toInt()
-                productViewModel.update(it)
+                productVM.update(it)
                 toast(getString(R.string.updated, it.name))
             } ?: let {
                 toast(getString(R.string.pleaseSelect))
@@ -104,7 +104,7 @@ class ProductFragment : Fragment() {
         /** Query */
         binding.btnQuery.setOnClickListener {
             val name = productName.text.toString()
-            productRvAdapter.update(productViewModel.query(name))
+            productRvAdapter.update(productVM.query(name))
 
             hideKeyboard(binding.textView)
         }
@@ -114,7 +114,7 @@ class ProductFragment : Fragment() {
         productRvAdapter = RvItemAdapter()
         binding.rvProduct.adapter = productRvAdapter.apply {
             itemClickListener = {
-                productViewModel.selectProduct(it)
+                productVM.selectProduct(it)
             }
 
             changeBackgroundListener = { currentItem, holder ->
@@ -122,7 +122,7 @@ class ProductFragment : Fragment() {
             }
         }
         binding.rvProduct.layoutManager = LinearLayoutManager(requireActivity())
-        productViewModel.productList.observe(viewLifecycleOwner, Observer {
+        productVM.productList.observe(viewLifecycleOwner, Observer {
             productRvAdapter.update(it)
         })
     }
@@ -130,9 +130,9 @@ class ProductFragment : Fragment() {
     private fun setSelectedItemColor(currentProduct: Product, holder: RvItemAdapter.MyHolder) {
         val selectedColor = getString(R.string.selectedColor)
         val defaultColor = getString(R.string.defaultColor)
-        productViewModel.selectedProduct.observe(viewLifecycleOwner, Observer {
+        productVM.selectedProduct.observe(viewLifecycleOwner, Observer {
             //do not use "it" in here, cause it might be null
-            if (currentProduct.id == productViewModel.selectedProduct.value?.id) {
+            if (currentProduct.id == productVM.selectedProduct.value?.id) {
                 holder.name.setTextColor(Color.BLACK)
                 holder.price.setTextColor(Color.BLACK)
                 holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
@@ -145,7 +145,7 @@ class ProductFragment : Fragment() {
     }
 
     private fun setEditTextContent() {
-        productViewModel.selectedProduct.observe(viewLifecycleOwner, { selectedItem ->
+        productVM.selectedProduct.observe(viewLifecycleOwner, { selectedItem ->
             selectedItem?.let {
                 productName.setText(selectedItem.name)
                 productPrice.setText(selectedItem.price.toString())
@@ -162,7 +162,7 @@ class ProductFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_itemListDel -> {
-                productViewModel.dbClear()
+                productVM.dbClear()
                 toast("All items deleted!!")
                 true
             }

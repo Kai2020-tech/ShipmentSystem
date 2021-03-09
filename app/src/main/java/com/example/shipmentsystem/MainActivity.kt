@@ -8,12 +8,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.shipmentsystem.product.ProductViewModel
+import com.example.shipmentsystem.product.ProductVM
 import com.example.shipmentsystem.product.ItemViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var productViewModel: ProductViewModel
+    private lateinit var productVM: ProductVM
+    private lateinit var orderVM: OrderVm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +63,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun createProductVm() {
         val app = requireNotNull(this).application
-        productViewModel =
-            ViewModelProvider(this, ItemViewModelFactory(app)).get(ProductViewModel::class.java)
+        productVM =
+            ViewModelProvider(this, ItemViewModelFactory(app)).get(ProductVM::class.java)
+    }
+
+    private fun createOrderVm() {
+        val app = requireNotNull(this).application
+        orderVM =
+            ViewModelProvider(this, ItemViewModelFactory(app)).get(OrderVm::class.java)
     }
 }

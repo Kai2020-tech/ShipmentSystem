@@ -1,7 +1,6 @@
 package com.example.shipmentsystem.product
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +8,7 @@ import com.example.shipmentsystem.db.MyDatabase
 import com.example.shipmentsystem.db.Product
 import timber.log.Timber
 
-class ProductViewModel(application: Application) : AndroidViewModel(application) {
+class ProductVM(application: Application) : AndroidViewModel(application) {
     private var db: MyDatabase = MyDatabase.getInstance(application)
     var selectedProduct = MutableLiveData<Product>()
     val productList = MutableLiveData<List<Product>>()
@@ -21,7 +20,7 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun getAllProduct() {
-        productList.value = db.dao.getAllItems()
+        productList.value = db.dao.getAllProducts()
     }
 
     fun createProduct(name: String, price: Int) {

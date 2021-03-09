@@ -9,18 +9,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.getProductViewModel
-import com.example.shipmentsystem.product.ItemViewModelFactory
-import com.example.shipmentsystem.product.ProductViewModel
+import com.example.shipmentsystem.product.ProductVM
 import timber.log.Timber
 
 
 class OrderFragment : Fragment() {
     private var orderBinding: FragmentOrderBinding? = null
-    private lateinit var productVM: ProductViewModel
+    private lateinit var productVM: ProductVM
     private val binding get() = orderBinding!!
 
     override fun onCreateView(

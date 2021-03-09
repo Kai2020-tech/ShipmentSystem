@@ -10,6 +10,9 @@ interface Dao {
     @Insert
     fun insert(product: Product)
 
+    @Insert
+    fun insertOrder(orderItem: OrderItem)
+
     @Update
     fun update(product: Product)
 
@@ -30,5 +33,5 @@ interface Dao {
     fun getItem(): Product?
 
     @Query("SELECT * FROM product_table  ORDER BY id DESC")
-    fun getAllItems(): List<Product>
+    fun getAllProducts(): List<Product>
 }
