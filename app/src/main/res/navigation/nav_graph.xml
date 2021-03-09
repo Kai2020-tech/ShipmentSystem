@@ -6,7 +6,7 @@
     app:startDestination="@id/orderListFragment">
     <fragment
         android:id="@+id/orderListFragment"
-        android:name="com.example.shipmentsystem.order.OrderListFragment"
+        android:name="com.example.shipmentsystem.order.OrderFragment"
         android:label="@string/order_list"
          />
     <fragment

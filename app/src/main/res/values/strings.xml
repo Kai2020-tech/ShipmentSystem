@@ -17,7 +17,7 @@
     <string name="update">Update</string>
     <string name="query">Query</string>
     <string name="order_list">Order List</string>
-    <string name="sell_list">Sell List</string>
+    <string name="complete_list">Complete List</string>
     <string name="product_list">Product List</string>
     <string name="delete_all_products">Delete All Products</string>
     <string name="amount">Amount</string>

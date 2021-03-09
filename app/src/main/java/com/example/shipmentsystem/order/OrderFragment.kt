@@ -11,15 +11,15 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.shipmentsystem.R
-import com.example.shipmentsystem.databinding.FragmentOrderListBinding
+import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.getProductViewModel
 import com.example.shipmentsystem.product.ItemViewModelFactory
 import com.example.shipmentsystem.product.ProductViewModel
 import timber.log.Timber
 
 
-class OrderListFragment : Fragment() {
-    private var orderBinding: FragmentOrderListBinding? = null
+class OrderFragment : Fragment() {
+    private var orderBinding: FragmentOrderBinding? = null
     private lateinit var productVM: ProductViewModel
     private val binding get() = orderBinding!!
 
@@ -27,7 +27,7 @@ class OrderListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        orderBinding = FragmentOrderListBinding.inflate(inflater, container, false)
+        orderBinding = FragmentOrderBinding.inflate(inflater, container, false)
         productVM = getProductViewModel()
         productVM.getAllProduct()
         getProductListToSpinner()
@@ -41,7 +41,6 @@ class OrderListFragment : Fragment() {
             it.forEach { product ->
                 productList.add(product.name)
             }
-            Timber.d("product $productList")
             setProductSpinner(productList)
         })
     }
@@ -52,8 +51,6 @@ class OrderListFragment : Fragment() {
             R.layout.spinner_item,  //spinner text view style
             list                    //spinner option list
         )
-        Timber.d("spinner $list")
-//        adapter.setDropDownViewResource(R.layout.spinner_checked_item)
         binding.spinnerProduct.adapter = adapter
         binding.spinnerProduct.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {

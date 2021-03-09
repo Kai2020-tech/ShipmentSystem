@@ -7,7 +7,7 @@
 <item
     android:id="@+id/resultFragment"
     android:icon="@drawable/ic_result"
-    android:title="@string/sell_list"/>
+    android:title="@string/complete_list"/>
 <item
     android:id="@+id/itemFragment"
     android:icon="@drawable/ic_item"
