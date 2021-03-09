@@ -16,6 +16,7 @@
     <string name="delete">Delete</string>
     <string name="update">Update</string>
     <string name="query">Query</string>
+    <string name="date">Date</string>
     <string name="order_list">Order List</string>
     <string name="complete_list">Complete List</string>
     <string name="product_list">Product List</string>

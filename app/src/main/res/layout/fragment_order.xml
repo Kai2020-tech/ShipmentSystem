@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/customer_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/black"
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text="@string/customer_order"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -50,13 +50,13 @@
     <Button
         android:id="@+id/btn_create"
         style="@style/button_style"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
         android:text="@string/create"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/btn_delete"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView1" />
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_delete"
@@ -82,6 +82,7 @@
         android:id="@+id/btn_query"
         style="@style/button_style"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/query"
         app:layout_constraintBaseline_toBaselineOf="@+id/btn_update"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,25 +117,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/textView1"
+        app:layout_constraintBottom_toTopOf="@+id/btn_create"
         app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintStart_toEndOf="@+id/textView1"
-        app:layout_constraintTop_toTopOf="@+id/textView1" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
     <EditText
         android:id="@+id/ed_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:textColor="@color/black"
+        android:layout_marginBottom="8dp"
         android:background="@color/edtext_background"
         android:ems="10"
         android:inputType="numberDecimal"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/btn_delete"
+        app:layout_constraintEnd_toStartOf="@+id/tv_date"
+        app:layout_constraintStart_toStartOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView2"
@@ -145,5 +147,20 @@
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView1"
         app:layout_constraintStart_toStartOf="@+id/ed_customerName" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/edtext_background"
+        android:gravity="center"
+        android:text="@string/date"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/ed_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

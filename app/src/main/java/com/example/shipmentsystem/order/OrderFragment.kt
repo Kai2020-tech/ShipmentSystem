@@ -1,5 +1,6 @@
 package com.example.shipmentsystem.order
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,8 @@ import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.getProductViewModel
 import com.example.shipmentsystem.product.ProductVM
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class OrderFragment : Fragment() {
@@ -29,6 +32,8 @@ class OrderFragment : Fragment() {
         productVM = getProductViewModel()
         productVM.getAllProduct()
         getProductListToSpinner()
+
+        setDate()
 
         return binding.root
     }
@@ -68,5 +73,22 @@ class OrderFragment : Fragment() {
 
             }
 
+    }
+
+    private fun setDate(){
+        binding.tvDate.text = SimpleDateFormat("yyyy/MM/dd").format(System.currentTimeMillis())
+        binding.tvDate.setOnClickListener {
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+            DatePickerDialog(requireActivity(), { _, year, month, day ->
+                run {
+//                        val format = "你設定的日期為:${setDateFormat(year, month, day)}"
+//                        val formatDate = SimpleDateFormat("yyyy/MM/dd").parse("$year/$month/$day")
+                    binding.tvDate.text = "$year/${month + 1}/$day"
+                }
+            }, year, month, day).show()
+        }
     }
 }

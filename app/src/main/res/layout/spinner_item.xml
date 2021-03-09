@@ -3,7 +3,7 @@
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:maxWidth="60dp"
+    android:maxWidth="90dp"
     android:layout_height="wrap_content"
     android:textSize="18sp"
     android:gravity="left"
