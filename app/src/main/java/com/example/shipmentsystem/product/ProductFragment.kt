@@ -14,6 +14,8 @@ import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProductBinding
 import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.getProductViewModel
+import com.example.shipmentsystem.hideKeyboard
+import com.example.shipmentsystem.toast
 import timber.log.Timber
 
 
@@ -21,7 +23,7 @@ class ProductFragment : Fragment() {
     private var productBinding: FragmentProductBinding? = null
     private val binding get() = productBinding!!
 
-    private lateinit var productRvAdapter: RvItemAdapter
+    private lateinit var productRvAdapter: RvProductAdapter
 
     private lateinit var productVM: ProductVM
 
@@ -111,7 +113,7 @@ class ProductFragment : Fragment() {
     }
 
     private fun initProductRecyclerView() {
-        productRvAdapter = RvItemAdapter()
+        productRvAdapter = RvProductAdapter()
         binding.rvProduct.adapter = productRvAdapter.apply {
             itemClickListener = {
                 productVM.onSelectProduct(it)
@@ -127,7 +129,7 @@ class ProductFragment : Fragment() {
         })
     }
 
-    private fun setSelectedItemColor(currentProduct: Product, holder: RvItemAdapter.MyHolder) {
+    private fun setSelectedItemColor(currentProduct: Product, holder: RvProductAdapter.MyHolder) {
         val selectedColor = getString(R.string.selectedColor)
         val defaultColor = getString(R.string.defaultColor)
         productVM.selectedProduct.observe(viewLifecycleOwner, Observer {
@@ -175,15 +177,4 @@ class ProductFragment : Fragment() {
         productPrice.text.clear()
     }
 
-    private fun toast(message: String) {
-        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT)
-            .show()
-    }
-
-    private fun hideKeyboard(view: View, nextFoocusView: View = view.rootView) {
-        val imm = view.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-        view.clearFocus()
-        nextFoocusView.requestFocus()
-    }
 }

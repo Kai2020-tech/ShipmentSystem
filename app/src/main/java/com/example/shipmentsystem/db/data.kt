@@ -23,7 +23,7 @@ data class OrderItem(
     var name: String = "",
 
     @ColumnInfo(name = "order_sum")
-    var orderSum: Int = 0,
+    var sumPrice: Int = 0,
 
     @ColumnInfo(name = "order_date")
     var date: Date,

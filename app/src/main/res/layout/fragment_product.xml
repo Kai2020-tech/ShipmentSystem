@@ -67,7 +67,7 @@
         android:id="@+id/btn_create"
         style="@style/button_style"
         android:text="@string/create"
-        app:layout_constraintBottom_toTopOf="@+id/rv_product"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/btn_delete"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -108,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="148dp" />
+        app:layout_constraintGuide_begin="149dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_product"
@@ -125,6 +125,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_view" />
+        tools:listitem="@layout/item_product" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

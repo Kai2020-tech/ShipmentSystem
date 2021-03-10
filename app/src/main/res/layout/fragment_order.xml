@@ -97,7 +97,7 @@
         app:layout_constraintGuide_begin="148dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_product"
+        android:id="@+id/rv_order"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
@@ -109,7 +109,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        tools:listitem="@layout/item_view" />
+        tools:listitem="@layout/item_order" />
 
     <Spinner
         android:id="@+id/spinner_product"

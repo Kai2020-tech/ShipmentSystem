@@ -9,7 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.shipmentsystem.product.ProductVM
-import com.example.shipmentsystem.product.ItemViewModelFactory
+import com.example.shipmentsystem.product.ProductViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -64,12 +64,12 @@ class MainActivity : AppCompatActivity() {
     private fun createProductVm() {
         val app = requireNotNull(this).application
         productVM =
-            ViewModelProvider(this, ItemViewModelFactory(app)).get(ProductVM::class.java)
+            ViewModelProvider(this, ProductViewModelFactory(app)).get(ProductVM::class.java)
     }
 
     private fun createOrderVm() {
         val app = requireNotNull(this).application
         orderVM =
-            ViewModelProvider(this, ItemViewModelFactory(app)).get(OrderVm::class.java)
+            ViewModelProvider(this, ProductViewModelFactory(app)).get(OrderVm::class.java)
     }
 }
