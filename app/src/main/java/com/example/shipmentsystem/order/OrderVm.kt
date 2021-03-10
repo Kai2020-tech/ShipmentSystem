@@ -13,8 +13,7 @@ import java.text.SimpleDateFormat
 class OrderVm(application: Application) : AndroidViewModel(application) {
     private var db: MyDatabase = MyDatabase.getInstance(application)
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun createOrder() {
+    suspend fun createOrder() {
         var dateInString = "2020-05-02"
 
         val date = SimpleDateFormat("dd-MM-yyyy").parse(dateInString)

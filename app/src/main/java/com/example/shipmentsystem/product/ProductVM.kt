@@ -1,11 +1,14 @@
 package com.example.shipmentsystem.product
 
 import android.app.Application
+import android.content.ClipData
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.shipmentsystem.db.MyDatabase
 import com.example.shipmentsystem.db.Product
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class ProductVM(application: Application) : AndroidViewModel(application) {
@@ -20,44 +23,72 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
     }
 
     fun getAllProduct() {
+        viewModelScope.launch {
+            getProductList()
+        }
+    }
+
+    private suspend fun getProductList() {
         productList.value = db.dao.getAllProducts()
     }
 
-    fun createProduct(name: String, price: Int) {
-        val item = Product(name, price)
-        db.dao.insert(item)
-        getAllProduct()
+    fun onInsertProduct(name: String, price: Int) {
+        viewModelScope.launch {
+            val product = Product(name, price)
+            insertProductItem(product)
+            getAllProduct()
+        }
+    }
+
+    private suspend fun insertProductItem(product: Product) {
+        db.dao.insert(product)
     }
 
     //    fun get(itemSelectedId: Int): Item? = itemDb.itemDao.get(itemSelectedId)
 
-    private fun setSelectedProductValue(itemSelectedId: Int, isSelected: Boolean) {
-        if (isSelected) {
-            selectedProduct.value = db.dao.get(itemSelectedId)
-        } else {
+
+    fun onDeleteProduct(itemSelectedId: Int) {
+        viewModelScope.launch {
+            deleteProduct(itemSelectedId)
+            selectedProduct.value = null
+            getAllProduct()
+        }
+    }
+
+    private suspend fun deleteProduct(itemSelectedId: Int) {
+        db.dao.delete(itemSelectedId)
+    }
+
+    fun onUpdate(product: Product) {
+        viewModelScope.launch {
+            update(product)
+            getAllProduct()
             selectedProduct.value = null
         }
     }
 
-    fun deleteProduct(itemSelectedId: Int) {
-        db.dao.delete(itemSelectedId)
-        selectedProduct.value = null
-        getAllProduct()
-    }
-
-    fun update(product: Product) {
+    private suspend fun update(product: Product) {
         db.dao.update(product)
-        getAllProduct()
-        selectedProduct.value = null
     }
 
-    fun dbClear() {
+    fun onDbClear() {
+        viewModelScope.launch {
+            dbClear()
+            selectedProduct.value = null
+            getAllProduct()
+        }
+    }
+    private suspend fun dbClear(){
         db.dao.clear()
-        selectedProduct.value = null
-        getAllProduct()
     }
 
-    fun selectProduct(product: Product) {
+    fun onSelectProduct(product: Product) {
+        viewModelScope.launch {
+            selectProduct(product)
+        }
+    }
+
+    private suspend fun selectProduct(product: Product){
         when {
             onSelected -> {
                 setSelectedProductValue(product.id, onSelected)
@@ -74,6 +105,14 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
                 toast("${product.name} \n selected.")
                 onSelected = false
             }
+        }
+    }
+
+    private suspend fun setSelectedProductValue(itemSelectedId: Int, isSelected: Boolean) {
+        if (isSelected) {
+            selectedProduct.value = db.dao.get(itemSelectedId)
+        } else {
+            selectedProduct.value = null
         }
     }
 

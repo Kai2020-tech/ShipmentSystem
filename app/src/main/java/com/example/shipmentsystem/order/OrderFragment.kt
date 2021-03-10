@@ -42,6 +42,7 @@ class OrderFragment : Fragment() {
     private fun getProductListToSpinner() {
         val productList = mutableListOf<String>()
         productVM.productList.observe(viewLifecycleOwner, Observer { it ->
+            productList.clear()
             it.forEach { product ->
                 productList.add(product.name)
             }

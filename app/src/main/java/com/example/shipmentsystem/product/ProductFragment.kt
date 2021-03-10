@@ -75,7 +75,7 @@ class ProductFragment : Fragment() {
             } else {
                 (100..900).random()
             }
-            productVM.createProduct(name, price)
+            productVM.onInsertProduct(name, price)
             toast(getString(R.string.created, name))
             clearEditText()
         }
@@ -83,7 +83,7 @@ class ProductFragment : Fragment() {
         binding.btnDelete.setOnClickListener {
             val selectedItem = productVM.selectedProduct.value
             selectedItem?.let {
-                productVM.deleteProduct(it.id)
+                productVM.onDeleteProduct(it.id)
                 toast(getString(R.string.deleted, it.name))
             } ?: let {
                 toast(getString(R.string.pleaseSelect))
@@ -95,7 +95,7 @@ class ProductFragment : Fragment() {
             selectedItem?.let {
                 it.name = productName.text.toString()
                 it.price = productPrice.text.toString().toInt()
-                productVM.update(it)
+                productVM.onUpdate(it)
                 toast(getString(R.string.updated, it.name))
             } ?: let {
                 toast(getString(R.string.pleaseSelect))
@@ -114,7 +114,7 @@ class ProductFragment : Fragment() {
         productRvAdapter = RvItemAdapter()
         binding.rvProduct.adapter = productRvAdapter.apply {
             itemClickListener = {
-                productVM.selectProduct(it)
+                productVM.onSelectProduct(it)
             }
 
             changeBackgroundListener = { currentItem, holder ->
@@ -162,7 +162,7 @@ class ProductFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_itemListDel -> {
-                productVM.dbClear()
+                productVM.onDbClear()
                 toast("All items deleted!!")
                 true
             }
