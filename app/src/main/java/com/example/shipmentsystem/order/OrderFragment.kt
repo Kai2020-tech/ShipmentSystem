@@ -2,27 +2,18 @@ package com.example.shipmentsystem.order
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.FtsOptions
-import com.example.shipmentsystem.OrderVm
-import com.example.shipmentsystem.R
+import com.example.shipmentsystem.*
 import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.db.OrderItem
-import com.example.shipmentsystem.db.Product
-import com.example.shipmentsystem.getOrderViewModel
-import com.example.shipmentsystem.getProductViewModel
 import com.example.shipmentsystem.product.ProductVM
-import com.example.shipmentsystem.product.RvProductAdapter
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,11 +28,20 @@ class OrderFragment : Fragment() {
 
     private lateinit var orderRvAdapter: RvOrderAdapter
 
+    private lateinit var customerName: EditText
+    private lateinit var productAmount: EditText
+    private lateinit var orderDate: TextView
+    private lateinit var orderProduct: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         orderBinding = FragmentOrderBinding.inflate(inflater, container, false)
+
+        customerName = binding.edCustomerName
+        productAmount = binding.edAmount
+        orderDate = binding.tvDate
+
 
         productVM = getProductViewModel()
 
@@ -53,7 +53,25 @@ class OrderFragment : Fragment() {
 
         setDatePicker()
 
+        onCrud()
+
         return binding.root
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun onCrud() {
+        /** Create */
+        binding.btnCreate.setOnClickListener {
+            val amount:Int = productAmount.text.toString().toInt()
+            val name = customerName.text.toString()
+            val date = SimpleDateFormat("yyyy/MM/dd").parse(orderDate.text.toString())
+            if (customerName.text.isNotBlank() && amount != 0) {
+
+                orderVM.onInsertOrder(name, orderProduct, amount, date)
+                toast(getString(R.string.created, name))
+//                clearEditText()
+            }
+        }
     }
 
     private fun getProductListToSpinner() {
@@ -88,6 +106,7 @@ class OrderFragment : Fragment() {
                 ) {
                     Timber.d("clicked")
                     Toast.makeText(requireActivity(), list[position], Toast.LENGTH_SHORT).show()
+                    orderProduct = list[position]
                 }
 
             }
@@ -129,8 +148,8 @@ class OrderFragment : Fragment() {
     }
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
-    private fun setDatePicker(){
-        binding.tvDate.text = SimpleDateFormat("yyyy/MM/dd").format(System.currentTimeMillis())
+    private fun setDatePicker() {
+        orderDate.text = SimpleDateFormat("yyyy/MM/dd").format(System.currentTimeMillis())
         binding.tvDate.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)

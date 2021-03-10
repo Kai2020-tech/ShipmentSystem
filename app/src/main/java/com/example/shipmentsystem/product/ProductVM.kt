@@ -1,7 +1,6 @@
 package com.example.shipmentsystem.product
 
 import android.app.Application
-import android.content.ClipData
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -19,7 +18,7 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
     private val app = application
 
     init {
-        Timber.d("GameViewModel created! $this")
+        Timber.d("ProductViewModel created! $this")
     }
 
     fun getAllProduct() {
@@ -41,7 +40,7 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
     }
 
     private suspend fun insertProductItem(product: Product) {
-        db.dao.insert(product)
+        db.dao.insertProduct(product)
     }
 
     //    fun get(itemSelectedId: Int): Item? = itemDb.itemDao.get(itemSelectedId)
@@ -143,6 +142,6 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
 
     override fun onCleared() {
         super.onCleared()
-        Timber.d("GameViewModel destroyed!")
+        Timber.d("ProductViewModel destroyed!")
     }
 }

@@ -22,6 +22,9 @@ data class OrderItem(
     @ColumnInfo(name = "customer_name")
     var name: String = "",
 
+    @ColumnInfo(name = "order_product")
+    var product: String = "",
+
     @ColumnInfo(name = "order_sum")
     var sumPrice: Int = 0,
 

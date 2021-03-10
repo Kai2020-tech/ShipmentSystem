@@ -22,4 +22,5 @@
     <string name="product_list">Product</string>
     <string name="delete_all_products">Delete All Products</string>
     <string name="amount">Amount</string>
+    <string name="order_date">Order Date</string>
 </resources>
