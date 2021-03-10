@@ -55,4 +55,5 @@ class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
         innerItemList.addAll(updateList)
         this.notifyDataSetChanged()
     }
+
 }
