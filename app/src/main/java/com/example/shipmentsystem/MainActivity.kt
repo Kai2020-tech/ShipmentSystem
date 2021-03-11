@@ -8,19 +8,15 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.shipmentsystem.product.OrderViewModelFactory
 import com.example.shipmentsystem.product.ProductVM
 import com.example.shipmentsystem.product.ProductViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var productVM: ProductVM
-    private lateinit var orderVM: OrderVm
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        createProductVm()
 
 //        if (savedInstanceState == null) {  //判斷前一fragment是否由系統自動recreate
 //            val itemFragment = ItemFragment()
@@ -59,17 +55,5 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         return navHostFragment.navController
-    }
-
-    private fun createProductVm() {
-        val app = requireNotNull(this).application
-        productVM =
-            ViewModelProvider(this, ProductViewModelFactory(app)).get(ProductVM::class.java)
-    }
-
-    private fun createOrderVm() {
-        val app = requireNotNull(this).application
-        orderVM =
-            ViewModelProvider(this, ProductViewModelFactory(app)).get(OrderVm::class.java)
     }
 }
