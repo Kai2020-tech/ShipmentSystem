@@ -29,10 +29,18 @@ class MainActivity : AppCompatActivity() {
 
         val navController = getNavController()
 
+        setupActionBar(navController)
+
         setupBottomNav(navController)
 
-        setupActionBar(navController)
     }
+
+    private fun getNavController(): NavController {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        return navHostFragment.navController
+
+    }//set NavHostFragment, a container for fragments
 
     private fun setupActionBar(navController: NavController) {
         val appBarConfiguration = AppBarConfiguration(
@@ -42,18 +50,16 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-    }//setup ActionBar fragment's label with nav_graph
+
+    }//set ActionBar fragment's label with nav_graph.xml
 
     private fun setupBottomNav(navController: NavController) {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_Navigation)
         bottomNav.setupWithNavController(navController)
+
         // if current fragment == destination , do not create the same fragment
         bottomNav.setOnNavigationItemReselectedListener {}
-    }
 
-    private fun getNavController(): NavController {
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        return navHostFragment.navController
-    }
+    }//set BottomNavigationView with NavController
+
 }
