@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.*
 import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.db.OrderItem
+import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.product.ProductVM
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -32,6 +32,7 @@ class OrderFragment : Fragment() {
     private lateinit var productAmount: EditText
     private lateinit var orderDate: TextView
     private lateinit var orderProduct: String
+    private var orderProductPrice = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,12 +67,13 @@ class OrderFragment : Fragment() {
     private fun onCrud() {
         /** Create */
         binding.btnCreate.setOnClickListener {
-            val amount:Int = productAmount.text.toString().toInt()
+            val amount: Int = productAmount.text.toString().toInt()
+            val sumPrice = amount * orderProductPrice
             val name = customerName.text.toString()
             val date = SimpleDateFormat("yyyy/MM/dd").parse(orderDate.text.toString())
             if (customerName.text.isNotBlank() && amount != 0) {
 
-                orderVM.onInsertOrder(name, orderProduct, amount, date)
+                orderVM.onInsertOrder(name, orderProduct, sumPrice, date)
                 toast(getString(R.string.created, name))
 //                clearEditText()
             }
@@ -80,21 +82,28 @@ class OrderFragment : Fragment() {
 
     private fun getProductListToSpinner() {
         productVM.getAllProduct()   //trigger ProductList
-        val productList = mutableListOf<String>()
-        productVM.productList.observe(viewLifecycleOwner, Observer { it ->
-            productList.clear()
-            it.forEach { product ->
-                productList.add(product.name)
-            }
-            setProductSpinner(productList)
+//        val productList = mutableListOf<String>()
+        val productList = mutableListOf<Product>()
+        productVM.productList.observe(viewLifecycleOwner, Observer {
+//            productList.clear()
+//            it.forEach { product ->
+//                productList.add(product.name)
+//            }
+//            productList.addAll(it)
+
+            setProductSpinner(it)
         })
     }
 
-    private fun setProductSpinner(list: MutableList<String>) {
+    private fun setProductSpinner(productList: List<Product>) {
+        val spinnerList = mutableListOf<String>()
+        productList.forEach {
+            spinnerList.add(it.name)
+        }
         val adapter = ArrayAdapter(
             requireActivity(),      //context
             R.layout.spinner_item,  //spinner text view style
-            list                    //spinner option list
+            spinnerList             //spinner option list
         )
         binding.spinnerProduct.adapter = adapter
         binding.spinnerProduct.onItemSelectedListener =
@@ -110,7 +119,8 @@ class OrderFragment : Fragment() {
                     id: Long
                 ) {
 //                    Toast.makeText(requireActivity(), list[position], Toast.LENGTH_SHORT).show()
-                    orderProduct = list[position]
+                    orderProduct = spinnerList[position]
+                    orderProductPrice = productList[position].price
                 }
 
             }

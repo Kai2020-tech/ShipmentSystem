@@ -29,9 +29,9 @@ class OrderVm(application: Application) : AndroidViewModel(application) {
         orderList.value = db.dao.getAllOrders()
     }
 
-    fun onInsertOrder(name: String, product: String, amount: Int, date: Date) {
+    fun onInsertOrder(name: String, product: String, sumPrice: Int, date: Date) {
         viewModelScope.launch {
-            val orderItem = OrderItem(name, product, amount, date)
+            val orderItem = OrderItem(name, product, sumPrice, date)
             insertOrderItem(orderItem)
             getAllOrders()
         }
