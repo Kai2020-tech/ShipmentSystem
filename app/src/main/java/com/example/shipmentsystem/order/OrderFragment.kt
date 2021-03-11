@@ -47,7 +47,11 @@ class OrderFragment : Fragment() {
 
         orderVM = getOrderViewModel()
 
-        productVM.getAllProduct()
+
+
+        orderVM.getAllOrders()
+
+        initOrderRecyclerView()
 
         getProductListToSpinner()
 
@@ -75,6 +79,7 @@ class OrderFragment : Fragment() {
     }
 
     private fun getProductListToSpinner() {
+        productVM.getAllProduct()   //trigger ProductList
         val productList = mutableListOf<String>()
         productVM.productList.observe(viewLifecycleOwner, Observer { it ->
             productList.clear()
@@ -104,8 +109,7 @@ class OrderFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    Timber.d("clicked")
-                    Toast.makeText(requireActivity(), list[position], Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireActivity(), list[position], Toast.LENGTH_SHORT).show()
                     orderProduct = list[position]
                 }
 
@@ -125,9 +129,9 @@ class OrderFragment : Fragment() {
             }
         }
         binding.rvOrder.layoutManager = LinearLayoutManager(requireActivity())
-//        orderVM.productList.observe(viewLifecycleOwner, Observer {
-//            orderRvAdapter.update(it)
-//        })
+        orderVM.orderList.observe(viewLifecycleOwner, Observer {
+            orderRvAdapter.update(it)
+        })
     }
 
     private fun setSelectedItemColor(currentItem: OrderItem, holder: RvOrderAdapter.MyHolder) {

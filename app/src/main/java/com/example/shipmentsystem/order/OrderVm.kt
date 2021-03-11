@@ -19,14 +19,6 @@ class OrderVm(application: Application) : AndroidViewModel(application) {
         Timber.d("OrderVM created.")
     }
 
-//    suspend fun createOrder() {
-//        var dateInString = "2020-05-02"
-//
-//        val date = SimpleDateFormat("dd-MM-yyyy").parse(dateInString)
-//        val item = OrderItem("adf",123, date)
-//        db.dao.insertOrder(item)
-//    }
-
     fun getAllOrders() {
         viewModelScope.launch {
             getOrderList()
