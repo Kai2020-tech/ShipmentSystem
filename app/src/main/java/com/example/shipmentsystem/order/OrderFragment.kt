@@ -140,8 +140,8 @@ class OrderFragment : Fragment() {
     private fun initOrderRecyclerView() {
         orderRvAdapter = RvOrderAdapter()
         binding.rvOrder.adapter = orderRvAdapter.apply {
-            itemClickListener = { currentItem, postion ->
-                orderListVm.onSelectedOrderItem(currentItem,postion)
+            itemClickListener = {
+                orderListVm.onSelectedOrderItem(it)
             }
 
             changeBackgroundListener = { currentItem, holder ->
@@ -161,7 +161,7 @@ class OrderFragment : Fragment() {
         val selectedColor = getString(R.string.selectedOrderItemColor)
         val defaultColor = getString(R.string.defaultOrderItemColor)
         orderListVm.selectedItem.observe(viewLifecycleOwner, Observer {
-            //do not use "it" in here, cause it might be null
+            //use === compare objects , currentItem and vm's live data item
             if (currentItem === orderListVm.selectedItem.value) {
                 holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
             } else {

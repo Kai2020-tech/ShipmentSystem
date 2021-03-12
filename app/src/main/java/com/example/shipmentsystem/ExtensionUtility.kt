@@ -5,6 +5,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.shipmentsystem.order.OrderListVm
 import com.example.shipmentsystem.product.OrderViewModelFactory
@@ -37,6 +38,11 @@ fun Fragment.getOrderListVm(): OrderListVm {
 
 fun Fragment.toast(message: String) {
     Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT)
+        .show()
+}
+
+fun AndroidViewModel.toast(message: String) {
+    Toast.makeText(getApplication(), message, Toast.LENGTH_SHORT)
         .show()
 }
 

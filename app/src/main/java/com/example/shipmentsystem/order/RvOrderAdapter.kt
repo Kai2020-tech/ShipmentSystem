@@ -9,7 +9,7 @@ import com.example.shipmentsystem.db.OrderItem
 
 class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
     private val innerItemList = mutableListOf<OrderItem>()
-    var itemClickListener: (OrderItem,Int) -> Unit = { orderItem: OrderItem, i: Int -> }
+    var itemClickListener: (OrderItem) -> Unit = { }
     var changeBackgroundListener: (OrderItem, MyHolder) -> Unit =
         { orderItem: OrderItem, myHolder: MyHolder -> }
 
@@ -23,7 +23,7 @@ class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
             changeBackgroundListener.invoke(orderItem, holder)
 
             holder.itemView.setOnClickListener {
-                itemClickListener.invoke(innerItemList[adapterPosition],adapterPosition)
+                itemClickListener.invoke(innerItemList[adapterPosition])
             }
         }
     }
