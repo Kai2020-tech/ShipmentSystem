@@ -18,13 +18,13 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
         Timber.d("OrderListVm created.")
     }
 
-    fun createOrderItem(item: OrderItem){
+    fun createOrderItem(item: OrderItem) {
         list.add(item)
         orderList.value = list
         print("${orderList.value}")
     }
 
-    fun onSelectedOrderItem(item: OrderItem){
+    fun onSelectedOrderItem(item: OrderItem) {
         when {
             onSelected -> {
                 setSelectedItemValue(item, onSelected)

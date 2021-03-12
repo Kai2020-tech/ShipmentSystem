@@ -25,8 +25,6 @@ class OrderFragment : Fragment() {
     private val binding get() = orderBinding!!
 
     private lateinit var productVM: ProductVM
-
-    //    private lateinit var orderVM: OrderVm
     private lateinit var orderListVm: OrderListVm
 
     private lateinit var orderRvAdapter: RvOrderAdapter
@@ -34,8 +32,10 @@ class OrderFragment : Fragment() {
     private lateinit var customerName: EditText
     private lateinit var productAmount: EditText
     private lateinit var orderDate: TextView
+
     private lateinit var orderProduct: String
     private var orderProductPrice = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,17 +48,7 @@ class OrderFragment : Fragment() {
 
         productVM = getProductViewModel()
 
-//        orderVM = getOrderViewModel().apply {
-//            this.customerName.observe(viewLifecycleOwner, Observer {
-//                this@OrderFragment.customerName.setText(it)
-//                this@OrderFragment.customerName.isEnabled = false
-//                this@OrderFragment.orderDate.isEnabled = false
-//            })
-//        }
-
         orderListVm = getOrderListVm()
-
-//        orderVM.getAllOrders()
 
         initOrderRecyclerView()
 
@@ -74,22 +64,6 @@ class OrderFragment : Fragment() {
     @SuppressLint("SimpleDateFormat")
     private fun onCrud() {
         /** Create */
-//        binding.btnCreate.setOnClickListener {
-//            val name = customerName.text.toString()
-//            val amount = if (productAmount.text.isNotBlank()) {
-//                productAmount.text.toString().toInt()
-//            } else {
-//                1
-//            }
-//
-//            val date = SimpleDateFormat("yyyy/MM/dd").parse(orderDate.text.toString())
-//            if (customerName.text.isNotBlank() && amount != 0) {
-//                orderVM.onInsertOrder(name, orderProduct, amount * orderProductPrice, date)
-//                toast(getString(R.string.created, name))
-//                clearEditText()
-//                orderVM.setCustomerName(name)
-//            }
-//        }
         binding.btnCreate.setOnClickListener {
             val amount = if (productAmount.text.isBlank()) 1
             else productAmount.text.toString().toInt()
@@ -128,12 +102,15 @@ class OrderFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-//                    Toast.makeText(requireActivity(), list[position], Toast.LENGTH_SHORT).show()
                     orderProduct = spinnerList[position]
                     orderProductPrice = productList[position].price
                 }
 
             }
+        //when click an item , will notify spinner to display selected item name
+        orderListVm.selectedItem.observe(viewLifecycleOwner, Observer {
+            binding.spinnerProduct.setSelection(adapter.getPosition(it.name))
+        })
 
     }
 
@@ -149,9 +126,6 @@ class OrderFragment : Fragment() {
             }
         }
         binding.rvOrder.layoutManager = LinearLayoutManager(requireActivity())
-//        orderVM.orderList.observe(viewLifecycleOwner, Observer {
-//            orderRvAdapter.update(it)
-//        })
         orderListVm.orderList.observe(viewLifecycleOwner, Observer {
             orderRvAdapter.update(it.toList())
         })
