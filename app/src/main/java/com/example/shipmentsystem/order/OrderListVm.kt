@@ -5,10 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.shipmentsystem.db.OrderItem
 import timber.log.Timber
+import java.text.FieldPosition
 
 class OrderListVm(application: Application) : AndroidViewModel(application) {
-    val OrderList = MutableLiveData<MutableList<OrderItem>>()
-    val list = mutableListOf<OrderItem>()
+    val orderList = MutableLiveData<MutableList<OrderItem>>()
+    val selectedItem = MutableLiveData<OrderItem>()
+    private val list = mutableListOf<OrderItem>()
     val customerName = MutableLiveData<String>()
 
     init {
@@ -17,8 +19,12 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
 
     fun createOrderItem(item: OrderItem){
         list.add(item)
-        OrderList.value = list
-        print("${OrderList.value}")
+        orderList.value = list
+        print("${orderList.value}")
+    }
+
+    fun onSelectedOrderItem(item: OrderItem,id: Int){
+        selectedItem.value = item
     }
 
 

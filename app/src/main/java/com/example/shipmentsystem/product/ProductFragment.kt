@@ -127,8 +127,8 @@ class ProductFragment : Fragment() {
     }
 
     private fun setSelectedItemColor(currentProduct: Product, holder: RvProductAdapter.MyHolder) {
-        val selectedColor = getString(R.string.selectedColor)
-        val defaultColor = getString(R.string.defaultColor)
+        val selectedColor = getString(R.string.selectedProductColor)
+        val defaultColor = getString(R.string.defaultProductColor)
         productVM.selectedProduct.observe(viewLifecycleOwner, Observer {
             //do not use "it" in here, cause it might be null
             if (currentProduct.id == productVM.selectedProduct.value?.id) {

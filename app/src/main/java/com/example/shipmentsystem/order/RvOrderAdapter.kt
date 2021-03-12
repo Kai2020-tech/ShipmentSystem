@@ -9,22 +9,21 @@ import com.example.shipmentsystem.db.OrderItem
 
 class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
     private val innerItemList = mutableListOf<OrderItem>()
-    var itemClickListener: (OrderItem) -> Unit = {}
+    var itemClickListener: (OrderItem,Int) -> Unit = { orderItem: OrderItem, i: Int -> }
     var changeBackgroundListener: (OrderItem, MyHolder) -> Unit =
-        { OrderItem: OrderItem, myHolder: MyHolder -> }
+        { orderItem: OrderItem, myHolder: MyHolder -> }
 
     inner class MyHolder(binding: ItemOrderBinding) : RecyclerView.ViewHolder(binding.root) {
         var name = binding.tvItemName
         var price = binding.tvItemPrice
         var id = binding.tvItemId
-//        var orderDate = binding.tvOrderDate
         val amount = binding.tvAmount
 
-        fun bind(OrderItem: OrderItem, holder: MyHolder) {
-            changeBackgroundListener.invoke(OrderItem, holder)
+        fun bind(orderItem: OrderItem, holder: MyHolder) {
+            changeBackgroundListener.invoke(orderItem, holder)
 
             holder.itemView.setOnClickListener {
-                itemClickListener.invoke(innerItemList[adapterPosition])
+                itemClickListener.invoke(innerItemList[adapterPosition],adapterPosition)
             }
         }
     }
@@ -47,7 +46,6 @@ class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
         holder.name.text = currentItem.name
         holder.price.text = "$ ${currentItem.sumPrice}"
         holder.amount.text = currentItem.amount.toString()
-//        holder.orderDate.text = currentItem.date.toString()
         holder.bind(currentItem, holder)
     }
 

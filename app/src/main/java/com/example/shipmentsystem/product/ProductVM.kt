@@ -14,7 +14,7 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
     private var db: MyDatabase = MyDatabase.getInstance(application)
     var selectedProduct = MutableLiveData<Product>()
     val productList = MutableLiveData<List<Product>>()
-    var onSelected = true
+    private var onSelected = true
     private val app = application
 
     init {

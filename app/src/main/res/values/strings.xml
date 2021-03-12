@@ -2,8 +2,11 @@
     <string name="app_name">ShipmentSystem</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="selectedColor">#F57C00</string>
-    <string name="defaultColor">#FFAB91</string>
+    <string name="selectedProductColor">#F57C00</string>
+    <string name="defaultProductColor">#FFAB91</string>
+    <string name="selectedOrderItemColor">#1548C3</string>
+    <string name="defaultOrderItemColor">#6288E4</string>
+
     <string name="created">"%1$s created!"</string>
     <string name="deleted">"%1$s deleted!"</string>
     <string name="updated">"%1$s updated!"</string>

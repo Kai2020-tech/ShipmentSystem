@@ -2,6 +2,7 @@ package com.example.shipmentsystem.order
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.*
 import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.db.OrderItem
-import com.example.shipmentsystem.db.OrderList
 import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.product.ProductVM
 import java.text.SimpleDateFormat
@@ -140,38 +140,34 @@ class OrderFragment : Fragment() {
     private fun initOrderRecyclerView() {
         orderRvAdapter = RvOrderAdapter()
         binding.rvOrder.adapter = orderRvAdapter.apply {
-            itemClickListener = {
-//                orderVM.onSelectProduct(it)
+            itemClickListener = { currentItem, postion ->
+                orderListVm.onSelectedOrderItem(currentItem,postion)
             }
 
             changeBackgroundListener = { currentItem, holder ->
-//                setSelectedItemColor(currentItem, holder)
+                setSelectedItemColor(currentItem, holder)
             }
         }
         binding.rvOrder.layoutManager = LinearLayoutManager(requireActivity())
 //        orderVM.orderList.observe(viewLifecycleOwner, Observer {
 //            orderRvAdapter.update(it)
 //        })
-        orderListVm.OrderList.observe(viewLifecycleOwner, Observer {
+        orderListVm.orderList.observe(viewLifecycleOwner, Observer {
             orderRvAdapter.update(it.toList())
         })
     }
 
-    private fun setSelectedItemColor(currentList: OrderList, holder: RvOrderAdapter.MyHolder) {
-        val selectedColor = getString(R.string.selectedColor)
-        val defaultColor = getString(R.string.defaultColor)
-//        orderVM.selectedProduct.observe(viewLifecycleOwner, Observer {
-//            //do not use "it" in here, cause it might be null
-//            if (currentItem.id == orderVM.selectedProduct.value?.id) {
-//                holder.name.setTextColor(Color.BLACK)
-//                holder.price.setTextColor(Color.BLACK)
-//                holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
-//            } else {
-//                holder.name.setTextColor(Color.WHITE)
-//                holder.price.setTextColor(Color.WHITE)
-//                holder.itemView.setBackgroundColor(Color.parseColor(defaultColor))
-//            }
-//        })
+    private fun setSelectedItemColor(currentItem: OrderItem, holder: RvOrderAdapter.MyHolder) {
+        val selectedColor = getString(R.string.selectedOrderItemColor)
+        val defaultColor = getString(R.string.defaultOrderItemColor)
+        orderListVm.selectedItem.observe(viewLifecycleOwner, Observer {
+            //do not use "it" in here, cause it might be null
+            if (currentItem === orderListVm.selectedItem.value) {
+                holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
+            } else {
+                holder.itemView.setBackgroundColor(Color.parseColor(defaultColor))
+            }
+        })
     }
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
