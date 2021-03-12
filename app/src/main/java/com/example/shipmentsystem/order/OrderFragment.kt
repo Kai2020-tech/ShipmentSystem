@@ -109,9 +109,9 @@ class OrderFragment : Fragment() {
             }
         //when click an item , will notify spinner to display selected item name
         orderListVm.selectedItem.observe(viewLifecycleOwner, Observer {
-            binding.spinnerProduct.setSelection(adapter.getPosition(it.name))
+            it?.let { binding.spinnerProduct.setSelection(adapter.getPosition(it.name)) }
+                ?: let { binding.spinnerProduct.setSelection(0) }
         })
-
     }
 
     private fun initOrderRecyclerView() {
