@@ -10,16 +10,18 @@ import com.example.shipmentsystem.db.OrderItem
 class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
     private val innerItemList = mutableListOf<OrderItem>()
     var itemClickListener: (OrderItem) -> Unit = {}
-    var changeBackgroundListener: (OrderItem, MyHolder) -> Unit = { orderItem: OrderItem, myHolder: MyHolder -> }
+    var changeBackgroundListener: (OrderItem, MyHolder) -> Unit =
+        { OrderItem: OrderItem, myHolder: MyHolder -> }
 
     inner class MyHolder(binding: ItemOrderBinding) : RecyclerView.ViewHolder(binding.root) {
         var name = binding.tvItemName
         var price = binding.tvItemPrice
         var id = binding.tvItemId
-        var orderDate = binding.tvOrderDate
+//        var orderDate = binding.tvOrderDate
+        val amount = binding.tvAmount
 
-        fun bind(orderItem: OrderItem, holder: MyHolder) {
-            changeBackgroundListener.invoke(orderItem, holder)
+        fun bind(OrderItem: OrderItem, holder: MyHolder) {
+            changeBackgroundListener.invoke(OrderItem, holder)
 
             holder.itemView.setOnClickListener {
                 itemClickListener.invoke(innerItemList[adapterPosition])
@@ -41,10 +43,11 @@ class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val currentItem = innerItemList[position]
-        holder.id.text = currentItem.id.toString()
+        holder.id.text = (position + 1).toString()
         holder.name.text = currentItem.name
         holder.price.text = "$ ${currentItem.sumPrice}"
-        holder.orderDate.text = currentItem.date.toString()
+        holder.amount.text = currentItem.amount.toString()
+//        holder.orderDate.text = currentItem.date.toString()
         holder.bind(currentItem, holder)
     }
 

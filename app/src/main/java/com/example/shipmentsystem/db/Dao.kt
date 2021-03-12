@@ -11,7 +11,7 @@ interface Dao {
     suspend fun insertProduct(product: Product)
 
     @Insert
-    suspend fun insertOrder(orderItem: OrderItem)
+    suspend fun insertOrder(orderList: OrderList)
 
     @Update
     suspend fun update(product: Product)
@@ -36,5 +36,5 @@ interface Dao {
     suspend fun getAllProducts(): List<Product>
 
     @Query("SELECT * FROM orderList_table  ORDER BY id DESC")
-    suspend fun getAllOrders(): List<OrderItem>
+    suspend fun getAllOrders(): List<OrderList>
 }

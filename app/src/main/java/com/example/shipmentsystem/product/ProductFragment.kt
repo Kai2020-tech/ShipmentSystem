@@ -1,12 +1,9 @@
 package com.example.shipmentsystem.product
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,7 +37,7 @@ class ProductFragment : Fragment() {
         productPrice = binding.edProductPrice
 
         productVM = getProductViewModel()
-        productVM.getAllProduct()
+        productVM.onCreateProductList()
 
         initProductRecyclerView()
 

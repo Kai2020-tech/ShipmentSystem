@@ -18,7 +18,7 @@ data class Product(
 )
 
 @Entity(tableName = "orderList_table")
-data class OrderItem(
+data class OrderList(
     @ColumnInfo(name = "customer_name")
     var name: String = "",
 
@@ -33,4 +33,10 @@ data class OrderItem(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
+)
+
+data class OrderItem(
+    val name: String,
+    val amount: Int,
+    val sumPrice: Int
 )

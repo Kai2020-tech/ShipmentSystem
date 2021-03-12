@@ -6,6 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.shipmentsystem.order.OrderListVm
 import com.example.shipmentsystem.product.OrderViewModelFactory
 import com.example.shipmentsystem.product.ProductViewModelFactory
 import com.example.shipmentsystem.product.ProductVM
@@ -24,6 +25,14 @@ fun Fragment.getOrderViewModel(): OrderVm {
         requireActivity(),
         OrderViewModelFactory(app)
     ).get(OrderVm::class.java)
+}
+
+fun Fragment.getOrderListVm(): OrderListVm {
+    val app = requireNotNull(activity).application
+    return ViewModelProvider(
+        requireActivity(),
+        OrderViewModelFactory(app)
+    ).get(OrderListVm::class.java)
 }
 
 fun Fragment.toast(message: String) {

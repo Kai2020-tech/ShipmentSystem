@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.*
 import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.db.OrderItem
+import com.example.shipmentsystem.db.OrderList
 import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.product.ProductVM
 import java.text.SimpleDateFormat
@@ -24,7 +25,9 @@ class OrderFragment : Fragment() {
     private val binding get() = orderBinding!!
 
     private lateinit var productVM: ProductVM
-    private lateinit var orderVM: OrderVm
+
+    //    private lateinit var orderVM: OrderVm
+    private lateinit var orderListVm: OrderListVm
 
     private lateinit var orderRvAdapter: RvOrderAdapter
 
@@ -43,14 +46,19 @@ class OrderFragment : Fragment() {
         productAmount = binding.edAmount
         orderDate = binding.tvDate
 
-
         productVM = getProductViewModel()
 
-        orderVM = getOrderViewModel()
+//        orderVM = getOrderViewModel().apply {
+//            this.customerName.observe(viewLifecycleOwner, Observer {
+//                this@OrderFragment.customerName.setText(it)
+//                this@OrderFragment.customerName.isEnabled = false
+//                this@OrderFragment.orderDate.isEnabled = false
+//            })
+//        }
 
+        orderListVm = getOrderListVm()
 
-
-        orderVM.getAllOrders()
+//        orderVM.getAllOrders()
 
         initOrderRecyclerView()
 
@@ -66,31 +74,33 @@ class OrderFragment : Fragment() {
     @SuppressLint("SimpleDateFormat")
     private fun onCrud() {
         /** Create */
-        binding.btnCreate.setOnClickListener {
-            val amount: Int = productAmount.text.toString().toInt()
-            val sumPrice = amount * orderProductPrice
-            val name = customerName.text.toString()
-            val date = SimpleDateFormat("yyyy/MM/dd").parse(orderDate.text.toString())
-            if (customerName.text.isNotBlank() && amount != 0) {
-
-                orderVM.onInsertOrder(name, orderProduct, sumPrice, date)
-                toast(getString(R.string.created, name))
+//        binding.btnCreate.setOnClickListener {
+//            val name = customerName.text.toString()
+//            val amount = if (productAmount.text.isNotBlank()) {
+//                productAmount.text.toString().toInt()
+//            } else {
+//                1
+//            }
+//
+//            val date = SimpleDateFormat("yyyy/MM/dd").parse(orderDate.text.toString())
+//            if (customerName.text.isNotBlank() && amount != 0) {
+//                orderVM.onInsertOrder(name, orderProduct, amount * orderProductPrice, date)
+//                toast(getString(R.string.created, name))
 //                clearEditText()
-            }
+//                orderVM.setCustomerName(name)
+//            }
+//        }
+        binding.btnCreate.setOnClickListener {
+            val amount = if (productAmount.text.isBlank()) 1
+            else productAmount.text.toString().toInt()
+            val item = OrderItem(orderProduct, amount, amount * orderProductPrice)
+            orderListVm.createOrderItem(item)
+
         }
     }
 
     private fun getProductListToSpinner() {
-        productVM.getAllProduct()   //trigger ProductList
-//        val productList = mutableListOf<String>()
-        val productList = mutableListOf<Product>()
         productVM.productList.observe(viewLifecycleOwner, Observer {
-//            productList.clear()
-//            it.forEach { product ->
-//                productList.add(product.name)
-//            }
-//            productList.addAll(it)
-
             setProductSpinner(it)
         })
     }
@@ -135,16 +145,19 @@ class OrderFragment : Fragment() {
             }
 
             changeBackgroundListener = { currentItem, holder ->
-                setSelectedItemColor(currentItem, holder)
+//                setSelectedItemColor(currentItem, holder)
             }
         }
         binding.rvOrder.layoutManager = LinearLayoutManager(requireActivity())
-        orderVM.orderList.observe(viewLifecycleOwner, Observer {
-            orderRvAdapter.update(it)
+//        orderVM.orderList.observe(viewLifecycleOwner, Observer {
+//            orderRvAdapter.update(it)
+//        })
+        orderListVm.OrderList.observe(viewLifecycleOwner, Observer {
+            orderRvAdapter.update(it.toList())
         })
     }
 
-    private fun setSelectedItemColor(currentItem: OrderItem, holder: RvOrderAdapter.MyHolder) {
+    private fun setSelectedItemColor(currentList: OrderList, holder: RvOrderAdapter.MyHolder) {
         val selectedColor = getString(R.string.selectedColor)
         val defaultColor = getString(R.string.defaultColor)
 //        orderVM.selectedProduct.observe(viewLifecycleOwner, Observer {
@@ -175,5 +188,10 @@ class OrderFragment : Fragment() {
                 }
             }, year, month, day).show()
         }
+    }
+
+    private fun clearEditText() {
+        customerName.text.clear()
+        productAmount.text.clear()
     }
 }
