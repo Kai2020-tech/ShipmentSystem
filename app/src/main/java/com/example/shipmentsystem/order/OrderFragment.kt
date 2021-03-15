@@ -33,7 +33,7 @@ class OrderFragment : Fragment() {
     private lateinit var productAmount: EditText
     private lateinit var orderDate: TextView
 
-    private lateinit var orderProduct: String
+    private var orderProduct = ""
     private var orderProductPrice = 0
 
     override fun onCreateView(
@@ -67,8 +67,13 @@ class OrderFragment : Fragment() {
         binding.btnCreate.setOnClickListener {
             val amount = if (productAmount.text.isBlank()) 1
             else productAmount.text.toString().toInt()
-            val item = OrderItem(orderProduct, amount, amount * orderProductPrice)
-            orderListVm.createOrderItem(item)
+            if (orderProduct == "") {
+                toast("Please create a product first")
+            } else {
+                val item = OrderItem(orderProduct, amount, amount * orderProductPrice)
+                orderListVm.createOrderItem(item)
+            }
+
 
         }
     }
