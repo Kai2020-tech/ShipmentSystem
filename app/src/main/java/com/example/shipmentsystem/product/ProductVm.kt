@@ -3,6 +3,7 @@ package com.example.shipmentsystem.product
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.shipmentsystem.db.MyDatabase
@@ -10,10 +11,19 @@ import com.example.shipmentsystem.db.Product
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ProductVM(application: Application) : AndroidViewModel(application) {
+class ProductVm(application: Application) : AndroidViewModel(application) {
     private var db: MyDatabase = MyDatabase.getInstance(application)
-    var selectedProduct = MutableLiveData<Product>()
-    val productList = MutableLiveData<List<Product>>()
+
+    private val _selectedProduct = MutableLiveData<Product>()
+    val selectedProduct : LiveData<Product>
+    get() = _selectedProduct
+
+    private val _productList = MutableLiveData<List<Product>>()
+    val productList :LiveData<List<Product>>
+    get() = _productList
+
+
+
     private var onSelected = true
     private val app = application
 
@@ -29,7 +39,7 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
     }
 
     private suspend fun getProductList() {
-        productList.value = db.dao.getAllProducts()
+        _productList.value = db.dao.getAllProducts()
     }
 
     fun onInsertProduct(name: String, price: Int) {
@@ -50,7 +60,7 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
     fun onDeleteProduct(itemSelectedId: Int) {
         viewModelScope.launch {
             deleteProduct(itemSelectedId)
-            selectedProduct.value = null
+            _selectedProduct.value = null
             onCreateProductList()
         }
     }
@@ -63,7 +73,7 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             update(product)
             onCreateProductList()
-            selectedProduct.value = null
+            _selectedProduct.value = null
         }
     }
 
@@ -74,7 +84,7 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
     fun onDbClear() {
         viewModelScope.launch {
             dbClear()
-            selectedProduct.value = null
+            _selectedProduct.value = null
             onCreateProductList()
         }
     }
@@ -91,28 +101,28 @@ class ProductVM(application: Application) : AndroidViewModel(application) {
     private suspend fun selectProduct(product: Product){
         when {
             onSelected -> {
-                setSelectedProductValue(product.id, onSelected)
+                set_selectedProductValue(product.id, onSelected)
                 toast("${product.name} \n selected.")
                 onSelected = false
             }
-            product.id == selectedProduct.value?.id -> {
-                setSelectedProductValue(product.id, onSelected)
+            product.id == _selectedProduct.value?.id -> {
+                set_selectedProductValue(product.id, onSelected)
                 toast("${product.name} \n unselected.")
                 onSelected = true
             }
             else -> {
-                setSelectedProductValue(product.id, true)
+                set_selectedProductValue(product.id, true)
                 toast("${product.name} \n selected.")
                 onSelected = false
             }
         }
     }
 
-    private suspend fun setSelectedProductValue(itemSelectedId: Int, isSelected: Boolean) {
+    private suspend fun set_selectedProductValue(itemSelectedId: Int, isSelected: Boolean) {
         if (isSelected) {
-            selectedProduct.value = db.dao.get(itemSelectedId)
+            _selectedProduct.value = db.dao.get(itemSelectedId)
         } else {
-            selectedProduct.value = null
+            _selectedProduct.value = null
         }
     }
 

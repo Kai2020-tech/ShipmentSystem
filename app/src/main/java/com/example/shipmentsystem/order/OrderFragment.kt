@@ -15,7 +15,7 @@ import com.example.shipmentsystem.*
 import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.Product
-import com.example.shipmentsystem.product.ProductVM
+import com.example.shipmentsystem.product.ProductVm
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,7 +24,7 @@ class OrderFragment : Fragment() {
     private var orderBinding: FragmentOrderBinding? = null
     private val binding get() = orderBinding!!
 
-    private lateinit var productVM: ProductVM
+    private lateinit var productVm: ProductVm
     private lateinit var orderListVm: OrderListVm
 
     private lateinit var orderRvAdapter: RvOrderAdapter
@@ -46,7 +46,7 @@ class OrderFragment : Fragment() {
         productAmount = binding.edAmount
         orderDate = binding.tvDate
 
-        productVM = getProductViewModel()
+        productVm = getProductViewModel()
 
         orderListVm = getOrderListVm()
 
@@ -79,7 +79,7 @@ class OrderFragment : Fragment() {
     }
 
     private fun getProductListToSpinner() {
-        productVM.productList.observe(viewLifecycleOwner, Observer {
+        productVm.productList.observe(viewLifecycleOwner, Observer {
             setProductSpinner(it)
         })
     }

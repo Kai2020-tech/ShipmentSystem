@@ -10,8 +10,8 @@ class ProductViewModelFactory(val application: Application) :
     ViewModelProvider.AndroidViewModelFactory(application) {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ProductVM::class.java)) {
-            return ProductVM(application) as T
+        if (modelClass.isAssignableFrom(ProductVm::class.java)) {
+            return ProductVm(application) as T
         }
         throw IllegalArgumentException("Unknown VewModel class.")
     }

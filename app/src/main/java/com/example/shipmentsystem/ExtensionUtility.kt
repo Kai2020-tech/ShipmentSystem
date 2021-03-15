@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.shipmentsystem.order.OrderListVm
 import com.example.shipmentsystem.product.OrderViewModelFactory
 import com.example.shipmentsystem.product.ProductViewModelFactory
-import com.example.shipmentsystem.product.ProductVM
+import com.example.shipmentsystem.product.ProductVm
 
-fun Fragment.getProductViewModel(): ProductVM {
+fun Fragment.getProductViewModel(): ProductVm {
     val app = requireNotNull(activity).application
     return ViewModelProvider(
         requireActivity(),
         ProductViewModelFactory(app)
-    ).get(ProductVM::class.java)
+    ).get(ProductVm::class.java)
 }
 
 fun Fragment.getOrderViewModel(): OrderVm {
