@@ -2,14 +2,21 @@ package com.example.shipmentsystem.order
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.toast
 import timber.log.Timber
 
 class OrderListVm(application: Application) : AndroidViewModel(application) {
-    val orderList = MutableLiveData<MutableList<OrderItem>>()
-    val selectedItem = MutableLiveData<OrderItem>()
+    private val _orderList = MutableLiveData<MutableList<OrderItem>>()
+    val orderList: LiveData<MutableList<OrderItem>>
+        get() = _orderList
+
+    private val _selectedItem = MutableLiveData<OrderItem>()
+    val selectedItem: LiveData<OrderItem>
+        get() = _selectedItem
+
     private var onSelected = true
     private val list = mutableListOf<OrderItem>()
     val customerName = MutableLiveData<String>()
@@ -20,7 +27,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
 
     fun createOrderItem(item: OrderItem) {
         list.add(item)
-        orderList.value = list
+        _orderList.value = list
         print("${orderList.value}")
     }
 
@@ -46,9 +53,9 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
 
     private fun setSelectedItemValue(item: OrderItem, isSelected: Boolean) {
         if (isSelected) {
-            selectedItem.value = item
+            _selectedItem.value = item
         } else {
-            selectedItem.value = null
+            _selectedItem.value = null
         }
     }
 
