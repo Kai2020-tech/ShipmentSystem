@@ -73,9 +73,12 @@ class OrderFragment : Fragment() {
                 val item = OrderItem(orderProduct, amount, amount * orderProductPrice)
                 orderListVm.createOrderItem(item)
             }
-
-
         }
+        /** Delete */
+        binding.btnDelete.setOnClickListener {
+            orderListVm.deleteOrderItem()
+        }
+
     }
 
     private fun getProductListToSpinner() {

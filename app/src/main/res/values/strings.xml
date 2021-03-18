@@ -21,9 +21,11 @@
     <string name="query">Query</string>
     <string name="date">Date</string>
     <string name="order_list">Order</string>
-    <string name="complete_list">Complete</string>
+    <string name="ship_list">Ship</string>
     <string name="product_list">Product</string>
     <string name="delete_all_products">Delete All Products</string>
     <string name="amount">Amount:</string>
     <string name="order_date">Order Date:</string>
+    <string name="please_enter_a_name">Please enter a name</string>
+    <string name="please_select_an_item">Please select an item</string>
 </resources>

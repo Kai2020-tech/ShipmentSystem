@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.shipmentsystem.R
 import com.example.shipmentsystem.db.MyDatabase
 import com.example.shipmentsystem.db.Product
 import kotlinx.coroutines.launch
@@ -101,24 +102,24 @@ class ProductVm(application: Application) : AndroidViewModel(application) {
     private suspend fun selectProduct(product: Product){
         when {
             onSelected -> {
-                set_selectedProductValue(product.id, onSelected)
+                setSelectedProductValue(product.id, onSelected)
                 toast("${product.name} \n selected.")
                 onSelected = false
             }
             product.id == _selectedProduct.value?.id -> {
-                set_selectedProductValue(product.id, onSelected)
+                setSelectedProductValue(product.id, onSelected)
                 toast("${product.name} \n unselected.")
                 onSelected = true
             }
             else -> {
-                set_selectedProductValue(product.id, true)
+                setSelectedProductValue(product.id, true)
                 toast("${product.name} \n selected.")
                 onSelected = false
             }
         }
     }
 
-    private suspend fun set_selectedProductValue(itemSelectedId: Int, isSelected: Boolean) {
+    private suspend fun setSelectedProductValue(itemSelectedId: Int, isSelected: Boolean) {
         if (isSelected) {
             _selectedProduct.value = db.dao.get(itemSelectedId)
         } else {
@@ -141,7 +142,7 @@ class ProductVm(application: Application) : AndroidViewModel(application) {
                 resultList
             }
         } else {
-            toast("Please enter a name")
+            toast(app.getString(R.string.please_enter_a_name))
             return productList.value!!
         }
     }
