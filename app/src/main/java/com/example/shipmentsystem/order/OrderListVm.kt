@@ -18,6 +18,10 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
     val selectedItem: LiveData<OrderItem>
         get() = _selectedItem
 
+    private val _selectedPos = MutableLiveData<Int>()
+    val selectedPos: LiveData<Int>
+        get() = _selectedPos
+
     private val app = application
 
     private var onSelected = true
@@ -34,7 +38,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
         print("${orderList.value}")
     }
 
-    fun onSelectedOrderItem(item: OrderItem) {
+    fun onSelectedOrderItem(item: OrderItem,pos: Int) {
         when {
             onSelected -> {
                 setSelectedItemValue(item, onSelected)
@@ -62,6 +66,9 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
         } else {
             toast(app.getString(R.string.please_select_an_item))
         }
+    }
+
+    fun updateOrderItem(){
 
     }
 

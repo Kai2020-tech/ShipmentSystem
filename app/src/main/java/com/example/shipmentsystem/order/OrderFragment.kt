@@ -58,6 +58,12 @@ class OrderFragment : Fragment() {
 
         onCrud()
 
+        orderListVm.selectedItem.observe(viewLifecycleOwner, Observer {
+            it?.let { binding.edAmount.setText(it.amount.toString()) }
+                ?: let { binding.edAmount.setText("") }
+        })
+
+
         return binding.root
     }
 
@@ -77,6 +83,16 @@ class OrderFragment : Fragment() {
         /** Delete */
         binding.btnDelete.setOnClickListener {
             orderListVm.deleteOrderItem()
+        }
+        /** Update */
+        binding.btnUpdate.setOnClickListener {
+            if (orderListVm.selectedItem.value != null) {
+                val amount = productAmount.text.toString().toInt()
+                val item = OrderItem(orderProduct, amount, amount * orderProductPrice)
+                orderListVm.updateOrderItem()
+            } else {
+                toast(this.getString(R.string.please_select_an_item))
+            }
         }
 
     }
@@ -125,8 +141,8 @@ class OrderFragment : Fragment() {
     private fun initOrderRecyclerView() {
         orderRvAdapter = RvOrderAdapter()
         binding.rvOrder.adapter = orderRvAdapter.apply {
-            itemClickListener = {
-                orderListVm.onSelectedOrderItem(it)
+            itemClickListener = { item, pos ->
+                orderListVm.onSelectedOrderItem(item, pos)
             }
 
             changeBackgroundListener = { currentItem, holder ->
@@ -135,7 +151,7 @@ class OrderFragment : Fragment() {
         }
         binding.rvOrder.layoutManager = LinearLayoutManager(requireActivity())
         orderListVm.orderList.observe(viewLifecycleOwner, Observer {
-            orderRvAdapter.update(it.toList())
+            orderRvAdapter.updateList(it.toList())
         })
     }
 
