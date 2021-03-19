@@ -35,6 +35,21 @@ data class OrderList(
     var id: Int = 0
 )
 
+@Entity(tableName = "processing_table")
+data class ProcessingList(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+
+    @ColumnInfo(name = "customer_name")
+    var name: String = "",
+
+    @ColumnInfo(name = "order_date")
+    var date: Date,
+
+    @ColumnInfo(name = "order_productList")
+    var product: List<Product>,
+)
+
 data class OrderItem(
     val name: String,
     val amount: Int,
