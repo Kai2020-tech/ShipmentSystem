@@ -10,6 +10,7 @@ import com.example.shipmentsystem.toast
 import timber.log.Timber
 
 class OrderListVm(application: Application) : AndroidViewModel(application) {
+
     private val _orderList = MutableLiveData<MutableList<OrderItem>>()
     val orderList: LiveData<MutableList<OrderItem>>
         get() = _orderList
@@ -26,10 +27,16 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
     val selectedPos: LiveData<Int>
         get() = _selectedPos
 
+    private val _totalOrderPrice = MutableLiveData<Int>()
+    val totalOrderPrice: LiveData<Int>
+        get() = _totalOrderPrice
+
     private val app = application
 
     private var onSelected = true
+
     private val list = mutableListOf<OrderItem>()
+
     val customerName = MutableLiveData<String>()
 
     init {
@@ -39,10 +46,11 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
     fun createOrderItem(item: OrderItem) {
         list.add(item)
         _orderList.value = list
+        calTotalOrderPrice()
         print("${orderList.value}")
     }
 
-    fun onSelectedOrderItem(item: OrderItem,pos: Int) {
+    fun onSelectedOrderItem(item: OrderItem, pos: Int) {
         when {
             onSelected -> {
                 setSelectedItemValue(item, onSelected)
@@ -70,13 +78,16 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
             list.remove(selectedItem.value)
             _orderList.value = list
             _selectedItem.value = null
+            calTotalOrderPrice()
         } else {
             toast(app.getString(R.string.please_select_an_item))
         }
     }
 
-    fun updateOrderItem(item: OrderItem){
+    fun updateOrderItem(item: OrderItem) {
         _updatedItem.value = item
+        list[selectedPos.value ?: -1] = item
+        calTotalOrderPrice()
     }
 
     private fun setSelectedItemValue(item: OrderItem, isSelected: Boolean) {
@@ -84,6 +95,13 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
             _selectedItem.value = item
         } else {
             _selectedItem.value = null
+        }
+    }
+
+    private fun calTotalOrderPrice(){
+        _totalOrderPrice.value = 0
+        list.forEach {
+            _totalOrderPrice.value = _totalOrderPrice.value!! + it.sumPrice
         }
     }
 

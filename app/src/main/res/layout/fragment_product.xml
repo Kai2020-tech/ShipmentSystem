@@ -89,7 +89,7 @@
         android:layout_marginStart="8dp"
         android:text="@string/update"
         app:layout_constraintBaseline_toBaselineOf="@+id/btn_delete"
-        app:layout_constraintEnd_toStartOf="@+id/btn_query"
+        app:layout_constraintEnd_toStartOf="@+id/btn_commit"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_delete" />
 

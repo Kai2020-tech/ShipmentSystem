@@ -75,16 +75,16 @@
         android:layout_marginStart="8dp"
         android:text="@string/update"
         app:layout_constraintBaseline_toBaselineOf="@+id/btn_delete"
-        app:layout_constraintEnd_toStartOf="@+id/btn_query"
+        app:layout_constraintEnd_toStartOf="@+id/btn_commit"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_delete" />
 
     <Button
-        android:id="@+id/btn_query"
+        android:id="@+id/btn_commit"
         style="@style/button_style"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/query"
+        android:text="@string/commit"
         app:layout_constraintBaseline_toBaselineOf="@+id/btn_update"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -106,7 +106,7 @@
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="2dp"
         android:background="@color/recyclerview_background"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
@@ -178,5 +178,29 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/tv_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/total"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_totalResult" />
+
+    <TextView
+        android:id="@+id/tv_totalResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
