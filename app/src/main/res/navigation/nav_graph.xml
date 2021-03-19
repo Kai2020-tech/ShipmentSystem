@@ -13,4 +13,8 @@
         android:id="@+id/itemFragment"
         android:name="com.example.shipmentsystem.product.ProductFragment"
         android:label="@string/product_list" />
+    <fragment
+        android:id="@+id/shipFragment"
+        android:name="com.example.shipmentsystem.ship.ShipFragment"
+        android:label="@string/shipFragment" />
 </navigation>
