@@ -87,14 +87,13 @@ class OrderFragment : Fragment() {
         /** Update */
         binding.btnUpdate.setOnClickListener {
             if (orderListVm.selectedItem.value != null) {
-                val amount = productAmount.text.toString().toInt()
+                val amount = productAmount.text.toString().toInt() ?: 1
                 val item = OrderItem(orderProduct, amount, amount * orderProductPrice)
-                orderListVm.updateOrderItem()
+                orderListVm.updateOrderItem(item)
             } else {
                 toast(this.getString(R.string.please_select_an_item))
             }
         }
-
     }
 
     private fun getProductListToSpinner() {
@@ -149,9 +148,17 @@ class OrderFragment : Fragment() {
                 setSelectedItemColor(currentItem, holder)
             }
         }
+
         binding.rvOrder.layoutManager = LinearLayoutManager(requireActivity())
+
         orderListVm.orderList.observe(viewLifecycleOwner, Observer {
             orderRvAdapter.updateList(it.toList())
+        })
+
+        orderListVm.updatedItem.observe(viewLifecycleOwner, Observer { updatedItem ->
+            orderListVm.selectedPos.value?.let { position ->
+                orderRvAdapter.updateItem(position, updatedItem)
+            }
         })
     }
 
