@@ -69,4 +69,7 @@ dependencies {
     def coroutine_version = "1.4.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    //viewpager2, need with material
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 }

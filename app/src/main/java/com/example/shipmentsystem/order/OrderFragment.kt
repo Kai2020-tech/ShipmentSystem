@@ -64,7 +64,7 @@ class OrderFragment : Fragment() {
         })
 
         orderListVm.totalOrderPrice.observe(viewLifecycleOwner, Observer {
-            it?.let { binding.tvTotalResult.text = it.toString() }
+            it?.let { binding.tvTotalPrice.text = it.toString() }
         })
 
 

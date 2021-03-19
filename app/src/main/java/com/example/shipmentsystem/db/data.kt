@@ -47,7 +47,10 @@ data class ProcessingList(
     var date: Date,
 
     @ColumnInfo(name = "order_productList")
-    var product: List<Product>,
+    var product: MutableList<Product>,
+
+    @ColumnInfo(name = "order_totalPrice")
+    var totalPrice: Int = 0
 )
 
 data class OrderItem(

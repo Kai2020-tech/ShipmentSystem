@@ -189,10 +189,10 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_totalResult" />
+        app:layout_constraintEnd_toStartOf="@+id/tv_totalPrice" />
 
     <TextView
-        android:id="@+id/tv_totalResult"
+        android:id="@+id/tv_totalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
