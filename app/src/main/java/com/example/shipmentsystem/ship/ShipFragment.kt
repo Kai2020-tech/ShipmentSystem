@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentShipBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class ShipFragment : Fragment() {
@@ -20,6 +21,14 @@ class ShipFragment : Fragment() {
     ): View? {
         shipBinding = FragmentShipBinding.inflate(inflater, container, false)
 
+        binding.viewPager2.adapter = VpAdapter(requireActivity().supportFragmentManager, lifecycle)
+
+        val title: ArrayList<String> =
+            arrayListOf(getString(R.string.processing), getString(R.string.complete))
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
+            tab.text = title[position]
+        }.attach()
 
         return binding.root
     }
