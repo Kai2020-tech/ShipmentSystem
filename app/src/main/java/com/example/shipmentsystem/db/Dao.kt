@@ -34,9 +34,9 @@ interface Dao {
     suspend fun getAllProducts(): List<Product>
 
 
-    @Insert
-    suspend fun insertOrder(orderList: OrderList)
-
-    @Query("SELECT * FROM orderList_table  ORDER BY id DESC")
-    suspend fun getAllOrders(): List<OrderList>
+//    @Insert
+//    suspend fun insertOrder(orderList: OrderList)
+//
+//    @Query("SELECT * FROM orderList_table  ORDER BY id DESC")
+//    suspend fun getAllOrders(): List<OrderList>
 }

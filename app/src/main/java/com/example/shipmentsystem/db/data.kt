@@ -17,24 +17,6 @@ data class Product(
     var id: Int = 0
 )
 
-@Entity(tableName = "orderList_table")
-data class OrderList(
-    @ColumnInfo(name = "customer_name")
-    var name: String = "",
-
-    @ColumnInfo(name = "order_product")
-    var product: String = "",
-
-    @ColumnInfo(name = "order_sum")
-    var sumPrice: Int = 0,
-
-    @ColumnInfo(name = "order_date")
-    var date: Date,
-
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
-)
-
 @Entity(tableName = "processing_table")
 data class ProcessingList(
     @PrimaryKey(autoGenerate = true)

@@ -20,13 +20,6 @@ fun Fragment.getProductViewModel(): ProductVm {
     ).get(ProductVm::class.java)
 }
 
-fun Fragment.getOrderViewModel(): OrderVm {
-    val app = requireNotNull(activity).application
-    return ViewModelProvider(
-        requireActivity(),
-        OrderViewModelFactory(app)
-    ).get(OrderVm::class.java)
-}
 
 fun Fragment.getOrderListVm(): OrderListVm {
     val app = requireNotNull(activity).application
