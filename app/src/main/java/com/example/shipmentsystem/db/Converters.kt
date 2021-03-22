@@ -19,13 +19,13 @@ class Converters {
     }
 
     @TypeConverter
-    fun productListFromJson(value: String): MutableList<Product> {
-        val listType = object : TypeToken<MutableList<Product>>() {}.type
+    fun productListFromJson(value: String): MutableList<OrderItem> {
+        val listType = object : TypeToken<MutableList<OrderItem>>() {}.type
         return Gson().fromJson(value, listType)
     }
 
     @TypeConverter
-    fun productListToJson(list: MutableList<Product>): String {
+    fun productListToJson(list: MutableList<OrderItem>): String {
         val gson = Gson()
         return gson.toJson(list)
     }

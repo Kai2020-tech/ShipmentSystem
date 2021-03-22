@@ -35,7 +35,7 @@ interface Dao {
 
     /** Processing */
     @Insert
-    suspend fun insertProcessing(processItem: ProcessingItem)
+    suspend fun insertProcessing(item: ProcessingItem)
 
     @Query("SELECT * FROM processing_table  ORDER BY id DESC")
     suspend fun getAllProcessing(): List<ProcessingItem>

@@ -1,15 +1,20 @@
 package com.example.shipmentsystem.order
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.example.shipmentsystem.R
+import com.example.shipmentsystem.db.MyDatabase
 import com.example.shipmentsystem.db.OrderItem
+import com.example.shipmentsystem.db.ProcessingItem
+import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.toast
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 
 class OrderListVm(application: Application) : AndroidViewModel(application) {
+
+    private var dbDao = MyDatabase.getInstance(application).dao
 
     private val _orderList = MutableLiveData<MutableList<OrderItem>>()
     val orderList: LiveData<MutableList<OrderItem>>
@@ -98,11 +103,27 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun calTotalOrderPrice(){
+    private fun calTotalOrderPrice() {
         _totalOrderPrice.value = 0
         list.forEach {
             _totalOrderPrice.value = _totalOrderPrice.value!! + it.sumPrice
         }
+    }
+
+    fun createProcessingItem(name: String, date: Date) {
+        val item = ProcessingItem(
+            name = name,
+            date = date,
+            orderList = list,
+            totalPrice = totalOrderPrice.value ?: 0
+        )
+        viewModelScope.launch {
+            insertProcessingItem(item)
+        }
+    }
+
+    private suspend fun insertProcessingItem(item: ProcessingItem) {
+        dbDao.insertProcessing(item)
     }
 
 

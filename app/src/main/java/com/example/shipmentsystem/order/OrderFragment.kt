@@ -98,6 +98,13 @@ class OrderFragment : Fragment() {
                 toast(this.getString(R.string.please_select_an_item))
             }
         }
+
+        /** Commit */
+        binding.btnCommit.setOnClickListener {
+            if(orderListVm.orderList.value != null && binding.edCustomerName.text.isNotBlank()){
+//                orderListVm.
+            }
+        }
     }
 
     private fun getProductListToSpinner() {
