@@ -8,7 +8,7 @@ import com.example.shipmentsystem.databinding.ItemOrderBinding
 import com.example.shipmentsystem.db.OrderItem
 
 class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
-    private val innerItemList = mutableListOf<OrderItem>()
+    private val innerList = mutableListOf<OrderItem>()
     var itemClickListener: (OrderItem, Int) -> Unit = { orderItem: OrderItem, int: Int -> }
     var changeBackgroundListener: (OrderItem, MyHolder) -> Unit =
         { orderItem: OrderItem, myHolder: MyHolder -> }
@@ -23,7 +23,7 @@ class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
             changeBackgroundListener.invoke(orderItem, holder)
 
             holder.itemView.setOnClickListener {
-                itemClickListener.invoke(innerItemList[adapterPosition], adapterPosition)
+                itemClickListener.invoke(innerList[adapterPosition], adapterPosition)
             }
         }
     }
@@ -41,7 +41,7 @@ class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        val currentItem = innerItemList[position]
+        val currentItem = innerList[position]
         holder.id.text = (position + 1).toString()
         holder.name.text = currentItem.name
         holder.price.text = "$ ${currentItem.sumPrice}"
@@ -49,16 +49,16 @@ class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
         holder.bind(currentItem, holder)
     }
 
-    override fun getItemCount(): Int = innerItemList.size
+    override fun getItemCount(): Int = innerList.size
 
     fun updateList(updateList: List<OrderItem>) {
-        innerItemList.clear()
-        innerItemList.addAll(updateList)
+        innerList.clear()
+        innerList.addAll(updateList)
         this.notifyDataSetChanged()
     }
 
     fun updateItem(int: Int, item: OrderItem) {
-        innerItemList[int] = item
+        innerList[int] = item
         this.notifyItemChanged(int)
     }
 

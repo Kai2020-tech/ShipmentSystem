@@ -7,7 +7,7 @@ import androidx.room.Update
 
 @Dao
 interface Dao {
-    /** Product Db */
+    /** Product */
     @Insert
     suspend fun insertProduct(product: Product)
 
@@ -32,6 +32,13 @@ interface Dao {
 
     @Query("SELECT * FROM product_table  ORDER BY id DESC")
     suspend fun getAllProducts(): List<Product>
+
+    /** Processing */
+    @Insert
+    suspend fun insertProcessing(processItem: ProcessingItem)
+
+    @Query("SELECT * FROM processing_table  ORDER BY id DESC")
+    suspend fun getAllProcessing(): List<ProcessingItem>
 
 
 //    @Insert

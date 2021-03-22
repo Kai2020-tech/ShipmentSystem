@@ -3,6 +3,7 @@ package com.example.shipmentsystem.db
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import java.util.*
 
 @Entity(tableName = "product_table")
@@ -18,7 +19,7 @@ data class Product(
 )
 
 @Entity(tableName = "processing_table")
-data class ProcessingList(
+data class ProcessingItem(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
 
@@ -29,7 +30,7 @@ data class ProcessingList(
     var date: Date,
 
     @ColumnInfo(name = "order_productList")
-    var product: MutableList<Product>,
+    var orderList: MutableList<Product>,
 
     @ColumnInfo(name = "order_totalPrice")
     var totalPrice: Int = 0

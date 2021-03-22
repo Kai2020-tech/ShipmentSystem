@@ -6,16 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.shipmentsystem.R
+import com.example.shipmentsystem.databinding.FragmentProcessingBinding
 
 
 class ProcessingFragment : Fragment() {
+    private var processingBinding: FragmentProcessingBinding? = null
+    private val binding get() = processingBinding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_processing, container, false)
+
+        processingBinding = FragmentProcessingBinding.inflate(inflater,container,false)
+
+
+
+
+        return binding.root
     }
 
 
