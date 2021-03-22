@@ -8,6 +8,7 @@ import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.ProcessingItem
 import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.toast
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
@@ -117,7 +118,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
             orderList = list,
             totalPrice = totalOrderPrice.value ?: 0
         )
-        viewModelScope.launch {
+        viewModelScope.launch{
             insertProcessingItem(item)
         }
     }

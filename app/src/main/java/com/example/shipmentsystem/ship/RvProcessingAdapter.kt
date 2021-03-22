@@ -41,4 +41,10 @@ class RvProcessingAdapter : RecyclerView.Adapter<RvProcessingAdapter.MyHolder>()
     override fun getItemCount(): Int {
         return innerList.size
     }
+
+    fun update(updateList: List<ProcessingItem>) {
+        innerList.clear()
+        innerList.addAll(updateList)
+        this.notifyDataSetChanged()
+    }
 }

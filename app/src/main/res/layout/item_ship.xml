@@ -7,7 +7,7 @@
     android:layout_marginLeft="1dp"
     android:layout_marginRight="1dp"
     android:layout_marginBottom="4dp"
-    android:background="#FFF59D">
+    android:background="#AF8AD8">
 
     <TextView
         android:id="@+id/textView5"
@@ -16,6 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/order_date"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="TextView"
+        android:textColor="@color/black"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
         app:layout_constraintStart_toEndOf="@+id/textView5" />
 
@@ -35,6 +37,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -45,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/items"
+        android:textColor="@color/black"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_orderDate"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
@@ -61,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="TextView"
+        android:textColor="@color/black"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
         app:layout_constraintStart_toEndOf="@+id/textView8" />
 
@@ -70,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/total"
+        android:textColor="@color/black"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_customerName"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
@@ -77,8 +83,9 @@
         android:id="@+id/tv_totalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="2dp"
         android:text="TextView"
+        android:textColor="@color/black"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView10"
         app:layout_constraintStart_toEndOf="@+id/textView10" />
 </androidx.constraintlayout.widget.ConstraintLayout>

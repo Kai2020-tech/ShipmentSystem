@@ -30,10 +30,10 @@ class ProductVm(application: Application) : AndroidViewModel(application) {
 
     init {
         Timber.d("ProductViewModel created! $this")
-        onCreateProductList()
+        getList()
     }
 
-    fun onCreateProductList() {
+    fun getList() {
         viewModelScope.launch {
             getProductList()
         }
@@ -47,7 +47,7 @@ class ProductVm(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val product = Product(name, price)
             insertProductItem(product)
-            onCreateProductList()
+            getList()
         }
     }
 
@@ -62,7 +62,7 @@ class ProductVm(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             deleteProduct(itemSelectedId)
             _selectedProduct.value = null
-            onCreateProductList()
+            getList()
         }
     }
 
@@ -73,7 +73,7 @@ class ProductVm(application: Application) : AndroidViewModel(application) {
     fun onUpdate(product: Product) {
         viewModelScope.launch {
             update(product)
-            onCreateProductList()
+            getList()
             _selectedProduct.value = null
         }
     }
@@ -86,7 +86,7 @@ class ProductVm(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             dbClear()
             _selectedProduct.value = null
-            onCreateProductList()
+            getList()
         }
     }
     private suspend fun dbClear(){

@@ -7,12 +7,9 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.shipmentsystem.R
+import com.example.shipmentsystem.*
 import com.example.shipmentsystem.databinding.FragmentProductBinding
 import com.example.shipmentsystem.db.Product
-import com.example.shipmentsystem.getProductViewModel
-import com.example.shipmentsystem.hideKeyboard
-import com.example.shipmentsystem.toast
 import timber.log.Timber
 
 
@@ -36,8 +33,9 @@ class ProductFragment : Fragment() {
         productName = binding.edProductName
         productPrice = binding.edProductPrice
 
-        productVm = getProductViewModel()
-        productVm.onCreateProductList()
+        productVm = getProductVm()
+//        productVm = getViewModel(ProductVm(requireActivity().application))
+        productVm.getList()
 
         initProductRecyclerView()
 

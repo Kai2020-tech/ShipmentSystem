@@ -16,6 +16,7 @@ import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.product.ProductVm
+import com.example.shipmentsystem.ship.ProcessingVm
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,6 +27,7 @@ class OrderFragment : Fragment() {
 
     private lateinit var productVm: ProductVm
     private lateinit var orderListVm: OrderListVm
+    private lateinit var processingVm: ProcessingVm
 
     private lateinit var orderRvAdapter: RvOrderAdapter
 
@@ -46,9 +48,13 @@ class OrderFragment : Fragment() {
         productAmount = binding.edAmount
         orderDate = binding.tvDate
 
-        productVm = getProductViewModel()
+        productVm = getProductVm()
+//        productVm = getViewModel(ProductVm(requireActivity().application))
 
         orderListVm = getOrderListVm()
+//        orderListVm = getViewModel(OrderListVm(requireActivity().application))
+
+        processingVm = getProcessingVm()
 
         initOrderRecyclerView()
 
@@ -101,9 +107,13 @@ class OrderFragment : Fragment() {
 
         /** Commit */
         binding.btnCommit.setOnClickListener {
-            if(orderListVm.orderList.value != null && binding.edCustomerName.text.isNotBlank()){
-//                orderListVm.
+            if (orderListVm.orderList.value != null && binding.edCustomerName.text.isNotBlank()) {
+                val name = binding.edCustomerName.text.toString()
+                val date = SimpleDateFormat("yyyy/MM/dd").parse(binding.tvDate.text.toString())
+                orderListVm.createProcessingItem(name, date)
+                processingVm.getList()  //notify processingVm get the recent list
             }
+
         }
     }
 
