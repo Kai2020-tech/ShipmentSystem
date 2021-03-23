@@ -1,5 +1,6 @@
 package com.example.shipmentsystem.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -38,7 +39,7 @@ interface Dao {
     suspend fun insertProcessing(item: ProcessingItem)
 
     @Query("SELECT * FROM processing_table  ORDER BY id DESC")
-    suspend fun getAllProcessing(): List<ProcessingItem>
+    fun getAllProcessing(): LiveData<List<ProcessingItem>>
 
 
 //    @Insert

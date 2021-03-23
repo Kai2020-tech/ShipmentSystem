@@ -111,7 +111,7 @@ class OrderFragment : Fragment() {
                 val name = binding.edCustomerName.text.toString()
                 val date = SimpleDateFormat("yyyy/MM/dd").parse(binding.tvDate.text.toString())
                 orderListVm.createProcessingItem(name, date)
-                processingVm.getList()  //notify processingVm get the recent list
+//                processingVm.getList()  //notify processingVm get the recent list
             }
 
         }
