@@ -3,8 +3,11 @@ package com.example.shipmentsystem
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,6 +33,18 @@ class MainActivity : AppCompatActivity() {
         setupBottomNav(navController)
 
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = this.findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+//                R.id.orderListFragment,
+//                R.id.itemFragment,
+//                R.id.shipFragment
+            )
+        )
+        return NavigationUI.navigateUp(navController,appBarConfiguration)
+    }// setup back arrow
 
     private fun getNavController(): NavController {
         val navHostFragment = supportFragmentManager

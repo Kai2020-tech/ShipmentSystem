@@ -24,6 +24,6 @@
     <fragment
         android:id="@+id/editFragment"
         android:name="com.example.shipmentsystem.ship.EditFragment"
-        android:label="fragment_edit"
+        android:label="@string/edit_fragment"
         tools:layout="@layout/fragment_edit" />
 </navigation>

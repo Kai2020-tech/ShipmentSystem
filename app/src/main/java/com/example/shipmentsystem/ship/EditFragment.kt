@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.shipmentsystem.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,6 +40,8 @@ class EditFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit, container, false)
     }
+
+
 
     companion object {
         /**
