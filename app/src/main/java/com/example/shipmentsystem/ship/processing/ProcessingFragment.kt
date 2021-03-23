@@ -1,17 +1,14 @@
-package com.example.shipmentsystem.ship
+package com.example.shipmentsystem.ship.processing
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
 import com.example.shipmentsystem.getProcessingVm
-import com.example.shipmentsystem.product.ProductVm
-import com.example.shipmentsystem.product.ViewModelFactory
 
 
 class ProcessingFragment : Fragment() {

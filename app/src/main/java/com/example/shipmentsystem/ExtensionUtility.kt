@@ -12,8 +12,7 @@ import com.example.shipmentsystem.order.OrderListVm
 import com.example.shipmentsystem.product.ViewModelFactory
 import com.example.shipmentsystem.product.ProductViewModelFactory
 import com.example.shipmentsystem.product.ProductVm
-import com.example.shipmentsystem.ship.ProcessingVm
-import kotlin.reflect.KClass
+import com.example.shipmentsystem.ship.processing.ProcessingVm
 
 fun Fragment.getProductVm(): ProductVm {
     val app = requireNotNull(activity).application

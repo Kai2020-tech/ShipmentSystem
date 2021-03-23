@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.shipmentsystem.order.OrderListVm
-import com.example.shipmentsystem.ship.ProcessingVm
+import com.example.shipmentsystem.ship.processing.ProcessingVm
 
 class ProductViewModelFactory(private val application: Application) :
     ViewModelProvider.AndroidViewModelFactory(application) {

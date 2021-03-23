@@ -16,7 +16,7 @@ import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.product.ProductVm
-import com.example.shipmentsystem.ship.ProcessingVm
+import com.example.shipmentsystem.ship.processing.ProcessingVm
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -113,9 +113,8 @@ class OrderFragment : Fragment() {
                 orderListVm.createProcessingItem(name, date)
                 clearScreen()
             } else {
-                toast(getString(R.string.please_enter_name_or_items))
+                toast(this.getString(R.string.please_enter_name_or_items))
             }
-
         }
     }
 
