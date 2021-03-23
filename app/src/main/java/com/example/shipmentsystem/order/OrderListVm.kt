@@ -47,6 +47,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
 
     init {
         Timber.d("OrderListVm created.")
+        _orderList.value = list //let LiveData nonnull
     }
 
     fun createOrderItem(item: OrderItem) {
@@ -96,6 +97,12 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
         calTotalOrderPrice()
     }
 
+    fun clear() {
+        list.clear()
+        _orderList.value = list
+        _totalOrderPrice.value = 0
+    }
+
     private fun setSelectedItemValue(item: OrderItem, isSelected: Boolean) {
         if (isSelected) {
             _selectedItem.value = item
@@ -118,7 +125,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
             orderList = list,
             totalPrice = totalOrderPrice.value ?: 0
         )
-        viewModelScope.launch{
+        viewModelScope.launch {
             insertProcessingItem(item)
         }
     }

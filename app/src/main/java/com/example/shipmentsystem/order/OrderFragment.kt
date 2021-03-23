@@ -107,11 +107,13 @@ class OrderFragment : Fragment() {
 
         /** Commit */
         binding.btnCommit.setOnClickListener {
-            if (orderListVm.orderList.value != null && binding.edCustomerName.text.isNotBlank()) {
+            if (orderListVm.orderList.value?.size != 0 && binding.edCustomerName.text.isNotBlank()) {
                 val name = binding.edCustomerName.text.toString()
                 val date = SimpleDateFormat("yyyy/MM/dd").parse(binding.tvDate.text.toString())
                 orderListVm.createProcessingItem(name, date)
-//                processingVm.getList()  //notify processingVm get the recent list
+                clearScreen()
+            } else {
+                toast(getString(R.string.please_enter_name_or_items))
             }
 
         }
@@ -172,8 +174,8 @@ class OrderFragment : Fragment() {
 
         binding.rvOrder.layoutManager = LinearLayoutManager(requireActivity())
 
-        orderListVm.orderList.observe(viewLifecycleOwner, Observer {
-            orderRvAdapter.updateList(it.toList())
+        orderListVm.orderList.observe(viewLifecycleOwner, Observer { orderList ->
+            orderList?.let { orderRvAdapter.updateList(orderList.toList()) }
         })
 
         orderListVm.updatedItem.observe(viewLifecycleOwner, Observer { updatedItem ->
@@ -212,8 +214,10 @@ class OrderFragment : Fragment() {
         }
     }
 
-    private fun clearEditText() {
+    private fun clearScreen() {
         customerName.text.clear()
         productAmount.text.clear()
+        orderListVm.clear()
+        hideKeyboard(binding.textView)
     }
 }
