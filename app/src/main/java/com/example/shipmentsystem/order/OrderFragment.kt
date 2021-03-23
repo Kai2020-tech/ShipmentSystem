@@ -216,7 +216,6 @@ class OrderFragment : Fragment() {
     private fun clearScreen() {
         customerName.text.clear()
         productAmount.text.clear()
-        orderListVm.clear()
         hideKeyboard(binding.textView)
     }
 }

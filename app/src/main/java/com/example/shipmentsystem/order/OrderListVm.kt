@@ -97,7 +97,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
         calTotalOrderPrice()
     }
 
-    fun clear() {
+    private fun clear() {
         list.clear()
         _orderList.value = list
         _totalOrderPrice.value = 0
@@ -127,6 +127,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
         )
         viewModelScope.launch {
             insertProcessingItem(item)
+            clear()
         }
     }
 
