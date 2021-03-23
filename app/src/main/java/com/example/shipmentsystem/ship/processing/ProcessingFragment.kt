@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
 import com.example.shipmentsystem.getProcessingVm
 
@@ -25,8 +28,15 @@ class ProcessingFragment : Fragment() {
 
         processingBinding = FragmentProcessingBinding.inflate(inflater,container,false)
 
+
+
         processAdapter = RvProcessingAdapter()
-        binding.recyclerView.adapter = processAdapter
+        binding.recyclerView.adapter = processAdapter.apply {
+            val navController = getNavController()
+            itemClickListener ={
+                navController.navigate(R.id.action_shipFragment_to_editFragment)
+            }
+        }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
         processingVm = getProcessingVm()
@@ -41,5 +51,11 @@ class ProcessingFragment : Fragment() {
         return binding.root
     }
 
+    private fun getNavController(): NavController {
+        val navHostFragment = requireActivity().supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        return navHostFragment.navController
+
+    }//set NavHostFragment, a container for fragments
 
 }

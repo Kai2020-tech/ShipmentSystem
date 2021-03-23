@@ -16,5 +16,14 @@
     <fragment
         android:id="@+id/shipFragment"
         android:name="com.example.shipmentsystem.ship.ShipFragment"
-        android:label="@string/shipFragment" />
+        android:label="@string/shipFragment" >
+        <action
+            android:id="@+id/action_shipFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.example.shipmentsystem.ship.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" />
 </navigation>

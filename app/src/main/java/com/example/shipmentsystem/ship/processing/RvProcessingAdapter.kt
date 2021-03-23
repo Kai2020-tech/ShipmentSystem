@@ -4,10 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shipmentsystem.databinding.ItemShipBinding
+import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.ProcessingItem
+import com.example.shipmentsystem.order.RvOrderAdapter
 import java.text.SimpleDateFormat
 
 class RvProcessingAdapter : RecyclerView.Adapter<RvProcessingAdapter.MyHolder>() {
+    var itemClickListener: () -> Unit = {}
 
     private val innerList = mutableListOf<ProcessingItem>()
 
@@ -16,6 +19,14 @@ class RvProcessingAdapter : RecyclerView.Adapter<RvProcessingAdapter.MyHolder>()
         var name = binding.tvCustomerName
         var itemCount = binding.tvItemCount
         var totalPrice = binding.tvTotalPrice
+
+
+        fun bind(holder: MyHolder) {
+
+            holder.itemView.setOnClickListener {
+                itemClickListener.invoke()
+            }
+        }
 
 
     }
@@ -35,6 +46,8 @@ class RvProcessingAdapter : RecyclerView.Adapter<RvProcessingAdapter.MyHolder>()
         holder.name.text = currentItem.name
         holder.itemCount.text = currentItem.orderList.size.toString()
         holder.totalPrice.text = currentItem.totalPrice.toString()
+
+        holder.bind(holder)
 
     }
 
