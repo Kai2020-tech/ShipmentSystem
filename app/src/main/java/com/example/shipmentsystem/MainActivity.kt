@@ -2,7 +2,10 @@ package com.example.shipmentsystem
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -10,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.shipmentsystem.ship.EditFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -43,12 +47,13 @@ class MainActivity : AppCompatActivity() {
 //                R.id.shipFragment
             )
         )
-        return NavigationUI.navigateUp(navController,appBarConfiguration)
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
     }// setup back arrow
 
     private fun getNavController(): NavController {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
         return navHostFragment.navController
 
     }//set NavHostFragment, a container for fragments
@@ -72,6 +77,15 @@ class MainActivity : AppCompatActivity() {
         // if current fragment == destination , do not create the same fragment
         bottomNav.setOnNavigationItemReselectedListener {}
 
+        //decide bottomNav GONE or VISIBLE of current fragment
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+//            Log.e(TAG, "onDestinationChanged: "+destination.label);
+            if (destination.label == getString(R.string.edit_fragment)) {
+                bottomNav.visibility = View.GONE
+            }else{
+                bottomNav.visibility = View.VISIBLE
+            }
+        }
     }//set BottomNavigationView with NavController
 
 }
