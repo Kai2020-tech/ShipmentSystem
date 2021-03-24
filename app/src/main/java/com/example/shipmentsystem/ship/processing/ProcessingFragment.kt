@@ -28,13 +28,11 @@ class ProcessingFragment : Fragment() {
 
         processingBinding = FragmentProcessingBinding.inflate(inflater,container,false)
 
-
-
         processAdapter = RvProcessingAdapter()
+
         binding.recyclerView.adapter = processAdapter.apply {
-            val navController = getNavController()
             itemClickListener ={
-                navController.navigate(R.id.action_shipFragment_to_editFragment)
+                getNavController().navigate(R.id.action_shipFragment_to_editFragment)
             }
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
@@ -44,9 +42,6 @@ class ProcessingFragment : Fragment() {
         processingVm.processingList.observe(viewLifecycleOwner, Observer { list ->
             processAdapter.update(list)
         })
-
-
-
 
         return binding.root
     }
