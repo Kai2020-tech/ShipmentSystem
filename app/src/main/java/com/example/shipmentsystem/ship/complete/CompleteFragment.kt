@@ -1,4 +1,4 @@
-package com.example.shipmentsystem.ship
+package com.example.shipmentsystem.ship.complete
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
