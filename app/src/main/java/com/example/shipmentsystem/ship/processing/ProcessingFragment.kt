@@ -26,12 +26,12 @@ class ProcessingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        processingBinding = FragmentProcessingBinding.inflate(inflater,container,false)
+        processingBinding = FragmentProcessingBinding.inflate(inflater, container, false)
 
         processAdapter = RvProcessingAdapter()
 
         binding.recyclerView.adapter = processAdapter.apply {
-            itemClickListener ={
+            itemClickListener = {
                 getNavController().navigate(R.id.action_shipFragment_to_editFragment)
             }
         }
