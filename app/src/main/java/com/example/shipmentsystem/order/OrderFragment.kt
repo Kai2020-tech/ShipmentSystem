@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.*
@@ -25,7 +26,7 @@ class OrderFragment : Fragment() {
     private var orderBinding: FragmentOrderBinding? = null
     private val binding get() = orderBinding!!
 
-    private lateinit var productVm: ProductVm
+    private val productVm: ProductVm by activityViewModels()
     private lateinit var orderListVm: OrderListVm
     private lateinit var processingVm: ProcessingVm
 
@@ -47,10 +48,6 @@ class OrderFragment : Fragment() {
         customerName = binding.edCustomerName
         productAmount = binding.edAmount
         orderDate = binding.tvDate
-
-        productVm = getProductVm()
-//        productVm = getViewModel(ProductVm(requireActivity().application))
-        productVm = getViewModel(ProductVm::class.java)
 
         orderListVm = getOrderListVm()
 //        orderListVm = getViewModel(OrderListVm(requireActivity().application))

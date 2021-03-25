@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.*
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.*
@@ -19,7 +21,7 @@ class ProductFragment : Fragment() {
 
     private lateinit var productRvAdapter: RvProductAdapter
 
-    private lateinit var productVm: ProductVm
+    private val productVm: ProductVm by activityViewModels()
 
     private lateinit var productName:EditText
     private lateinit var productPrice:EditText
@@ -33,8 +35,6 @@ class ProductFragment : Fragment() {
         productName = binding.edProductName
         productPrice = binding.edProductPrice
 
-//        productVm = getProductVm()
-        productVm = getViewModel(ProductVm::class.java)
         productVm.getList()
 
         initProductRecyclerView()
