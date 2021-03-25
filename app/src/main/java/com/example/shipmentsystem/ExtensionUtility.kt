@@ -13,6 +13,7 @@ import com.example.shipmentsystem.product.ViewModelFactory
 import com.example.shipmentsystem.product.ProductViewModelFactory
 import com.example.shipmentsystem.product.ProductVm
 import com.example.shipmentsystem.ship.processing.ProcessingVm
+import kotlin.reflect.KClass
 
 fun Fragment.getProductVm(): ProductVm {
     val app = requireNotNull(activity).application
@@ -41,12 +42,12 @@ fun Fragment.getProcessingVm(): ProcessingVm {
 
 //想傳入不同ViewModel class後,回傳對應的VM實例
 //但目前這樣使用會得到相同class的多個實例
-inline fun <reified T : ViewModel> Fragment.getViewModel(myClass: T): T {
+inline fun <reified T : AndroidViewModel> Fragment.getViewModel(myClass: Class<T>): T {
     val app = requireNotNull(activity).application
     return ViewModelProvider(
         requireActivity(),
         ViewModelFactory(app)
-    ).get(myClass::class.java)
+    ).get(myClass)
 }
 
 fun Fragment.toast(message: String) {

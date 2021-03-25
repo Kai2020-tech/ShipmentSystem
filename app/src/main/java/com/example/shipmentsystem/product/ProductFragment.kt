@@ -33,8 +33,8 @@ class ProductFragment : Fragment() {
         productName = binding.edProductName
         productPrice = binding.edProductPrice
 
-        productVm = getProductVm()
-//        productVm = getViewModel(ProductVm(requireActivity().application))
+//        productVm = getProductVm()
+        productVm = getViewModel(ProductVm::class.java)
         productVm.getList()
 
         initProductRecyclerView()

@@ -50,6 +50,7 @@ class OrderFragment : Fragment() {
 
         productVm = getProductVm()
 //        productVm = getViewModel(ProductVm(requireActivity().application))
+        productVm = getViewModel(ProductVm::class.java)
 
         orderListVm = getOrderListVm()
 //        orderListVm = getViewModel(OrderListVm(requireActivity().application))
