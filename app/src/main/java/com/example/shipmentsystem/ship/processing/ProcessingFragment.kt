@@ -32,13 +32,13 @@ class ProcessingFragment : Fragment() {
 
         binding.recyclerView.adapter = processAdapter.apply {
             itemClickListener = {
-                getNavController().navigate(R.id.action_shipFragment_to_editFragment)
+                getNavController().navigate(R.id.action_shipFragment_to_orderListFragment)
             }
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
         processingVm = getProcessingVm()
-//        processingVm.getList()
+        
         processingVm.processingList.observe(viewLifecycleOwner, Observer { list ->
             processAdapter.update(list)
         })
