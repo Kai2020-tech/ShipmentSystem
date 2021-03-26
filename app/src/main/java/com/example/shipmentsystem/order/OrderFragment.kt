@@ -27,8 +27,7 @@ class OrderFragment : Fragment() {
     private val binding get() = orderBinding!!
 
     private val productVm: ProductVm by activityViewModels()
-    private lateinit var orderListVm: OrderListVm
-    private lateinit var processingVm: ProcessingVm
+    private val orderListVm: OrderListVm by activityViewModels()
 
     private lateinit var orderRvAdapter: RvOrderAdapter
 
@@ -48,11 +47,6 @@ class OrderFragment : Fragment() {
         customerName = binding.edCustomerName
         productAmount = binding.edAmount
         orderDate = binding.tvDate
-
-        orderListVm = getOrderListVm()
-//        orderListVm = getViewModel(OrderListVm(requireActivity().application))
-
-        processingVm = getProcessingVm()
 
         initOrderRecyclerView()
 

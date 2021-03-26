@@ -5,13 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
-import com.example.shipmentsystem.getProcessingVm
+//import com.example.shipmentsystem.getProcessingVm
 
 
 class ProcessingFragment : Fragment() {
@@ -19,7 +20,7 @@ class ProcessingFragment : Fragment() {
     private val binding get() = processingBinding!!
     private lateinit var processAdapter: RvProcessingAdapter
 
-    private lateinit var processingVm: ProcessingVm
+    private val processingVm: ProcessingVm by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +38,6 @@ class ProcessingFragment : Fragment() {
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
-        processingVm = getProcessingVm()
-        
         processingVm.processingList.observe(viewLifecycleOwner, Observer { list ->
             processAdapter.update(list)
         })
