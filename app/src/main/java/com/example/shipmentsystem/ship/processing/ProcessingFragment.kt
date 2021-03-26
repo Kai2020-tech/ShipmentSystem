@@ -12,6 +12,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
+import com.example.shipmentsystem.toast
+
 //import com.example.shipmentsystem.getProcessingVm
 
 
@@ -33,7 +35,8 @@ class ProcessingFragment : Fragment() {
 
         binding.recyclerView.adapter = processAdapter.apply {
             itemClickListener = {
-                getNavController().navigate(R.id.action_shipFragment_to_orderListFragment)
+                getNavController().navigate(R.id.action_shipFragment_to_editFragment)
+                toast("$it")
             }
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())

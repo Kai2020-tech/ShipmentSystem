@@ -10,7 +10,7 @@ import com.example.shipmentsystem.order.RvOrderAdapter
 import java.text.SimpleDateFormat
 
 class RvProcessingAdapter : RecyclerView.Adapter<RvProcessingAdapter.MyHolder>() {
-    var itemClickListener: () -> Unit = {}
+    var itemClickListener: (ProcessingItem) -> Unit = {}
 
     private val innerList = mutableListOf<ProcessingItem>()
 
@@ -24,7 +24,7 @@ class RvProcessingAdapter : RecyclerView.Adapter<RvProcessingAdapter.MyHolder>()
         fun bind(holder: MyHolder) {
 
             holder.itemView.setOnClickListener {
-                itemClickListener.invoke()
+                itemClickListener.invoke(innerList[adapterPosition])
             }
         }
 

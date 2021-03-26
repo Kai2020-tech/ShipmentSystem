@@ -36,4 +36,6 @@
     <string name="shipFragment">Ship</string>
     <string name="please_enter_name_or_items">Please enter name or items</string>
     <string name="edit_fragment">Edit</string>
+    <string name="save">Save</string>
+    <string name="clear">Clear</string>
 </resources>
