@@ -2,11 +2,14 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
+    id 'kotlin-parcelize'
 }
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
+
 
     buildFeatures{
         viewBinding = true

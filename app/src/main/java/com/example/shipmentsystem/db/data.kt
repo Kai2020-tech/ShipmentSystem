@@ -1,9 +1,12 @@
 package com.example.shipmentsystem.db
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 import java.util.*
 
 @Entity(tableName = "product_table")
@@ -19,6 +22,7 @@ data class Product(
 )
 
 @Entity(tableName = "processing_table")
+@Parcelize
 data class ProcessingItem(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
@@ -34,10 +38,11 @@ data class ProcessingItem(
 
     @ColumnInfo(name = "order_totalPrice")
     var totalPrice: Int = 0
-)
+) : Parcelable
 
+@Parcelize
 data class OrderItem(
     val name: String,
     val amount: Int,
     val sumPrice: Int
-)
+) : Parcelable

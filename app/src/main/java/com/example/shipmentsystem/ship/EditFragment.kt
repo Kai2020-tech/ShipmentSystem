@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.shipmentsystem.R
+import timber.log.Timber
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,6 +39,9 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        val args = EditFragmentArgs.fromBundle(requireArguments())
+        Timber.d("${args.processingItem.name}")
         return inflater.inflate(R.layout.fragment_edit, container, false)
     }
 

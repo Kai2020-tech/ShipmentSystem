@@ -25,5 +25,10 @@
         android:id="@+id/editFragment"
         android:name="com.example.shipmentsystem.ship.EditFragment"
         android:label="@string/edit_fragment"
-        tools:layout="@layout/fragment_edit" />
+        tools:layout="@layout/fragment_edit">
+        <argument
+            android:name="processingItem"
+            app:argType="com.example.shipmentsystem.db.ProcessingItem"
+             />
+    </fragment>
 </navigation>
