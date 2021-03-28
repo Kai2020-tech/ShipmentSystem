@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF3E0"
-    tools:context=".ship.EditFragment">
+    tools:context=".ship.edit.EditFragment">
 
     <TextView
         android:id="@+id/textView"
@@ -98,7 +98,7 @@
         app:layout_constraintGuide_end="580dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_order"
+        android:id="@+id/rv_edit"
         android:layout_width="414dp"
         android:layout_height="496dp"
         android:layout_marginStart="1dp"
@@ -110,7 +110,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        tools:listitem="@layout/item_order" />
+        tools:listitem="@layout/item_edit" />
 
     <Spinner
         android:id="@+id/spinner_product"

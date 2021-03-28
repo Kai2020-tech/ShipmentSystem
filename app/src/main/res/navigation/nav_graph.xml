@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/editFragment"
-        android:name="com.example.shipmentsystem.ship.EditFragment"
+        android:name="com.example.shipmentsystem.ship.edit.EditFragment"
         android:label="@string/edit_fragment"
         tools:layout="@layout/fragment_edit">
         <argument

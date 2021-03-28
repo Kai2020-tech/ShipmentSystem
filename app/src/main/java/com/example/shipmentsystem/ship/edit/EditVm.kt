@@ -1,4 +1,4 @@
-package com.example.shipmentsystem.ship
+package com.example.shipmentsystem.ship.edit
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

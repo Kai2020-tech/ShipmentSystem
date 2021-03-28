@@ -12,8 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
-import com.example.shipmentsystem.ship.EditVm
-import com.example.shipmentsystem.ship.ShipFragmentDirections
+import com.example.shipmentsystem.ship.edit.EditVm
 import com.example.shipmentsystem.toast
 
 class ProcessingFragment : Fragment() {
