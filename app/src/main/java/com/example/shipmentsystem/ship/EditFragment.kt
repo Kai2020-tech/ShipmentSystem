@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -26,6 +27,8 @@ class EditFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val editVm: EditVm by activityViewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,8 +43,10 @@ class EditFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        val args = EditFragmentArgs.fromBundle(requireArguments())
-        Timber.d("${args.processingItem.name}")
+//        val args = EditFragmentArgs.fromBundle(requireArguments())
+//        Timber.d("${args.processingItem.name}")
+
+        Timber.d("${editVm.processingItem.value?.name}")
         return inflater.inflate(R.layout.fragment_edit, container, false)
     }
 

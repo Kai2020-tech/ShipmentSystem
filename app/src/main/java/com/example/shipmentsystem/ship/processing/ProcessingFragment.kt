@@ -12,11 +12,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
+import com.example.shipmentsystem.ship.EditVm
 import com.example.shipmentsystem.ship.ShipFragmentDirections
 import com.example.shipmentsystem.toast
-
-//import com.example.shipmentsystem.getProcessingVm
-
 
 class ProcessingFragment : Fragment() {
     private var processingBinding: FragmentProcessingBinding? = null
@@ -24,6 +22,7 @@ class ProcessingFragment : Fragment() {
     private lateinit var processAdapter: RvProcessingAdapter
 
     private val processingVm: ProcessingVm by activityViewModels()
+    private val editVm: EditVm by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +35,9 @@ class ProcessingFragment : Fragment() {
 
         binding.recyclerView.adapter = processAdapter.apply {
             itemClickListener = {
-//                getNavController().navigate(R.id.action_shipFragment_to_editFragment)
-                getNavController().navigate(ShipFragmentDirections.actionShipFragmentToEditFragment(it))
+                getNavController().navigate(R.id.action_shipFragment_to_editFragment)
+//                getNavController().navigate(ShipFragmentDirections.actionShipFragmentToEditFragment(it))
+                editVm.getProcessingItem(it)    //use viewModel access
                 toast("$it")
             }
         }
