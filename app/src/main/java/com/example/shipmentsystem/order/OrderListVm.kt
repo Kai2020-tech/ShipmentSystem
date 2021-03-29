@@ -21,16 +21,16 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
     val orderList: LiveData<MutableList<OrderItem>>
         get() = _orderList
 
-    private val _selectedItem = MutableLiveData<OrderItem>()
-    val selectedItem: LiveData<OrderItem>
+    private val _selectedItem = MutableLiveData<OrderItem?>()
+    val selectedItem: LiveData<OrderItem?>
         get() = _selectedItem
 
     private val _updatedItem = MutableLiveData<OrderItem>()
     val updatedItem: LiveData<OrderItem>
         get() = _updatedItem
 
-    private val _selectedPos = MutableLiveData<Int>()
-    val selectedPos: LiveData<Int>
+    private val _selectedPos = MutableLiveData<Int?>()
+    val selectedPos: LiveData<Int?>
         get() = _selectedPos
 
     private val _totalOrderPrice = MutableLiveData<Int>()
@@ -54,7 +54,6 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
         list.add(item)
         _orderList.value = list
         calTotalOrderPrice()
-        print("${orderList.value}")
     }
 
     fun onSelectedOrderItem(item: OrderItem, pos: Int) {

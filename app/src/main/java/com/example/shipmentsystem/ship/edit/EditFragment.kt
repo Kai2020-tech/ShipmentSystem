@@ -7,17 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentEditBinding
+import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.order.OrderListVm
 import com.example.shipmentsystem.product.ProductVm
+import com.example.shipmentsystem.toast
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,6 +32,10 @@ class EditFragment : Fragment() {
 
     private lateinit var rvEditAdapter: RvEditAdapter
 
+    private lateinit var customerName: EditText
+    private lateinit var productAmount: EditText
+    private lateinit var orderDate: TextView
+
     private var orderProduct = ""
     private var orderProductPrice = 0
 
@@ -41,7 +45,11 @@ class EditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        editBinding = FragmentEditBinding.inflate(inflater,container,false)
+        editBinding = FragmentEditBinding.inflate(inflater, container, false)
+
+        customerName = binding.edCustomerName
+        productAmount = binding.edAmount
+        orderDate = binding.tvDate
 
         //get processingItem from ViewModel,no need safeargs//
 //        val args = EditFragmentArgs.fromBundle(requireArguments())
@@ -57,12 +65,33 @@ class EditFragment : Fragment() {
         editVm.processingItem.observe(viewLifecycleOwner, Observer { processingItem ->
             binding.edCustomerName.setText(processingItem.name)
             binding.tvDate.text = SimpleDateFormat("yyyy/MM/dd").format(processingItem.date)
+            binding.tvTotalPrice.text = processingItem.totalPrice.toString()
             rvEditAdapter.updateList(processingItem.orderList)
+        })
+
+        editVm.orderList.observe(viewLifecycleOwner, Observer {
+            rvEditAdapter.updateList(it)
+        })
+
+        editVm.totalOrderPrice.observe(viewLifecycleOwner, Observer {
+            binding.tvTotalPrice.text = it.toString()
         })
 
         getProductListToSpinner()
 
         setDatePicker()
+
+        binding.btnCreate.setOnClickListener {
+            val amount = if (productAmount.text.isBlank()) 1
+            else productAmount.text.toString().toInt()
+            if (orderProduct == "") {
+                toast("Please create a product first")
+            } else {
+                val item = OrderItem(orderProduct, amount, amount * orderProductPrice)
+                editVm.createOrderItem(item)
+            }
+        }
+
 
         return binding.root
     }
