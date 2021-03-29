@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentCompleteBinding
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
+import timber.log.Timber
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,7 +26,9 @@ class CompleteFragment : Fragment() {
     private var processingBinding: FragmentCompleteBinding? = null
     private val binding get() = processingBinding!!
 
-
+    init {
+        Timber.d("complete Vm create $this")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

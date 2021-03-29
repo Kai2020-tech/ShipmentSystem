@@ -14,6 +14,7 @@ import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
 import com.example.shipmentsystem.ship.edit.EditVm
 import com.example.shipmentsystem.toast
+import timber.log.Timber
 
 class ProcessingFragment : Fragment() {
     private var processingBinding: FragmentProcessingBinding? = null
@@ -22,6 +23,10 @@ class ProcessingFragment : Fragment() {
 
     private val processingVm: ProcessingVm by activityViewModels()
     private val editVm: EditVm by activityViewModels()
+
+    init {
+        Timber.d("processing Vm create $this")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
