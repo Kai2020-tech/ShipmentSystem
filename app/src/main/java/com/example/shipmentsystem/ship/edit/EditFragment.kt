@@ -1,5 +1,7 @@
 package com.example.shipmentsystem.ship.edit
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +19,8 @@ import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.order.OrderListVm
 import com.example.shipmentsystem.product.ProductVm
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EditFragment : Fragment() {
     private var editBinding: FragmentEditBinding? = null
@@ -32,6 +36,7 @@ class EditFragment : Fragment() {
     private var orderProductPrice = 0
 
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,10 +56,13 @@ class EditFragment : Fragment() {
 
         editVm.processingItem.observe(viewLifecycleOwner, Observer { processingItem ->
             binding.edCustomerName.setText(processingItem.name)
+            binding.tvDate.text = SimpleDateFormat("yyyy/MM/dd").format(processingItem.date)
             rvEditAdapter.updateList(processingItem.orderList)
         })
 
         getProductListToSpinner()
+
+        setDatePicker()
 
         return binding.root
     }
@@ -98,6 +106,21 @@ class EditFragment : Fragment() {
             it?.let { binding.spinnerProduct.setSelection(adapter.getPosition(it.name)) }
                 ?: let { binding.spinnerProduct.setSelection(0) }
         })
+    }
+
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
+    private fun setDatePicker() {
+        binding.tvDate.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            DatePickerDialog(requireActivity(), { _, year, month, day ->
+                run {
+                    binding.tvDate.text = "$year/${month + 1}/$day"
+                }
+            }, year, month, day).show()
+        }
     }
 
 
