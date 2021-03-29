@@ -25,7 +25,7 @@ class ProcessingFragment : Fragment() {
     private val editVm: EditVm by activityViewModels()
 
     init {
-        Timber.d("processing Vm create $this")
+        Timber.d("processing fragment create $this")
     }
 
     override fun onCreateView(
@@ -61,4 +61,9 @@ class ProcessingFragment : Fragment() {
 
     }//set NavHostFragment, a container for fragments
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Timber.d("processing fragment destroyed.")
+    }
 }

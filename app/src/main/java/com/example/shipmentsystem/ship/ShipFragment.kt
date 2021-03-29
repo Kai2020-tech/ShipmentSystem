@@ -21,7 +21,7 @@ class ShipFragment : Fragment() {
     ): View? {
         shipBinding = FragmentShipBinding.inflate(inflater, container, false)
 
-        binding.viewPager2.adapter = VpAdapter(requireActivity().supportFragmentManager, lifecycle)
+        binding.viewPager2.adapter = VpAdapter(this.childFragmentManager, this.lifecycle)
 
         val title: ArrayList<String> =
             arrayListOf(getString(R.string.processing), getString(R.string.complete))
@@ -32,5 +32,4 @@ class ShipFragment : Fragment() {
 
         return binding.root
     }
-
 }
