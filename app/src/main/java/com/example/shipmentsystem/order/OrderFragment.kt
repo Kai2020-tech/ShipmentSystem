@@ -17,7 +17,6 @@ import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.product.ProductVm
-import com.example.shipmentsystem.ship.processing.ProcessingVm
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,7 +28,7 @@ class OrderFragment : Fragment() {
     private val productVm: ProductVm by activityViewModels()
     private val orderListVm: OrderListVm by activityViewModels()
 
-    private lateinit var orderRvAdapter: RvOrderAdapter
+    private lateinit var rvOrderAdapter: RvOrderAdapter
 
     private lateinit var customerName: EditText
     private lateinit var productAmount: EditText
@@ -152,8 +151,8 @@ class OrderFragment : Fragment() {
     }
 
     private fun initOrderRecyclerView() {
-        orderRvAdapter = RvOrderAdapter()
-        binding.rvOrder.adapter = orderRvAdapter.apply {
+        rvOrderAdapter = RvOrderAdapter()
+        binding.rvOrder.adapter = rvOrderAdapter.apply {
             itemClickListener = { item, pos ->
                 orderListVm.onSelectedOrderItem(item, pos)
             }
@@ -166,12 +165,12 @@ class OrderFragment : Fragment() {
         binding.rvOrder.layoutManager = LinearLayoutManager(requireActivity())
 
         orderListVm.orderList.observe(viewLifecycleOwner, Observer { orderList ->
-            orderList?.let { orderRvAdapter.updateList(orderList.toList()) }
+            orderList?.let { rvOrderAdapter.updateList(orderList.toList()) }
         })
 
         orderListVm.updatedItem.observe(viewLifecycleOwner, Observer { updatedItem ->
             orderListVm.selectedPos.value?.let { position ->
-                orderRvAdapter.updateItem(position, updatedItem)
+                rvOrderAdapter.updateItem(position, updatedItem)
             }
         })
     }

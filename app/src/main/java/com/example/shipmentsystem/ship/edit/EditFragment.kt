@@ -2,6 +2,7 @@ package com.example.shipmentsystem.ship.edit
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.example.shipmentsystem.databinding.FragmentEditBinding
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.order.OrderListVm
+import com.example.shipmentsystem.order.RvOrderAdapter
 import com.example.shipmentsystem.product.ProductVm
 import com.example.shipmentsystem.toast
 import timber.log.Timber
@@ -58,6 +60,13 @@ class EditFragment : Fragment() {
         rvEditAdapter = RvEditAdapter()
 
         binding.rvEdit.adapter = rvEditAdapter.apply {
+            itemClickListener = {item, pos ->
+                editVm.onSelectedOrderItem(item, pos)
+            }
+
+            changeBackgroundListener = { currentItem, holder ->
+                setSelectedItemColor(currentItem, holder)
+            }
 
         }
         binding.rvEdit.layoutManager = LinearLayoutManager(requireActivity())
@@ -152,5 +161,17 @@ class EditFragment : Fragment() {
         }
     }
 
+    private fun setSelectedItemColor(currentItem: OrderItem, holder: RvEditAdapter.MyHolder) {
+        val selectedColor = getString(R.string.selectedOrderItemColor)
+        val defaultColor = getString(R.string.defaultOrderItemColor)
+        editVm.selectedItem.observe(viewLifecycleOwner, Observer {
+            //use === compare objects , currentItem and vm's live data item
+            if (currentItem === editVm.selectedItem.value) {
+                holder.itemView.setBackgroundColor(Color.parseColor(selectedColor))
+            } else {
+                holder.itemView.setBackgroundColor(Color.parseColor(defaultColor))
+            }
+        })
+    }
 
 }
