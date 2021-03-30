@@ -42,5 +42,6 @@ data class ProcessingItem(
 data class OrderItem(
     val name: String,
     val amount: Int,
-    val sumPrice: Int
+    val sumPrice: Int,
+    var isChecked: Boolean = false
 ) : Parcelable

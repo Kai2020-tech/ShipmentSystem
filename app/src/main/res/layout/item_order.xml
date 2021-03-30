@@ -49,10 +49,10 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="170dp"
+        android:layout_marginStart="8dp"
         android:text="@string/amount"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_itemName"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/tv_itemName" />
 
     <TextView
         android:id="@+id/tv_amount"
@@ -63,4 +63,13 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_itemName"
         app:layout_constraintStart_toEndOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="@string/price_sign"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_amount"
+        app:layout_constraintEnd_toStartOf="@+id/tv_itemPrice" />
 </androidx.constraintlayout.widget.ConstraintLayout>

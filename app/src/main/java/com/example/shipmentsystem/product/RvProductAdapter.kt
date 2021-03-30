@@ -37,12 +37,11 @@ class RvProductAdapter : RecyclerView.Adapter<RvProductAdapter.MyHolder>() {
         return myHolder
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val currentItem = innerItemList[position]
         holder.id.text = currentItem.id.toString()
         holder.name.text = currentItem.name
-        holder.price.text = "$ ${currentItem.price}"
+        holder.price.text = currentItem.price.toString()
         holder.bind(currentItem, holder)
     }
 

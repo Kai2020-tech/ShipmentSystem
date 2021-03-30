@@ -38,4 +38,5 @@
     <string name="edit_fragment">Edit</string>
     <string name="save">Save</string>
     <string name="clear">Clear</string>
+    <string name="price_sign">$</string>
 </resources>
