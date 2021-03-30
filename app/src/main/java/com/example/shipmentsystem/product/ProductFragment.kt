@@ -6,7 +6,6 @@ import android.view.*
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.*
@@ -19,7 +18,7 @@ class ProductFragment : Fragment() {
     private var productBinding: FragmentProductBinding? = null
     private val binding get() = productBinding!!
 
-    private lateinit var productRvAdapter: RvProductAdapter
+    private lateinit var rvProductAdapter: RvProductAdapter
 
     private val productVm: ProductVm by activityViewModels()
 
@@ -101,15 +100,15 @@ class ProductFragment : Fragment() {
         /** Query */
         binding.btnQuery.setOnClickListener {
             val name = productName.text.toString()
-            productRvAdapter.update(productVm.query(name))
+            rvProductAdapter.update(productVm.query(name))
 
             hideKeyboard(binding.textView)
         }
     }
 
     private fun initProductRecyclerView() {
-        productRvAdapter = RvProductAdapter()
-        binding.rvProduct.adapter = productRvAdapter.apply {
+        rvProductAdapter = RvProductAdapter()
+        binding.rvProduct.adapter = rvProductAdapter.apply {
             itemClickListener = {
                 productVm.onSelectProduct(it)
             }
@@ -120,7 +119,7 @@ class ProductFragment : Fragment() {
         }
         binding.rvProduct.layoutManager = LinearLayoutManager(requireActivity())
         productVm.productList.observe(viewLifecycleOwner, Observer {
-            productRvAdapter.update(it)
+            rvProductAdapter.update(it)
         })
     }
 

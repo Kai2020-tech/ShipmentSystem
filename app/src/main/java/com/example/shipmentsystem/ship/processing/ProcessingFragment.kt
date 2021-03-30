@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
 import com.example.shipmentsystem.ship.edit.EditVm
-import com.example.shipmentsystem.toast
 import timber.log.Timber
 
 class ProcessingFragment : Fragment() {
     private var processingBinding: FragmentProcessingBinding? = null
     private val binding get() = processingBinding!!
-    private lateinit var processAdapter: RvProcessingAdapter
+    private lateinit var rvProcessAdapter: RvProcessingAdapter
 
     private val processingVm: ProcessingVm by activityViewModels()
     private val editVm: EditVm by activityViewModels()
@@ -35,9 +34,9 @@ class ProcessingFragment : Fragment() {
 
         processingBinding = FragmentProcessingBinding.inflate(inflater, container, false)
 
-        processAdapter = RvProcessingAdapter()
+        rvProcessAdapter = RvProcessingAdapter()
 
-        binding.recyclerView.adapter = processAdapter.apply {
+        binding.recyclerView.adapter = rvProcessAdapter.apply {
             itemClickListener = {
                 getNavController().navigate(R.id.action_shipFragment_to_editFragment)
 //                getNavController().navigate(ShipFragmentDirections.actionShipFragmentToEditFragment(it))
@@ -47,7 +46,7 @@ class ProcessingFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
         processingVm.processingList.observe(viewLifecycleOwner, Observer { list ->
-            processAdapter.update(list)
+            rvProcessAdapter.update(list)
         })
 
         return binding.root
