@@ -21,22 +21,19 @@ class EditVm(application: Application) : AndroidViewModel(application) {
     val totalOrderPrice: LiveData<Int>
         get() = _totalOrderPrice
 
-    private val list = mutableListOf<OrderItem>()
-
     fun getProcessingItem(item: ProcessingItem) {
         _processingItem.value = item
-        list.addAll(item.orderList)
     }
 
     fun createOrderItem(item: OrderItem) {
-        list.add(item)
-        _orderList.value = list
+        _processingItem.value?.orderList?.add(item)
+        _orderList.value = _processingItem.value?.orderList
         calTotalOrderPrice()
     }
 
     private fun calTotalOrderPrice() {
         _totalOrderPrice.value = 0
-        list.forEach {
+        _processingItem.value?.orderList?.forEach {
             _totalOrderPrice.value = _totalOrderPrice.value!! + it.sumPrice
         }
     }
