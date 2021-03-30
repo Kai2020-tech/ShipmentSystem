@@ -39,4 +39,6 @@
     <string name="save">Save</string>
     <string name="clear">Clear</string>
     <string name="price_sign">$</string>
+    <string name="order_saved">"%1$s order saved."</string>
+    <string name="order_in_processing">"%1$s order in processing."</string>
 </resources>

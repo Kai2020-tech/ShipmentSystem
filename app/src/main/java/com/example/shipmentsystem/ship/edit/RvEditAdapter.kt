@@ -69,4 +69,6 @@ class RvEditAdapter : RecyclerView.Adapter<RvEditAdapter.MyHolder>() {
         innerList[int] = item
         this.notifyItemChanged(int)
     }
+
+    fun getCheckedList() = innerList
 }

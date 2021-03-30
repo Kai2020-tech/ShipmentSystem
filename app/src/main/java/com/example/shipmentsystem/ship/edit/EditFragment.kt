@@ -11,16 +11,15 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentEditBinding
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.order.OrderListVm
-import com.example.shipmentsystem.order.RvOrderAdapter
 import com.example.shipmentsystem.product.ProductVm
 import com.example.shipmentsystem.toast
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,6 +28,8 @@ class EditFragment : Fragment() {
     private val binding get() = editBinding!!
 
     private val editVm: EditVm by activityViewModels()
+
+    //    private lateinit var editVm: EditVm
     private val productVm: ProductVm by activityViewModels()
     private val orderListVm: OrderListVm by activityViewModels()
 
@@ -49,6 +50,8 @@ class EditFragment : Fragment() {
     ): View? {
         editBinding = FragmentEditBinding.inflate(inflater, container, false)
 
+//        editVm = ViewModelProvider(this).get(EditVm::class.java)
+
         customerName = binding.edCustomerName
         productAmount = binding.edAmount
         orderDate = binding.tvDate
@@ -57,39 +60,38 @@ class EditFragment : Fragment() {
 //        val args = EditFragmentArgs.fromBundle(requireArguments())
 //        Timber.d("${args.processingItem.name}")
 
-        rvEditAdapter = RvEditAdapter()
-
-        binding.rvEdit.adapter = rvEditAdapter.apply {
-            itemClickListener = {item, pos ->
-                editVm.onSelectedOrderItem(item, pos)
-            }
-
-            changeBackgroundListener = { currentItem, holder ->
-                setSelectedItemColor(currentItem, holder)
-            }
-
-        }
-        binding.rvEdit.layoutManager = LinearLayoutManager(requireActivity())
+        initEditRecyclerView()
 
         editVm.processingItem.observe(viewLifecycleOwner, Observer { processingItem ->
-            binding.edCustomerName.setText(processingItem.name)
-            binding.tvDate.text = SimpleDateFormat("yyyy/MM/dd").format(processingItem.date)
-            binding.tvTotalPrice.text = processingItem.totalPrice.toString()
-            rvEditAdapter.updateList(processingItem.orderList)
+            binding.edCustomerName.setText(processingItem?.name)
+            binding.tvDate.text = SimpleDateFormat("yyyy/MM/dd").format(processingItem?.date)
+            binding.tvTotalPrice.text = processingItem?.totalPrice.toString()
+            processingItem?.orderList?.let { rvEditAdapter.updateList(it.toMutableList()) }
         })
 
         editVm.orderList.observe(viewLifecycleOwner, Observer {
             rvEditAdapter.updateList(it)
         })
 
+        editVm.selectedItem.observe(viewLifecycleOwner, Observer {
+            it?.let { binding.edAmount.setText(it.amount.toString()) }
+                ?: let { binding.edAmount.setText("") }
+        })
+
         editVm.totalOrderPrice.observe(viewLifecycleOwner, Observer {
             binding.tvTotalPrice.text = it.toString()
+        })
+
+        editVm.updatedItem.observe(viewLifecycleOwner, Observer { updatedItem ->
+            editVm.selectedPos.value?.let { position ->
+                rvEditAdapter.updateItem(position, updatedItem)
+            }
         })
 
         getProductListToSpinner()
 
         setDatePicker()
-
+        /** Create */
         binding.btnCreate.setOnClickListener {
             val amount = if (productAmount.text.isBlank()) 1
             else productAmount.text.toString().toInt()
@@ -100,9 +102,50 @@ class EditFragment : Fragment() {
                 editVm.createOrderItem(item)
             }
         }
+        /** Delete */
+        binding.btnDelete.setOnClickListener {
+            editVm.deleteOrderItem()
+        }
+        /** Update */
+        binding.btnUpdate.setOnClickListener {
+            if (editVm.selectedItem.value != null) {
+                val amount = productAmount.text.toString().toInt() ?: 1
+                val item = OrderItem(orderProduct, amount, amount * orderProductPrice)
+                editVm.updateOrderItem(item)
+            } else {
+                toast(this.getString(R.string.please_select_an_item))
+            }
+        }
+        /** Commit */
+        binding.btnCommit.setOnClickListener {
+            if (editVm.orderList.value?.size != 0 && binding.edCustomerName.text.isNotBlank()) {
+                val name = binding.edCustomerName.text.toString()
+                val date = SimpleDateFormat("yyyy/MM/dd").parse(binding.tvDate.text.toString())
+                val list = rvEditAdapter.getCheckedList()
+                editVm.updateProcessingItem(name, date, list)
+            } else {
+                toast(this.getString(R.string.please_enter_name_or_items))
+            }
+        }
 
 
         return binding.root
+    }
+
+    private fun initEditRecyclerView() {
+        rvEditAdapter = RvEditAdapter()
+
+        binding.rvEdit.adapter = rvEditAdapter.apply {
+            itemClickListener = { item, pos ->
+                editVm.onSelectedOrderItem(item, pos)
+            }
+
+            changeBackgroundListener = { currentItem, holder ->
+                setSelectedItemColor(currentItem, holder)
+            }
+
+        }
+        binding.rvEdit.layoutManager = LinearLayoutManager(requireActivity())
     }
 
     private fun getProductListToSpinner() {
@@ -173,5 +216,4 @@ class EditFragment : Fragment() {
             }
         })
     }
-
 }

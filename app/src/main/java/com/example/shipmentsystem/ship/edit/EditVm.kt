@@ -4,14 +4,21 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.shipmentsystem.R
+import com.example.shipmentsystem.db.MyDatabase
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.ProcessingItem
 import com.example.shipmentsystem.toast
-import timber.log.Timber
+import kotlinx.coroutines.launch
+import java.util.*
 
 class EditVm(application: Application) : AndroidViewModel(application) {
-    private val _processingItem = MutableLiveData<ProcessingItem>()
-    val processingItem: LiveData<ProcessingItem>
+    private val app = application
+    private var dbDao = MyDatabase.getInstance(application).dao
+
+    private val _processingItem = MutableLiveData<ProcessingItem?>()
+    val processingItem: LiveData<ProcessingItem?>
         get() = _processingItem
 
     private val _orderList = MutableLiveData<MutableList<OrderItem>>()
@@ -28,18 +35,65 @@ class EditVm(application: Application) : AndroidViewModel(application) {
 
     private var onSelected = true
 
+    private val _updatedItem = MutableLiveData<OrderItem>()
+    val updatedItem: LiveData<OrderItem>
+        get() = _updatedItem
+
     private val _totalOrderPrice = MutableLiveData<Int>()
     val totalOrderPrice: LiveData<Int>
         get() = _totalOrderPrice
 
     fun getProcessingItem(item: ProcessingItem) {
         _processingItem.value = item
+        _orderList.value = _processingItem.value?.orderList
     }
 
     fun createOrderItem(item: OrderItem) {
         _processingItem.value?.orderList?.add(item)
         _orderList.value = _processingItem.value?.orderList
         calTotalOrderPrice()
+    }
+
+    fun deleteOrderItem() {
+        if (_selectedItem.value != null) {
+            _processingItem.value?.orderList?.remove(selectedItem.value)
+            _orderList.value = _processingItem.value?.orderList
+            _selectedItem.value = null
+            calTotalOrderPrice()
+        } else {
+            toast(app.getString(R.string.please_select_an_item))
+        }
+    }
+
+    fun updateOrderItem(item: OrderItem) {
+        _updatedItem.value = item
+        _processingItem.value?.orderList?.set(selectedPos.value ?: -1, item)
+        calTotalOrderPrice()
+    }
+
+    fun updateProcessingItem(name: String, date: Date, list: MutableList<OrderItem>) {
+        val item = _processingItem.value
+        item?.let {
+            item.name = name
+            item.date = date
+            item.orderList = list
+            viewModelScope.launch {
+                updateProcessingItem(item)
+                clear()
+            }
+            toast(app.getString(R.string.order_saved, item.name))
+        }
+
+    }
+
+    private suspend fun updateProcessingItem(item: ProcessingItem) {
+        dbDao.updateProcessingItem(item)
+    }
+
+    private fun clear() {
+//        list.clear()
+//        _orderList.value = list
+//        _totalOrderPrice.value = 0
     }
 
     private fun calTotalOrderPrice() {

@@ -128,6 +128,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
             insertProcessingItem(item)
             clear()
         }
+        toast(app.getString(R.string.order_in_processing, item.name))
     }
 
     private suspend fun insertProcessingItem(item: ProcessingItem) {

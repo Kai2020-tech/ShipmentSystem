@@ -41,6 +41,10 @@ interface Dao {
     @Query("SELECT * FROM processing_table  ORDER BY id DESC")
     fun getAllProcessing(): LiveData<List<ProcessingItem>>
 
+    /** Edit VM commit */
+    @Update
+    suspend fun updateProcessingItem(item: ProcessingItem)
+
 
 //    @Insert
 //    suspend fun insertOrder(orderList: OrderList)
