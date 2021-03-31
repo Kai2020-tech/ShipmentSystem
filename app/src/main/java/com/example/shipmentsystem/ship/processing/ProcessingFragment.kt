@@ -56,5 +56,6 @@ class ProcessingFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Timber.d("processing fragment destroyed.")
+        processingBinding = null
     }
 }

@@ -243,4 +243,9 @@ class EditFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        editBinding = null
+    }
 }

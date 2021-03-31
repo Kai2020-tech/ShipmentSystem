@@ -210,4 +210,9 @@ class OrderFragment : Fragment() {
         productAmount.text.clear()
         hideKeyboard(binding.textView)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        orderBinding = null
+    }
 }
