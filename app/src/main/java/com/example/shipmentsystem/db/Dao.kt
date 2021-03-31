@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import java.util.*
 
 @Dao
 interface Dao {
@@ -52,6 +53,10 @@ interface Dao {
     /** Edit VM commit */
     @Update
     suspend fun updateProcessingItem(item: ProcessingItem)
+
+    /** Ship search */
+    @Query("SELECT * FROM processing_table  WHERE order_date >= :startDate AND order_date <= :endDate")
+    fun searchOrderList(startDate: Date, endDate: Date): LiveData<List<ProcessingItem>>
 
 
 //    @Insert

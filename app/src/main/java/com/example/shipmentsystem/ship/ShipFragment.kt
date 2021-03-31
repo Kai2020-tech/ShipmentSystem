@@ -5,9 +5,12 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.DialogSearchBinding
 import com.example.shipmentsystem.databinding.FragmentShipBinding
+import com.example.shipmentsystem.getNavController
+import com.example.shipmentsystem.ship.search.SearchVm
 import com.example.shipmentsystem.toast
 import com.google.android.material.tabs.TabLayoutMediator
 import java.text.SimpleDateFormat
@@ -19,6 +22,8 @@ class ShipFragment : Fragment() {
     private var shipBinding: FragmentShipBinding? = null
     private val binding get() = shipBinding!!
     private lateinit var dialogSearchBinding: DialogSearchBinding
+
+    private val searchVm: SearchVm by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +61,12 @@ class ShipFragment : Fragment() {
                     .setView(dialogSearchBinding.root)
                     .setNegativeButton(getString(R.string.no)) { _, _ -> }
                     .setPositiveButton(getString(R.string.yes)) { _, _ ->
-
+                        val start = dialogSearchBinding.tvDateStart.text.toString()
+                        val end = dialogSearchBinding.tvDateEnd.text.toString()
+                        val startDate: Date = SimpleDateFormat("yyyy/MM/dd").parse(start)
+                        val endDate: Date = SimpleDateFormat("yyyy/MM/dd").parse(end)
+                        searchVm.getSearchDate(startDate, endDate)
+                        getNavController().navigate(R.id.action_shipFragment_to_searchResultFragment)
                     }
                     .setOnDismissListener {
                         (dialogSearchBinding.root.parent as ViewGroup).removeView(

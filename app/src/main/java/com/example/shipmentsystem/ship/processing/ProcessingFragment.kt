@@ -40,7 +40,6 @@ class ProcessingFragment : Fragment() {
         binding.recyclerView.adapter = rvProcessAdapter.apply {
             itemClickListener = {
                 getNavController().navigate(R.id.action_shipFragment_to_editFragment)
-//                getNavController().navigate(ShipFragmentDirections.actionShipFragmentToEditFragment(it))
                 editVm.getProcessingItem(it)    //use viewModel access
             }
         }
@@ -52,7 +51,6 @@ class ProcessingFragment : Fragment() {
             rvProcessAdapter.update(list)
         })
 
-//        rvProcessAdapter.update(processingVm.getList())
 
         return binding.root
     }

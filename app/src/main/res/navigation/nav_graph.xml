@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_shipFragment_to_editFragment"
             app:destination="@id/editFragment" />
+        <action
+            android:id="@+id/action_shipFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/editFragment"
@@ -33,5 +36,13 @@
         <action
             android:id="@+id/action_editFragment_to_shipFragment"
             app:destination="@id/shipFragment" />
+        <action
+            android:id="@+id/action_editFragment_to_shipFragment2"
+            app:destination="@id/shipFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.example.shipmentsystem.ship.search.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" />
 </navigation>

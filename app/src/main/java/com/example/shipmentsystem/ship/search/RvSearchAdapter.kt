@@ -1,4 +1,4 @@
-package com.example.shipmentsystem.ship.processing
+package com.example.shipmentsystem.ship.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,8 @@ import com.example.shipmentsystem.databinding.ItemProcessingBinding
 import com.example.shipmentsystem.db.ProcessingItem
 import java.text.SimpleDateFormat
 
-class RvProcessingAdapter : RecyclerView.Adapter<RvProcessingAdapter.MyHolder>() {
+class RvSearchAdapter : RecyclerView.Adapter<RvSearchAdapter.MyHolder>() {
+
     var itemClickListener: (ProcessingItem) -> Unit = {}
 
     private val innerList = mutableListOf<ProcessingItem>()
