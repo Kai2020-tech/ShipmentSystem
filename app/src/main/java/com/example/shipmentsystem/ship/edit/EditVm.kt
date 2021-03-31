@@ -79,11 +79,12 @@ class EditVm(application: Application) : AndroidViewModel(application) {
     fun updateProcessingItem(name: String, date: Date, list: MutableList<OrderItem>) {
         val item = _processingItem.value
         item?.let {
-            item.name = name
-            item.date = date
-            item.orderList = list
+            it.name = name
+            it.date = date
+            it.orderList = list
+            it.totalPrice = _totalOrderPrice.value ?: 0
             viewModelScope.launch {
-                updateProcessingItem(item)
+                updateProcessingItem(it)
             }
             toast(app.getString(R.string.order_saved, item.name))
         }
@@ -144,9 +145,8 @@ class EditVm(application: Application) : AndroidViewModel(application) {
     }
 
     fun onClear() {
-//        _processingItem.value?.orderList?.clear()
-        val list = mutableListOf<OrderItem>()
-        _orderList.value = list
+        _processingItem.value?.orderList?.clear()
+        _orderList.value = _processingItem.value?.orderList
         _totalOrderPrice.value = 0
     }
 }

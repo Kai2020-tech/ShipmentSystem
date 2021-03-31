@@ -13,7 +13,11 @@ import timber.log.Timber
 class ProcessingVm(application: Application) : AndroidViewModel(application) {
     private var dbDao = MyDatabase.getInstance(application).dao
 
+    //    private val _processingList = dbDao.getAllProcessingItem()
+
     private val _processingList = MutableLiveData<List<ProcessingItem>>()
+
+
     val processingList: LiveData<List<ProcessingItem>>
         get() = _processingList
 
