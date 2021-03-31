@@ -54,10 +54,10 @@ class ShipFragment : Fragment() {
 
                 AlertDialog.Builder(requireActivity())
                     .setView(dialogSearchBinding.root)
-                    .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                        toast(getString(R.string.clear_list))
-                    }
                     .setNegativeButton(getString(R.string.no)) { _, _ -> }
+                    .setPositiveButton(getString(R.string.yes)) { _, _ ->
+
+                    }
                     .setOnDismissListener {
                         (dialogSearchBinding.root.parent as ViewGroup).removeView(
                             dialogSearchBinding.root

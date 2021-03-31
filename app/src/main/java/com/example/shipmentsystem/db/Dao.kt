@@ -38,8 +38,12 @@ interface Dao {
     @Insert
     suspend fun insertProcessingItem(item: ProcessingItem)
 
+//return LiveData will force shipFragment updated
+//    @Query("SELECT * FROM processing_table  ORDER BY id DESC")
+//    fun getAllProcessingItem(): LiveData<List<ProcessingItem>>
+
     @Query("SELECT * FROM processing_table  ORDER BY id DESC")
-    fun getAllProcessingItem(): LiveData<List<ProcessingItem>>
+    suspend fun getAllProcessingItem(): List<ProcessingItem>
 
     //清除選定資料
     @Query("DELETE FROM processing_table WHERE id = :key")

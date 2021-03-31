@@ -46,9 +46,13 @@ class ProcessingFragment : Fragment() {
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
+        processingVm.getList()
+
         processingVm.processingList.observe(viewLifecycleOwner, Observer { list ->
             rvProcessAdapter.update(list)
         })
+
+//        rvProcessAdapter.update(processingVm.getList())
 
         return binding.root
     }

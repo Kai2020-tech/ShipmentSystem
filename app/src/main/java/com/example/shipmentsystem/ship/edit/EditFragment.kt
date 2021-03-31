@@ -28,7 +28,6 @@ class EditFragment : Fragment() {
     private val binding get() = editBinding!!
 
     private val editVm: EditVm by activityViewModels()
-
     private val productVm: ProductVm by activityViewModels()
     private val orderListVm: OrderListVm by activityViewModels()
 

@@ -46,13 +46,18 @@ class EditVm(application: Application) : AndroidViewModel(application) {
     fun getProcessingItem(item: ProcessingItem) {
         _processingItem.value = item
         _orderList.value = _processingItem.value?.orderList
+        _totalOrderPrice.value = item.totalPrice
     }
 
     fun createOrderItem(item: OrderItem) {
+        if (_orderList.value?.size == 0) {
+            _processingItem.value?.orderList?.clear()
+        }
         _processingItem.value?.orderList?.add(item)
         _orderList.value = _processingItem.value?.orderList
         calTotalOrderPrice()
     }
+
 
     fun deleteOrderItem() {
         if (_selectedItem.value != null) {
@@ -139,7 +144,9 @@ class EditVm(application: Application) : AndroidViewModel(application) {
     }
 
     fun onClear() {
-        _processingItem.value?.orderList?.clear()
-        _orderList.value = _processingItem.value?.orderList
+//        _processingItem.value?.orderList?.clear()
+        val list = mutableListOf<OrderItem>()
+        _orderList.value = list
+        _totalOrderPrice.value = 0
     }
 }
