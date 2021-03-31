@@ -24,7 +24,7 @@
     <string name="order_list">Order</string>
     <string name="ship_list">Ship</string>
     <string name="product_list">Product</string>
-    <string name="delete_all_products">Delete All Products</string>
+    <string name="delete_data">Delete all data</string>
     <string name="amount">Amount:</string>
     <string name="order_date">Order Date:</string>
     <string name="please_enter_a_name">Please enter a name</string>
@@ -41,4 +41,9 @@
     <string name="price_sign">$</string>
     <string name="order_saved">"%1$s order saved."</string>
     <string name="order_in_processing">"%1$s order in processing."</string>
+    <string name="clear_list">List cleared.</string>
+    <string name="confirm_delete_all_Product">DELETE all Product?</string>
+    <string name="confirm_delete_processingOrder">DELETE this order list?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

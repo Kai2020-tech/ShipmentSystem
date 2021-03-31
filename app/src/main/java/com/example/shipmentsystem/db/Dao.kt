@@ -36,10 +36,14 @@ interface Dao {
 
     /** Processing */
     @Insert
-    suspend fun insertProcessing(item: ProcessingItem)
+    suspend fun insertProcessingItem(item: ProcessingItem)
 
     @Query("SELECT * FROM processing_table  ORDER BY id DESC")
-    fun getAllProcessing(): LiveData<List<ProcessingItem>>
+    fun getAllProcessingItem(): LiveData<List<ProcessingItem>>
+
+    //清除選定資料
+    @Query("DELETE FROM processing_table WHERE id = :key")
+    suspend fun deleteProcessingItem(key: Int)
 
     /** Edit VM commit */
     @Update

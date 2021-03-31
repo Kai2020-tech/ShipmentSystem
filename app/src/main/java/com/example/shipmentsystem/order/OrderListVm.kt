@@ -6,9 +6,7 @@ import com.example.shipmentsystem.R
 import com.example.shipmentsystem.db.MyDatabase
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.ProcessingItem
-import com.example.shipmentsystem.db.Product
 import com.example.shipmentsystem.toast
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
@@ -132,7 +130,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
     }
 
     private suspend fun insertProcessingItem(item: ProcessingItem) {
-        dbDao.insertProcessing(item)
+        dbDao.insertProcessingItem(item)
     }
 
 

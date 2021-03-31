@@ -79,7 +79,6 @@ class EditVm(application: Application) : AndroidViewModel(application) {
             item.orderList = list
             viewModelScope.launch {
                 updateProcessingItem(item)
-                clear()
             }
             toast(app.getString(R.string.order_saved, item.name))
         }
@@ -90,11 +89,16 @@ class EditVm(application: Application) : AndroidViewModel(application) {
         dbDao.updateProcessingItem(item)
     }
 
-    private fun clear() {
-//        list.clear()
-//        _orderList.value = list
-//        _totalOrderPrice.value = 0
+    fun onDelete() {
+        viewModelScope.launch {
+            _processingItem.value?.id?.let { deleteProcessingItem(it) }
+        }
     }
+
+    private suspend fun deleteProcessingItem(key: Int) {
+        dbDao.deleteProcessingItem(key)
+    }
+
 
     private fun calTotalOrderPrice() {
         _totalOrderPrice.value = 0
@@ -132,5 +136,10 @@ class EditVm(application: Application) : AndroidViewModel(application) {
         } else {
             _selectedItem.value = null
         }
+    }
+
+    fun onClear() {
+        _processingItem.value?.orderList?.clear()
+        _orderList.value = _processingItem.value?.orderList
     }
 }

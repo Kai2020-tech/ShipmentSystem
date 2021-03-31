@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
+import com.example.shipmentsystem.getNavController
 import com.example.shipmentsystem.ship.edit.EditVm
 import timber.log.Timber
 
@@ -51,14 +52,6 @@ class ProcessingFragment : Fragment() {
 
         return binding.root
     }
-
-    private fun getNavController(): NavController {
-        val navHostFragment = requireActivity().supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        return navHostFragment.navController
-
-    }//set NavHostFragment, a container for fragments
-
 
     override fun onDestroyView() {
         super.onDestroyView()

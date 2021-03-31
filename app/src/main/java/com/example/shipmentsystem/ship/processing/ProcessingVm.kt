@@ -3,12 +3,8 @@ package com.example.shipmentsystem.ship.processing
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.example.shipmentsystem.db.MyDatabase
 import com.example.shipmentsystem.db.ProcessingItem
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class ProcessingVm(application: Application) : AndroidViewModel(application) {
@@ -23,7 +19,7 @@ class ProcessingVm(application: Application) : AndroidViewModel(application) {
     }
 
     private fun getList():LiveData<List<ProcessingItem>>{
-        return dbDao.getAllProcessing()
+        return dbDao.getAllProcessingItem()
     }
 
 }

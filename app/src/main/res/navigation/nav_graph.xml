@@ -30,5 +30,8 @@
             android:name="processingItem"
             app:argType="com.example.shipmentsystem.db.ProcessingItem"
              />
+        <action
+            android:id="@+id/action_editFragment_to_shipFragment"
+            app:destination="@id/shipFragment" />
     </fragment>
 </navigation>

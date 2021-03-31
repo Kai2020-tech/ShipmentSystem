@@ -1,9 +1,11 @@
 package com.example.shipmentsystem.product
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -22,8 +24,8 @@ class ProductFragment : Fragment() {
 
     private val productVm: ProductVm by activityViewModels()
 
-    private lateinit var productName:EditText
-    private lateinit var productPrice:EditText
+    private lateinit var productName: EditText
+    private lateinit var productPrice: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -158,8 +160,14 @@ class ProductFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_itemListDel -> {
-                productVm.onDbClear()
-                toast("All items deleted!!")
+                AlertDialog.Builder(requireActivity())
+                    .setMessage(getString(R.string.confirm_delete_all_Product))
+                    .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                        productVm.onDbClear()
+                        toast(getString(R.string.clear_list))
+                    }
+                    .setNegativeButton(getString(R.string.no)) { _, _ -> }
+                    .show()
                 true
             }
             else -> super.onOptionsItemSelected(item)

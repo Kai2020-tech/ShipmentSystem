@@ -1,13 +1,12 @@
 package com.example.shipmentsystem.ship.edit
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -17,6 +16,7 @@ import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentEditBinding
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.Product
+import com.example.shipmentsystem.getNavController
 import com.example.shipmentsystem.order.OrderListVm
 import com.example.shipmentsystem.product.ProductVm
 import com.example.shipmentsystem.toast
@@ -29,7 +29,6 @@ class EditFragment : Fragment() {
 
     private val editVm: EditVm by activityViewModels()
 
-    //    private lateinit var editVm: EditVm
     private val productVm: ProductVm by activityViewModels()
     private val orderListVm: OrderListVm by activityViewModels()
 
@@ -50,8 +49,6 @@ class EditFragment : Fragment() {
     ): View? {
         editBinding = FragmentEditBinding.inflate(inflater, container, false)
 
-//        editVm = ViewModelProvider(this).get(EditVm::class.java)
-
         customerName = binding.edCustomerName
         productAmount = binding.edAmount
         orderDate = binding.tvDate
@@ -61,6 +58,8 @@ class EditFragment : Fragment() {
 //        Timber.d("${args.processingItem.name}")
 
         initEditRecyclerView()
+
+        setHasOptionsMenu(true)
 
         editVm.processingItem.observe(viewLifecycleOwner, Observer { processingItem ->
             binding.edCustomerName.setText(processingItem?.name)
@@ -126,6 +125,10 @@ class EditFragment : Fragment() {
             } else {
                 toast(this.getString(R.string.please_enter_name_or_items))
             }
+        }
+        /** Clear all order items */
+        binding.btnClear.setOnClickListener {
+            editVm.onClear()
         }
 
 
@@ -215,5 +218,29 @@ class EditFragment : Fragment() {
                 holder.itemView.setBackgroundColor(Color.parseColor(defaultColor))
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.item_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_itemListDel -> {
+                AlertDialog.Builder(requireActivity())
+                    .setMessage(getString(R.string.confirm_delete_processingOrder))
+                    .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                        editVm.onDelete()
+                        getNavController().navigate(R.id.action_editFragment_to_shipFragment)
+                        toast(getString(R.string.clear_list))
+                    }
+                    .setNegativeButton(getString(R.string.no)) { _, _ -> }
+                    .show()
+//                editVm.onClear()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
