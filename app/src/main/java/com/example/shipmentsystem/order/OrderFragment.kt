@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.shipmentsystem.*
 import com.example.shipmentsystem.databinding.FragmentOrderBinding
 import com.example.shipmentsystem.db.OrderItem

@@ -1,12 +1,18 @@
 package com.example.shipmentsystem.ship
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
+import android.view.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentShipBinding
+import com.example.shipmentsystem.getNavController
+import com.example.shipmentsystem.toast
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -30,6 +36,16 @@ class ShipFragment : Fragment() {
             tab.text = title[position]
         }.attach()
 
+        setHasOptionsMenu(true)
+
         return binding.root
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater?.inflate(R.menu.menu_search, menu)
+
+    }
+
 }

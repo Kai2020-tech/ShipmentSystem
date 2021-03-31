@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -154,7 +153,7 @@ class ProductFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.item_menu, menu)
+        inflater.inflate(R.menu.menu_item, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

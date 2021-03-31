@@ -222,7 +222,7 @@ class EditFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.item_menu, menu)
+        inflater.inflate(R.menu.menu_item, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
