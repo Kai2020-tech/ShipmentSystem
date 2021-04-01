@@ -138,8 +138,10 @@ class EditFragment : Fragment() {
 //                val orderDate = SimpleDateFormat("yyyy/MM/dd").parse(binding.tvDate.text.toString())
 //                val completeDate = Date(System.currentTimeMillis())
 //                editVm.onComplete(name,orderDate,completeDate,checkedList)
+
+                //back to shipFragment's viewpager,direct to specify position
                 val args = Bundle()
-                args.putInt("viewPager2Position",2)
+                args.putInt("viewPager2Position",1)
                 getNavController().navigate(R.id.action_editFragment_to_shipFragment,args)
 
             }else{
