@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentEditBinding
@@ -118,9 +117,9 @@ class EditFragment : Fragment() {
         binding.btnCommit.setOnClickListener {
             if (editVm.orderList.value?.size != 0 && binding.edCustomerName.text.isNotBlank()) {
                 val name = binding.edCustomerName.text.toString()
-                val date = SimpleDateFormat("yyyy/MM/dd").parse(binding.tvDate.text.toString())
-                val list = rvEditAdapter.getCheckedList()
-                editVm.updateProcessingItem(name, date, list)
+                val orderDate = SimpleDateFormat("yyyy/MM/dd").parse(binding.tvDate.text.toString())
+                val list = rvEditAdapter.getInnerList()
+                editVm.updateProcessingItem(name, orderDate, list)
             } else {
                 toast(this.getString(R.string.please_enter_name_or_items))
             }
@@ -128,6 +127,24 @@ class EditFragment : Fragment() {
         /** Clear all order items */
         binding.btnClear.setOnClickListener {
             editVm.onClear()
+        }
+
+        /** Complete , when every item is checked ,then list can be completed */
+        binding.btnComplete.setOnClickListener {
+            val innerList = rvEditAdapter.getInnerList()
+            val checkedList = rvEditAdapter.getCheckedList()
+            if(innerList.size == checkedList.size){
+//                val name = binding.edCustomerName.text.toString()
+//                val orderDate = SimpleDateFormat("yyyy/MM/dd").parse(binding.tvDate.text.toString())
+//                val completeDate = Date(System.currentTimeMillis())
+//                editVm.onComplete(name,orderDate,completeDate,checkedList)
+                val args = Bundle()
+                args.putInt("viewPager2Position",2)
+                getNavController().navigate(R.id.action_editFragment_to_shipFragment,args)
+
+            }else{
+                toast(getString(R.string.please_check_every_item))
+            }
         }
 
 

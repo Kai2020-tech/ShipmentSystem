@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_shipFragment_to_searchResultFragment"
             app:destination="@id/searchResultFragment" />
+        <action
+            android:id="@+id/action_shipFragment_to_completeFragment"
+            app:destination="@id/completeFragment" />
     </fragment>
     <fragment
         android:id="@+id/editFragment"
@@ -37,8 +40,8 @@
             android:id="@+id/action_editFragment_to_shipFragment"
             app:destination="@id/shipFragment" />
         <action
-            android:id="@+id/action_editFragment_to_shipFragment2"
-            app:destination="@id/shipFragment" />
+            android:id="@+id/action_editFragment_to_completeFragment"
+            app:destination="@id/completeFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
@@ -49,4 +52,8 @@
             android:id="@+id/action_searchResultFragment_to_editFragment"
             app:destination="@id/editFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/completeFragment"
+        android:name="com.example.shipmentsystem.ship.complete.CompleteFragment"
+        android:label="CompleteFragment" />
 </navigation>

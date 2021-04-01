@@ -24,14 +24,30 @@ class ShipFragment : Fragment() {
 
     private val searchVm: SearchVm by activityViewModels()
 
+    private var viewPager2Position: Int? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            viewPager2Position = it.getInt("viewPager2Position")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         shipBinding = FragmentShipBinding.inflate(inflater, container, false)
         dialogSearchBinding = DialogSearchBinding.inflate(inflater, container, false)
 
         binding.viewPager2.adapter = VpAdapter(this.childFragmentManager, this.lifecycle)
+
+        //if editFragment complete, action back to shipFragment
+        // will make viewpager display specify fragment(completeFragment)
+        viewPager2Position?.let {
+            binding.viewPager2.currentItem = it
+        }
+
 
         val title: ArrayList<String> =
             arrayListOf(getString(R.string.processing), getString(R.string.complete))

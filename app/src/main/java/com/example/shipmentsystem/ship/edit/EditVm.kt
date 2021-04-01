@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.shipmentsystem.R
+import com.example.shipmentsystem.db.CompleteItem
 import com.example.shipmentsystem.db.MyDatabase
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.ProcessingItem
@@ -42,6 +43,8 @@ class EditVm(application: Application) : AndroidViewModel(application) {
     private val _totalOrderPrice = MutableLiveData<Int>()
     val totalOrderPrice: LiveData<Int>
         get() = _totalOrderPrice
+
+    private lateinit var completeDate: Date
 
     fun getProcessingItem(item: ProcessingItem) {
         _processingItem.value = item
@@ -142,6 +145,27 @@ class EditVm(application: Application) : AndroidViewModel(application) {
         } else {
             _selectedItem.value = null
         }
+    }
+
+    fun onComplete(
+        name: String,
+        orderDate: Date,
+        completeDate: Date,
+        list: MutableList<OrderItem>
+    ) {
+        val completeItem = CompleteItem(
+            name = name,
+            orderDate = orderDate,
+            completeDate = completeDate,
+            orderList = list
+        )
+        viewModelScope.launch {
+            createCompleteItem(completeItem)
+        }
+    }
+
+    private suspend fun createCompleteItem(completeItem: CompleteItem) {
+        dbDao.insertCompleteItem(completeItem)
     }
 
     fun onClear() {

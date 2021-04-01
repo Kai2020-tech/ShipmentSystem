@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shipmentsystem.databinding.ItemEditBinding
 import com.example.shipmentsystem.db.OrderItem
+import com.example.shipmentsystem.db.ProcessingItem
 
 class RvEditAdapter : RecyclerView.Adapter<RvEditAdapter.MyHolder>() {
     private val innerList = mutableListOf<OrderItem>()
@@ -70,5 +71,15 @@ class RvEditAdapter : RecyclerView.Adapter<RvEditAdapter.MyHolder>() {
         this.notifyItemChanged(int)
     }
 
-    fun getCheckedList() = innerList
+    fun getInnerList() = innerList
+
+    fun getCheckedList(): MutableList<OrderItem> {
+        val checkedList = mutableListOf<OrderItem>()
+        innerList.forEach {
+            when (it.isChecked) {
+                true -> checkedList.add(it)
+            }
+        }
+        return checkedList
+    }
 }
