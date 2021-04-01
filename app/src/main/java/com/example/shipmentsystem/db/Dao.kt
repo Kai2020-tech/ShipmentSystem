@@ -58,10 +58,12 @@ interface Dao {
     @Query("SELECT * FROM processing_table  WHERE order_date >= :startDate AND order_date <= :endDate")
     fun searchOrderList(startDate: Date, endDate: Date): LiveData<List<ProcessingItem>>
 
+    /** Complete */
+    @Insert
+    suspend fun insertCompleteItem(item: CompleteItem)
 
-//    @Insert
-//    suspend fun insertOrder(orderList: OrderList)
-//
-//    @Query("SELECT * FROM orderList_table  ORDER BY id DESC")
-//    suspend fun getAllOrders(): List<OrderList>
+    @Query("SELECT * FROM complete_table  ORDER BY id DESC")
+    fun getAllCompleteItem(): LiveData<List<CompleteItem>>
+
+
 }

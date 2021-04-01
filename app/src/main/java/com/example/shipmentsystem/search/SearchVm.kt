@@ -12,7 +12,6 @@ class SearchVm(application: Application) : AndroidViewModel(application) {
     private var dbDao = MyDatabase.getInstance(application).dao
 
     var searchDate = ""
-    var searchCount = ""
 
     private lateinit var _searchList: LiveData<List<ProcessingItem>>
     val searchList: LiveData<List<ProcessingItem>>
