@@ -133,18 +133,21 @@ class EditFragment : Fragment() {
         binding.btnComplete.setOnClickListener {
             val innerList = rvEditAdapter.getInnerList()
             val checkedList = rvEditAdapter.getCheckedList()
-            if(innerList.size == checkedList.size){
-//                val name = binding.edCustomerName.text.toString()
-//                val orderDate = SimpleDateFormat("yyyy/MM/dd").parse(binding.tvDate.text.toString())
-//                val completeDate = Date(System.currentTimeMillis())
-//                editVm.onComplete(name,orderDate,completeDate,checkedList)
+            if (innerList.size == checkedList.size) {
+                val name = binding.edCustomerName.text.toString()
+                val orderDate = SimpleDateFormat("yyyy/MM/dd").parse(binding.tvDate.text.toString())
+                    ?: Date(System.currentTimeMillis())
+                val completeDate = Date(System.currentTimeMillis())
+                editVm.onComplete(name, orderDate, completeDate, checkedList)
 
                 //back to shipFragment's viewpager,direct to specify position
-                val args = Bundle()
-                args.putInt("viewPager2Position",1)
-                getNavController().navigate(R.id.action_editFragment_to_shipFragment,args)
+                getNavController().navigate(
+                    EditFragmentDirections.actionEditFragmentToShipFragment(
+                        2
+                    )
+                )
 
-            }else{
+            } else {
                 toast(getString(R.string.please_check_every_item))
             }
         }

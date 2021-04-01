@@ -24,15 +24,6 @@ class ShipFragment : Fragment() {
 
     private val searchVm: SearchVm by activityViewModels()
 
-    private var viewPager2Position: Int? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            viewPager2Position = it.getInt("viewPager2Position")
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,10 +35,9 @@ class ShipFragment : Fragment() {
 
         //if editFragment complete, action back to shipFragment
         // will make viewpager display specify fragment(completeFragment)
-        viewPager2Position?.let {
-            binding.viewPager2.currentItem = it
+        arguments?.let {
+            binding.viewPager2.currentItem = it.getInt("viewPager2Position")
         }
-
 
         val title: ArrayList<String> =
             arrayListOf(getString(R.string.processing), getString(R.string.complete))

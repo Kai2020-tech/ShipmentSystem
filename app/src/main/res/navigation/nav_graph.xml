@@ -7,8 +7,7 @@
     <fragment
         android:id="@+id/orderListFragment"
         android:name="com.example.shipmentsystem.order.OrderFragment"
-        android:label="@string/order_list"
-         />
+        android:label="@string/order_list" />
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.example.shipmentsystem.product.ProductFragment"
@@ -16,16 +15,16 @@
     <fragment
         android:id="@+id/shipFragment"
         android:name="com.example.shipmentsystem.ship.ShipFragment"
-        android:label="@string/shipFragment" >
+        android:label="@string/shipFragment">
         <action
             android:id="@+id/action_shipFragment_to_editFragment"
             app:destination="@id/editFragment" />
         <action
             android:id="@+id/action_shipFragment_to_searchResultFragment"
             app:destination="@id/searchResultFragment" />
-        <action
-            android:id="@+id/action_shipFragment_to_completeFragment"
-            app:destination="@id/completeFragment" />
+        <argument
+            android:name="viewPager2Position"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/editFragment"
@@ -34,20 +33,16 @@
         tools:layout="@layout/fragment_edit">
         <argument
             android:name="processingItem"
-            app:argType="com.example.shipmentsystem.db.ProcessingItem"
-             />
+            app:argType="com.example.shipmentsystem.db.ProcessingItem" />
         <action
             android:id="@+id/action_editFragment_to_shipFragment"
             app:destination="@id/shipFragment" />
-        <action
-            android:id="@+id/action_editFragment_to_completeFragment"
-            app:destination="@id/completeFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
         android:name="com.example.shipmentsystem.search.SearchResultFragment"
         android:label="@string/fragment_search_result"
-        tools:layout="@layout/fragment_search_result" >
+        tools:layout="@layout/fragment_search_result">
         <action
             android:id="@+id/action_searchResultFragment_to_editFragment"
             app:destination="@id/editFragment" />
