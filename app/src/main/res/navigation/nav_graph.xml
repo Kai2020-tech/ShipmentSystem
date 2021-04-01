@@ -42,7 +42,11 @@
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
-        android:name="com.example.shipmentsystem.ship.search.SearchResultFragment"
-        android:label="fragment_search_result"
-        tools:layout="@layout/fragment_search_result" />
+        android:name="com.example.shipmentsystem.search.SearchResultFragment"
+        android:label="@string/fragment_search_result"
+        tools:layout="@layout/fragment_search_result" >
+        <action
+            android:id="@+id/action_searchResultFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+    </fragment>
 </navigation>

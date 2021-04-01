@@ -1,4 +1,4 @@
-package com.example.shipmentsystem.ship.search
+package com.example.shipmentsystem.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

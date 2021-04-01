@@ -47,4 +47,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="enter_search">Search select : </string>
+    <string name="fragment_search_result">Search Result</string>
+    <string name="search_count">"total [ %1$s ] data."</string>
 </resources>

@@ -10,8 +10,7 @@ import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.DialogSearchBinding
 import com.example.shipmentsystem.databinding.FragmentShipBinding
 import com.example.shipmentsystem.getNavController
-import com.example.shipmentsystem.ship.search.SearchVm
-import com.example.shipmentsystem.toast
+import com.example.shipmentsystem.search.SearchVm
 import com.google.android.material.tabs.TabLayoutMediator
 import java.text.SimpleDateFormat
 import java.util.*
