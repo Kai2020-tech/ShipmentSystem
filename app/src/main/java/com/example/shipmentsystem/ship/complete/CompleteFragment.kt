@@ -33,6 +33,7 @@ class CompleteFragment : Fragment() {
         val rvCompleteAdapter = RvCompleteAdapter()
         binding.recyclerView.adapter = rvCompleteAdapter.apply {
             itemClickListener = {
+                completeVm.getCompleteItem(it)
                 getNavController().navigate(R.id.action_shipFragment_to_completeItemFragment)
             }
         }

@@ -5,7 +5,9 @@
     android:id="@+id/fragment_completeItemList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/complete_color">
+    android:background="@color/complete_color"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
     <TextView
         android:id="@+id/textView"
@@ -27,9 +29,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="@color/edtext_background"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:ems="10"
         android:paddingStart="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,10 +49,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="2dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="2dp"
         android:background="@color/recyclerview_background"
+        android:paddingTop="2dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +63,7 @@
         android:id="@+id/tv_orderDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:background="@color/edtext_background"
         android:gravity="center"
         android:text="@string/date"
@@ -116,7 +118,7 @@
         app:layout_constraintStart_toStartOf="@+id/ed_customerName" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/tv_completeDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -127,5 +129,26 @@
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_orderDate"
         app:layout_constraintStart_toStartOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/items"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
+        app:layout_constraintStart_toEndOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/tv_itemCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_completeDate"
+        app:layout_constraintStart_toStartOf="@+id/textView14" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
