@@ -25,6 +25,9 @@
         <argument
             android:name="viewPager2Position"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_shipFragment_to_completeItemFragment"
+            app:destination="@id/completeItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/editFragment"
@@ -51,4 +54,8 @@
         android:id="@+id/completeFragment"
         android:name="com.example.shipmentsystem.ship.complete.CompleteFragment"
         android:label="CompleteFragment" />
+    <fragment
+        android:id="@+id/completeItemFragment"
+        android:name="com.example.shipmentsystem.ship.complete.CompleteItemFragment"
+        android:label="Complete Order List" />
 </navigation>

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.FragmentCompleteBinding
 import com.example.shipmentsystem.databinding.FragmentProcessingBinding
+import com.example.shipmentsystem.getNavController
 import timber.log.Timber
 
 
@@ -30,7 +31,11 @@ class CompleteFragment : Fragment() {
         completeBinding = FragmentCompleteBinding.inflate(inflater, container, false)
 
         val rvCompleteAdapter = RvCompleteAdapter()
-        binding.recyclerView.adapter = rvCompleteAdapter
+        binding.recyclerView.adapter = rvCompleteAdapter.apply {
+            itemClickListener = {
+                getNavController().navigate(R.id.action_shipFragment_to_completeItemFragment)
+            }
+        }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
         completeVm.completeList.observe(viewLifecycleOwner, Observer {
