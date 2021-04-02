@@ -157,9 +157,11 @@ class EditVm(application: Application) : AndroidViewModel(application) {
             name = name,
             orderDate = orderDate,
             completeDate = completeDate,
-            orderList = list
+            orderList = list,
+            totalPrice = _totalOrderPrice.value ?: 0
         )
         viewModelScope.launch {
+            _processingItem.value?.id?.let { deleteProcessingItem(it) }  // processing to complete
             createCompleteItem(completeItem)
         }
     }
