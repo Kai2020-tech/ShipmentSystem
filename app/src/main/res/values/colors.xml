@@ -10,4 +10,5 @@
     <color name="button_backgroundTint">#C6C6C6</color>
     <color name="recyclerview_background">#C5CAE9</color>
     <color name="edtext_background">#E3DCDC</color>
+    <color name="complete_color">#A5D6A7</color>
 </resources>

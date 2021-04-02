@@ -7,7 +7,7 @@
     android:layout_marginLeft="1dp"
     android:layout_marginRight="1dp"
     android:layout_marginBottom="4dp"
-    android:background="#A5D6A7">
+    android:background="@color/complete_color">
 
     <TextView
         android:id="@+id/textView5"
