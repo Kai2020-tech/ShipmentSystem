@@ -3,7 +3,9 @@ package com.example.shipmentsystem.order
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shipmentsystem.R
 import com.example.shipmentsystem.databinding.ItemOrderBinding
 import com.example.shipmentsystem.db.OrderItem
 
@@ -46,6 +48,9 @@ class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
         holder.price.text = currentItem.sumPrice.toString()
         holder.amount.text = currentItem.amount.toString()
         holder.bind(currentItem, holder)
+
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recyclerview_anim)
     }
 
     override fun getItemCount(): Int = innerList.size
