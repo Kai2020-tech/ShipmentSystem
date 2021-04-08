@@ -8,6 +8,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shipmentsystem.*
 import com.example.shipmentsystem.databinding.FragmentProductBinding
@@ -119,6 +120,15 @@ class ProductFragment : Fragment() {
             }
         }
         binding.rvProduct.layoutManager = LinearLayoutManager(requireActivity())
+
+        //add item divide line
+        val dividerItemDecoration =
+            DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+        requireActivity().getDrawable(R.drawable.divider)?.let {
+            dividerItemDecoration.setDrawable(it)
+        }
+        binding.rvProduct.addItemDecoration(dividerItemDecoration)
+
         productVm.productList.observe(viewLifecycleOwner, Observer {
             rvProductAdapter.update(it)
         })
