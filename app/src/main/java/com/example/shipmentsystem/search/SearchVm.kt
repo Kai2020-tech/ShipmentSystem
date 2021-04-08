@@ -11,19 +11,19 @@ import java.util.*
 class SearchVm(application: Application) : AndroidViewModel(application) {
     private var dbDao = MyDatabase.getInstance(application).dao
 
-    var searchDate = ""
+    var searchOrderDate = ""
 
-    private lateinit var _searchList: LiveData<List<ProcessingItem>>
-    val searchList: LiveData<List<ProcessingItem>>
-        get() = _searchList
+    private lateinit var _searchResultProcessingList: LiveData<List<ProcessingItem>>
+    val searchResultProcessingList: LiveData<List<ProcessingItem>>
+        get() = _searchResultProcessingList
 
 
     fun getSearchDate(start: Date, end: Date) {
 
-        _searchList = dbDao.searchOrderList(start, end)
+        _searchResultProcessingList = dbDao.getSearchProcessingList(start, end)
 
         val startDate = SimpleDateFormat("yyyy/MM/dd").format(start)
         val endDate = SimpleDateFormat("yyyy/MM/dd").format(end)
-        searchDate = "$startDate ~ $endDate"
+        searchOrderDate = "$startDate ~ $endDate"
     }
 }

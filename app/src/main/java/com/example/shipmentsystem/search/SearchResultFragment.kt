@@ -40,12 +40,12 @@ class SearchResultFragment : Fragment() {
         }
         binding.rvSearchResult.layoutManager = LinearLayoutManager(requireActivity())
 
-        searchVm.searchList.observe(viewLifecycleOwner, Observer {
+        searchVm.searchResultProcessingList.observe(viewLifecycleOwner, Observer {
             rvSearchAdapter.update(it)
             binding.tvSeachCount.text = getString(R.string.search_count, it.size.toString())
         })
 
-        binding.tvSearchDate.text = searchVm.searchDate
+        binding.tvSearchDate.text = searchVm.searchOrderDate
 
 
 

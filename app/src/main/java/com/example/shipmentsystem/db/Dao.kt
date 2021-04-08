@@ -55,8 +55,13 @@ interface Dao {
     suspend fun updateProcessingItem(item: ProcessingItem)
 
     /** Ship search */
+    //processing
     @Query("SELECT * FROM processing_table  WHERE order_date >= :startDate AND order_date <= :endDate")
-    fun searchOrderList(startDate: Date, endDate: Date): LiveData<List<ProcessingItem>>
+    fun getSearchProcessingList(startDate: Date, endDate: Date): LiveData<List<ProcessingItem>>
+
+    //complete
+    @Query("SELECT * FROM complete_table  WHERE order_date >= :startDate AND order_date <= :endDate")
+    fun searchCompleteList(startDate: Date, endDate: Date): LiveData<List<CompleteItem>>
 
     /** Complete */
     @Insert
