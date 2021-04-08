@@ -66,4 +66,19 @@ class RvOrderAdapter : RecyclerView.Adapter<RvOrderAdapter.MyHolder>() {
         this.notifyItemChanged(int)
     }
 
+    fun insertItem(item: OrderItem) {
+        innerList.add(item)
+        this.notifyItemInserted(innerList.size + 1)
+    }
+
+    fun deleteItem(position: Int) {
+        innerList.removeAt(position)
+        this.notifyItemRemoved(position)
+    }
+
+    fun clearList() {
+        innerList.clear()
+        this.notifyDataSetChanged()
+    }
+
 }

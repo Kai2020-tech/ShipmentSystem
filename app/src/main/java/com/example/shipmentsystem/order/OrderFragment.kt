@@ -84,6 +84,9 @@ class OrderFragment : Fragment() {
         }
         /** Delete */
         binding.btnDelete.setOnClickListener {
+            orderListVm.selectedPos.value?.let { pos ->
+                rvOrderAdapter.deleteItem(pos)
+            }
             orderListVm.deleteOrderItem()
         }
         /** Update */
@@ -165,9 +168,11 @@ class OrderFragment : Fragment() {
 
         binding.rvOrder.layoutManager = LinearLayoutManager(requireActivity())
 
-        orderListVm.orderList.observe(viewLifecycleOwner, Observer { orderList ->
-            orderList?.let { rvOrderAdapter.updateList(orderList.toList()) }
+        orderListVm.insertItem.observe(viewLifecycleOwner, Observer {
+            rvOrderAdapter.insertItem(it)
         })
+
+        orderListVm.orderList.value?.let { rvOrderAdapter.updateList(it) }
 
         orderListVm.updatedItem.observe(viewLifecycleOwner, Observer { updatedItem ->
             orderListVm.selectedPos.value?.let { position ->
@@ -208,6 +213,7 @@ class OrderFragment : Fragment() {
     private fun clearScreen() {
         customerName.text.clear()
         productAmount.text.clear()
+        rvOrderAdapter.clearList()
         hideKeyboard(binding.textView)
     }
 

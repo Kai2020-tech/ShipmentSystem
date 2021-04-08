@@ -3,6 +3,7 @@ package com.example.shipmentsystem.order
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.shipmentsystem.R
+import com.example.shipmentsystem.SingleLiveEvent
 import com.example.shipmentsystem.db.MyDatabase
 import com.example.shipmentsystem.db.OrderItem
 import com.example.shipmentsystem.db.ProcessingItem
@@ -18,6 +19,8 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
     private val _orderList = MutableLiveData<MutableList<OrderItem>>()
     val orderList: LiveData<MutableList<OrderItem>>
         get() = _orderList
+
+    val insertItem = SingleLiveEvent<OrderItem>()
 
     private val _selectedItem = MutableLiveData<OrderItem?>()
     val selectedItem: LiveData<OrderItem?>
@@ -51,6 +54,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
     fun createOrderItem(item: OrderItem) {
         list.add(item)
         _orderList.value = list
+        insertItem.value = item
         calTotalOrderPrice()
     }
 
@@ -82,6 +86,7 @@ class OrderListVm(application: Application) : AndroidViewModel(application) {
             list.remove(selectedItem.value)
             _orderList.value = list
             _selectedItem.value = null
+            _selectedPos.value =null
             calTotalOrderPrice()
         } else {
             toast(app.getString(R.string.please_select_an_item))
